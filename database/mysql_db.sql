@@ -1,4 +1,4 @@
-USE parrilla_argentina
+USE parrilla_argentina;
 
 CREATE TABLE IF NOT EXISTS combos (
     id_combo        INT AUTO_INCREMENT PRIMARY KEY,
