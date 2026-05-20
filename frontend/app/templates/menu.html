@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Menú — Don Facundo Parrilla Argentina</title>
+  <meta name="description" content="Menú completo: entradas, principales, postres, bebidas y combos." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lato:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" /> 
+  
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="{{ url_for('frontend.home') }}" class="brand">
+        Don Facundo
+        <small>Parrilla Argentina</small>
+      </a>
+      <ul class="nav-links">
+        <li><a href="{{ url_for('frontend.home') }}">Inicio</a></li>
+        <li><a href="{{ url_for('frontend.menu') }}" class="activo">Menú</a></li>
+        <li><a href="{{ url_for('frontend.reserva') }}">Reservas</a></li>
+        <li><a href="{{ url_for('frontend.reserva') }}" class="btn btn-dorado">Reservar Mesa</a></li>
+      </ul>
+      <button class="hamburger" aria-label="Menú">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-nav">
+      <a href="{{ url_for('frontend.home') }}">Inicio</a>
+      <a href="{{ url_for('frontend.menu') }}">Menú</a>
+      <a href="{{ url_for('frontend.reserva') }}">Reservas</a>
+      <a href="{{ url_for('frontend.reserva') }}" class="btn btn-dorado btn-block">Reservar Mesa</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="menu-hero">
+    <div class="divisor" style="color:#fff;margin-bottom:.75rem;"><span>🔥</span></div>
+    <h1>Nuestro Menú</h1>
+    <p>Ingredientes frescos, brasas de quebracho y recetas que no cambian desde 1987</p>
+  </div>
+
+  <!-- LEYENDA ETIQUETAS -->
+  <div class="leyenda">
+    <div class="leyenda-inner">
+      <span class="leyenda-titulo">Etiquetas:</span>
+      <span class="tag tag-veg">🌿 Vegetariano</span>
+      <span class="tag tag-vegano">🌱 Vegano</span>
+      <span class="tag tag-tacc">🌾 Sin TACC</span>
+      <span class="tag tag-lactosa">🥛 Con Lactosa</span>
+    </div>
+  </div>
+
+  <!-- TABS CATEGORÍAS -->
+  <nav class="menu-nav">
+    <div class="menu-nav-inner">
+      <button class="menu-tab activo" data-target="entradas">Entradas</button>
+      <button class="menu-tab" data-target="principales">Principales</button>
+      <button class="menu-tab" data-target="postres">Postres</button>
+      <button class="menu-tab" data-target="bebidas">Bebidas</button>
+      <button class="menu-tab" data-target="combos">Combos</button>
+    </div>
+  </nav>
+
+  <!-- ENTRADAS -->
+  <section id="entradas" class="cat-seccion activo">
+    <div class="contenedor">
+      <div class="divisor"><span>🍽️</span></div>
+      <h2 class="seccion-titulo">Entradas</h2>
+      <p class="seccion-sub">Para abrir el apetito con los sabores de la parrilla</p>
+      <div class="platos-grid">
+
+        <article class="plato-card">
+          <div class="plato-head">
+            <h3>Chorizo criollo</h3>
+            <span class="plato-precio">$3.200</span>
+          </div>
+          <p class="plato-desc">Chorizo artesanal a las brasas. Dorado por fuera, jugoso por dentro.</p>
+          <div class="plato-tags">
+            <span class="tag tag-tacc">🌾 Sin TACC</span>
+          </div>
+        </article>
+
+        <article class="plato-card">
+          <div class="plato-head">
+            <h3>Morcilla</h3>
+            <span class="plato-precio">$2.800</span>
+          </div>
+          <p class="plato-desc">Morcilla casera a la parrilla. Un clásico imperdible del asado argentino.</p>
+          <div class="plato-tags">
+            <span class="tag tag-tacc">🌾 Sin TACC</span>
+          </div>
+        </article>
+
+        <article class="plato-card">
+          <div class="plato-head">
+            <h3>Provoleta</h3>
+            <span class="plato-precio">$3.500</span>
+          </div>
+          <p class="plato-desc">Queso provolone a la parrilla con orégano. Crocante por fuera, cremosa por dentro.</p>
+          <div class="plato-tags">
+            <span class="tag tag-veg">🌿 Vegetariano</span>
+            <span class="tag tag-tacc">🌾 Sin TACC</span>
+            <span class="tag tag-lactosa">🥛 Con Lactosa</span>
+          </div>
+        </article>
+
+        <article class="plato-card">
+          <div class="plato-head">
+            <h3>Ensalada mixta</h3>
+            <span class="plato-precio">$2.100</span>
+          </div>
+          <p class="plato-desc">Lechuga, tomate, zanahoria y choclo. Fresca, liviana y perfecta para acompañar.</p>
+          <div class="plato-tags">
+            <span class="tag tag-veg">🌿 Vegetariano</span>
+            <span class="tag tag-vegano">🌱 Vegano</span>
+            <span class="tag tag-tacc">🌾 Sin TACC</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PRINCIPALES -->
+  <section id="principales" class="cat-seccion">
+    <div class="contenedor">
+      <div class="divisor"><span>🥩</span></div>
+      <h2 class="seccion-titulo">Platos principales</h2>
+      <p class="seccion-sub">Cortes a la parrilla y clásicos de la cocina argentina</p>
+      <div class="platos-grid">
+
+        <article class="plato-card">
+          <div class="plato-head">
+            <h3>Asado de tira</h3>
+            <span class="plato-precio">$8.500</span>
+          </div>
+          <p class="plato-desc">Corte clásico a la parrilla. Tierno, jugoso y con el sabor inconfundible de las brasas.</p>
+          <div class="plato-tags">
+            <span class="tag tag-tacc">🌾 Sin TACC</span>
+          </div>
+        </article>
+
+        <article class="plato-card">
+          <div class="plato-head">
+            <h3>Vacío</h3>
+            <span class="plato-precio">$9.200</span>
+          </div>
+          <p class="plato-desc">Corte tierno con chimichurri casero. El favorito de los conocedores.</p>
+          <div class="plato-tags">
+            <span class="tag tag-tacc">🌾 Sin TACC</span>
+          </div>
+        </article>
+
+        <article class="plato-card">
+          <div class="plato-head">
+            <h3>Mini hamburguesita con papas fritas</h3>
+            <span class="plato-precio">$2.500</span>
+          </div>
+          <p class="plato-desc">Hamburguesa en pan chico con queso cheddar y papas crocantes. Ideal para los más chicos.</p>
+          <div class="plato-tags">
+            <span class="tag tag-lactosa">🥛 Con Lactosa</span>
+          </div>
+        </article>
+
+        <article class="plato-card">
+          <div class="plato-head">
+            <h3>Mini Choripan</h3>
+            <span class="plato-precio">$2.200</span>
+          </div>
+          <p class="plato-desc">Chorizo suave en pan chico con papas fritas. Clásico argentino en versión individual.</p>
+          <div class="plato-tags"></div>
+        </article>
+
+        <article class="plato-card">
+          <div class="plato-head">
+            <h3>Milanesitas con Puré</h3>
+            <span class="plato-precio">$2.400</span>
+          </div>
+          <p class="plato-desc">Tiritas de milanesa de pollo con puré de papa. El plato más pedido por los niños.</p>
+          <div class="plato-tags">
+            <span class="tag tag-lactosa">🥛 Con Lactosa</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- POSTRES -->
+  <section id="postres" class="cat-seccion">
+    <div class="contenedor">
+      <div class="divisor"><span>🍮</span></div>
+      <h2 class="seccion-titulo">Postres</h2>
+      <p class="seccion-sub">El dulce cierre que toda buena comida se merece</p>
+      <div class="platos-grid">
+
+        <article class="plato-card">
+          <div class="plato-head">
+            <h3>Flan casero</h3>
+            <span class="plato-precio">$1.800</span>
+          </div>
+          <p class="plato-desc">Con dulce de leche y crema. Suave, acaramelado y hecho en casa todos los días.</p>
+          <div class="plato-tags">
+            <span class="tag tag-lactosa">🥛 Con Lactosa</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- BEBIDAS -->
+  <section id="bebidas" class="cat-seccion">
+    <div class="contenedor">
+      <div class="divisor"><span>🥤</span></div>
+      <h2 class="seccion-titulo">Bebidas</h2>
+      <p class="seccion-sub">Para acompañar cada momento</p>
+      <div class="platos-grid">
+
+        <article class="plato-card">
+          <div class="plato-head">
+            <h3>Agua mineral</h3>
+            <span class="plato-precio">$900</span>
+          </div>
+          <p class="plato-desc">500 ml, sin gas o con gas. Siempre fresca y disponible.</p>
+          <div class="plato-tags">
+            <span class="tag tag-veg">🌿 Vegetariano</span>
+            <span class="tag tag-vegano">🌱 Vegano</span>
+            <span class="tag tag-tacc">🌾 Sin TACC</span>
+          </div>
+        </article>
+
+        <article class="plato-card">
+          <div class="plato-head">
+            <h3>Gaseosa</h3>
+            <span class="plato-precio">$1.200</span>
+          </div>
+          <p class="plato-desc">Coca-Cola, Sprite o Fanta 350 ml. La combinación perfecta con cualquier plato.</p>
+          <div class="plato-tags">
+            <span class="tag tag-veg">🌿 Vegetariano</span>
+            <span class="tag tag-vegano">🌱 Vegano</span>
+            <span class="tag tag-tacc">🌾 Sin TACC</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- COMBOS -->
+  <section id="combos" class="cat-seccion">
+    <div class="contenedor">
+      <div class="divisor"><span>🎯</span></div>
+      <h2 class="seccion-titulo">Combos</h2>
+      <p class="seccion-sub">La mejor relación precio-sabor, armada por nuestros expertos</p>
+      <div class="combos-grid">
+
+        <div class="combo-card">
+          <span class="combo-badge">⭐ Recomendado</span>
+          <h3>Combo Ejecutivo</h3>
+          <p class="version">Combo ejecutivo enero 2026</p>
+          <p class="combo-personas">👥 Para 2 personas</p>
+          <p style="font-size:.86rem;color:rgba(255,255,255,.65);margin-top:.25rem;">
+            Incluye cortes seleccionados a la parrilla, guarniciones y bebidas para compartir.
+          </p>
+          <div class="combo-precio">$12.500</div>
+          <a href="{{ url_for('frontend.reserva') }}" class="btn btn-dorado" style="margin-top:.5rem;">Reservar con este combo</a>
+        </div>
+
+        <div class="combo-card">
+          <span class="combo-badge">👶 Infantil</span>
+          <h3>Combo Infantil</h3>
+          <p class="version">Combo infantil enero 2026</p>
+          <p class="combo-personas">👤 Para 1 persona</p>
+          <p style="font-size:.86rem;color:rgba(255,255,255,.65);margin-top:.25rem;">
+            Mini hamburguesita o milanesitas con puré, gaseosa y postre. Perfecto para los más chicos.
+          </p>
+          <div class="combo-precio">$6.500</div>
+          <a href="{{ url_for('frontend.reserva') }}" class="btn btn-dorado" style="margin-top:.5rem;">Reservar con este combo</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-banner">
+    <h2>¿Te abrimos el apetito?</h2>
+    <p>Reservá tu mesa y viví la experiencia completa de Don Facundo.</p>
+    <a href="{{ url_for('frontend.reserva') }}" class="btn btn-dorado btn-lg">Hacer una Reserva</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-marca">
+        <h3>Don Facundo</h3>
+        <p class="tagline">Parrilla Argentina</p>
+        <p>Desde 1987, el sabor auténtico del asado argentino en el corazón de Buenos Aires.</p>
+      </div>
+      <div>
+        <h4>Navegación</h4>
+        <ul>
+          <li><a href="{{ url_for('frontend.home') }}">Inicio</a></li>
+          <li><a href="{{ url_for('frontend.menu') }}">Menú</a></li>
+          <li><a href="{{ url_for('frontend.reserva') }}">Reservas</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="tel:+541148520000">+54 11 4852-0000</a></li>
+          <li><a href="mailto:hola@donfacundo.com.ar">hola@donfacundo.com.ar</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Don Facundo Parrilla Argentina. Todos los derechos reservados.</span>
+      <span>Av. Corrientes 2847, CABA, Buenos Aires</span>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script> 
+  
+</body>
+</html>
