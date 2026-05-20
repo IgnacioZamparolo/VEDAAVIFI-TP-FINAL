@@ -1,5 +1,18 @@
 USE parrilla_argentina;
 
+CREATE TABLE IF NOT EXISTS productos (
+    id_producto     INT AUTO_INCREMENT PRIMARY KEY,
+    nombre          VARCHAR(100) NOT NULL,
+    descripcion     TEXT,
+    precio          DECIMAL(10,2) NOT NULL,
+    categoria       ENUM('entrada','principal','postre','bebida') NOT NULL,
+    lactosa         BOOLEAN DEFAULT FALSE,
+    vegetariano     BOOLEAN DEFAULT FALSE,
+    vegano          BOOLEAN DEFAULT FALSE,
+    sin_tacc        BOOLEAN DEFAULT FALSE
+);
+
+
 CREATE TABLE IF NOT EXISTS combos (
     id_combo        INT AUTO_INCREMENT PRIMARY KEY,
     nombre          VARCHAR(30) NOT NULL,
@@ -28,29 +41,18 @@ CREATE TABLE IF NOT EXISTS combo_version (
     FOREIGN KEY (id_combo) REFERENCES combos(id_combo)
 );
 
-CREATE TABLE IF NOT EXISTS productos (
-    id_producto     INT AUTO_INCREMENT PRIMARY KEY,
-    nombre          VARCHAR(100) NOT NULL,
-    descripcion     TEXT,
-    precio          DECIMAL(10,2) NOT NULL,
-    categoria       ENUM('entrada','principal','postre','bebida') NOT NULL,
-    lactosa         BOOLEAN DEFAULT FALSE,
-    vegetariano     BOOLEAN DEFAULT FALSE,
-    vegano          BOOLEAN DEFAULT FALSE,
-    sin_tacc        BOOLEAN DEFAULT FALSE
-);
+
 
 CREATE TABLE IF NOT EXISTS reservas (
     id_reserva      INT AUTO_INCREMENT PRIMARY KEY,
     cant_personas   INT NOT NULL CHECK (cant_personas > 0),
     horario         TIME NOT NULL,
     dia             DATE NOT NULL,
-    mesa            INT NOT NULL,
-    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
+    mesa            INT NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS reseñas (
-    id_reseña       INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS resenias (
+    id_resenias       INT AUTO_INCREMENT PRIMARY KEY,
     descripcion     VARCHAR(1000) NOT NULL
 );
 
@@ -82,11 +84,11 @@ INSERT INTO productos (nombre, descripcion, precio, categoria, lactosa, vegetari
 ('Agua mineral', '500ml sin gas o con gas', 900, 'bebida', FALSE, TRUE, TRUE, TRUE),
 ('Gaseosa', 'Coca-Cola, Sprite o Fanta 350ml', 1200, 'bebida', FALSE, TRUE, TRUE, TRUE);
 
-INSERT INTO reservas (id_usuario, cant_personas, dia, horario, mesa) VALUES
-(1, 4, '2026-06-15', '20:00:00', 1),
-(2, 2, '2026-06-20', '13:00:00', 2);
+INSERT INTO reservas (cant_personas, dia, horario, mesa) VALUES
+(4, '2026-06-15', '20:00:00', 1),
+(2, '2026-06-20', '13:00:00', 2);
 
-INSERT INTO reseñas (descripcion) VALUES
+INSERT INTO resenias (descripcion) VALUES
 ('Excelente experiencia. La carne llegó en el punto justo, súper tierna y con mucho sabor. Sin duda volvería.'),
 ('La provoleta una bomba. El servicio muy atento, re recomendado.'),
 ('El menú infantil estuvo genial, los chicos felices con las milanesitas.');

@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from database import get_connection 
+from db_connection import get_connection 
 
 servicios_extra = Blueprint("servicios_extra", __name__)
 
@@ -8,7 +8,7 @@ def ver_servicios():
     conn = get_connection() 
     cursor = conn.cursor() 
 
-    cursor.execute("SELECT * FROM Servicios_extra")
+    cursor.execute("SELECT * FROM servicios_extra")
     resultado = cursor.fetchall()
     
     cursor.close()
@@ -22,7 +22,7 @@ def actualizar_servicio(id_servicio):
     cursor = conn.cursor()
     data = request.get_json()  
     
-    cursor.execute(""" UPDATE Servicios_extra SET nombre = %s, descripcion = %s WHERE id_servicio = %s """, (data["nombre"], data["descripcion"], id_servicio)) 
+    cursor.execute(""" UPDATE servicios_extra SET nombre = %s, descripcion = %s WHERE id_servicio = %s """, (data["nombre"], data["descripcion"], id_servicio)) 
     conn.commit()  
 
     cursor.close()
@@ -36,7 +36,7 @@ def agregar_servicio():
     cursor = conn.cursor()
     data = request.get_json()
 
-    cursor.execute(""" INSERT INTO Servicios_extra (nombre, descripcion) VALUES (%s, %s) """, (data["nombre"], data["descripcion"]))
+    cursor.execute(""" INSERT INTO servicios_extra (nombre, descripcion) VALUES (%s, %s) """, (data["nombre"], data["descripcion"]))
     conn.commit()
 
     cursor.close()
@@ -49,7 +49,7 @@ def eliminar_servicio(id_servicio):
     conn = get_connection()
     cursor = conn.cursor()
 
-    cursor.execute("DELETE FROM Servicios_extra WHERE id_servicio = %s", (id_servicio,))
+    cursor.execute("DELETE FROM servicios_extra WHERE id_servicio = %s", (id_servicio,))
     conn.commit()
 
     cursor.close()
