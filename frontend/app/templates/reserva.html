@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reservas — Don Facundo Parrilla Argentina</title>
+  <meta name="description" content="Reservá tu mesa en Don Facundo. Completá el formulario y te confirmamos en menos de 24 hs." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lato:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" /> 
+  
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="{{ url_for('frontend.home') }}" class="brand">
+        Don Facundo
+        <small>Parrilla Argentina</small>
+      </a>
+      <ul class="nav-links">
+        <li><a href="{{ url_for('frontend.home') }}">Inicio</a></li>
+        <li><a href="{{ url_for('frontend.menu') }}">Menú</a></li>
+        <li><a href="{{ url_for('frontend.reserva') }}" class="activo">Reservas</a></li>
+        <li><a href="{{ url_for('frontend.reserva') }}" class="btn btn-dorado">Reservar Mesa</a></li>
+      </ul>
+      <button class="hamburger" aria-label="Menú">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-nav">
+      <a href="{{ url_for('frontend.home') }}">Inicio</a>
+      <a href="{{ url_for('frontend.menu') }}">Menú</a>
+      <a href="{{ url_for('frontend.reserva') }}">Reservas</a>
+      <a href="{{ url_for('frontend.reserva') }}" class="btn btn-dorado btn-block">Reservar Mesa</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="reserva-hero">
+    <div class="divisor" style="color:#fff;margin-bottom:.75rem;"><span>🔥</span></div>
+    <h1>Reservá tu Mesa</h1>
+    <p>Completá el formulario y te confirmamos tu reserva por correo en menos de 24 hs</p>
+  </div>
+
+  <!-- LAYOUT PRINCIPAL -->
+  <div class="reserva-layout">
+
+    <!-- FORMULARIO -->
+    <div>
+      <form class="form-card" id="reservaForm" novalidate>
+        <h2>Datos de la Reserva</h2>
+        <p>Los campos marcados con * son obligatorios</p>
+
+        <div class="form-grid">
+
+          <!-- Nombre -->
+          <div class="form-grupo">
+            <label for="nombre">Nombre *</label>
+            <input class="form-control" type="text" id="nombre" name="nombre"
+              placeholder="Ej: María" required autocomplete="given-name" />
+            <span class="error-msg"></span>
+          </div>
+
+          <!-- Email -->
+          <div class="form-grupo">
+            <label for="email">Email *</label>
+            <input class="form-control" type="email" id="email" name="email"
+              placeholder="tu@email.com" required autocomplete="email" />
+            <span class="error-msg"></span>
+          </div>
+
+          <!-- Fecha -->
+          <div class="form-grupo">
+            <label for="fecha">Fecha *</label>
+            <input class="form-control" type="date" id="fecha" name="fecha" required />
+            <span class="error-msg"></span>
+          </div>
+
+          <!-- Horario -->
+          <div class="form-grupo">
+            <label for="horario">Horario *</label>
+            <select class="form-control" id="horario" name="horario" required>
+              <option value="">— Elegir turno —</option>
+              <optgroup label="Mediodía">
+                <option value="12:00">12:00 hs</option>
+                <option value="12:30">12:30 hs</option>
+                <option value="13:00">13:00 hs</option>
+                <option value="13:30">13:30 hs</option>
+                <option value="14:00">14:00 hs</option>
+                <option value="15:00">15:00 hs</option>
+              </optgroup>
+              <optgroup label="Noche">
+                <option value="20:00">20:00 hs</option>
+                <option value="20:30">20:30 hs</option>
+                <option value="21:00">21:00 hs</option>
+                <option value="21:30">21:30 hs</option>
+                <option value="22:00">22:00 hs</option>
+                <option value="23:00">23:00 hs</option>
+              </optgroup>
+            </select>
+            <span class="error-msg"></span>
+          </div>
+
+          <!-- Cantidad de personas -->
+          <div class="form-grupo">
+            <label for="cant_personas">Cantidad de personas *</label>
+            <select class="form-control" id="cant_personas" name="cant_personas" required>
+              <option value="">— Seleccionar —</option>
+              <option value="1">1 persona</option>
+              <option value="2">2 personas</option>
+              <option value="3">3 personas</option>
+              <option value="4">4 personas</option>
+              <option value="5">5 personas</option>
+              <option value="6">6 personas</option>
+              <option value="7">7 personas</option>
+              <option value="8">8 personas</option>
+              <option value="9">9 personas</option>
+              <option value="10">10 personas</option>
+              <option value="11">Más de 10 (consultá por eventos)</option>
+            </select>
+            <span class="error-msg"></span>
+          </div>
+
+          <!-- Mesa (opcional) -->
+          <div class="form-grupo">
+            <label for="mesa">Mesa preferida <span style="font-weight:400;text-transform:none;letter-spacing:0;">(opcional)</span></label>
+            <select class="form-control" id="mesa" name="mesa">
+              <option value="">— Sin preferencia —</option>
+              <option value="interior">Interior (salón principal)</option>
+              <option value="ventana">Junto a la ventana</option>
+              <option value="terraza">Terraza exterior</option>
+              <option value="privada">Sala privada (grupos +6)</option>
+              <option value="barra">Barra del asador</option>
+            </select>
+          </div>
+
+          <!-- Comentarios -->
+          <div class="form-grupo full">
+            <label for="comentarios">Comentarios o solicitudes <span style="font-weight:400;text-transform:none;letter-spacing:0;">(opcional)</span></label>
+            <textarea class="form-control" id="comentarios" name="comentarios"
+              placeholder="Ej: alergias, celebración especial, silla para bebé, necesidad de acceso adaptado..."></textarea>
+          </div>
+
+        </div>
+
+        <div class="form-submit">
+          <button type="submit" class="btn btn-rojo btn-lg btn-block">
+            ✓ Confirmar Reserva
+          </button>
+        </div>
+        <p class="form-legal">
+          Al confirmar aceptás nuestra política de reservas. Las cancelaciones deben realizarse con al menos 1 hora de anticipación.
+        </p>
+      </form>
+
+      <!-- Confirmación visual (sin DB) -->
+      <div class="confirmacion" id="confirmacion">
+        <div class="ic">✅</div>
+        <h3>¡Reserva enviada con éxito!</h3>
+        <p>Recibimos tu solicitud. Te enviaremos la confirmación por email en menos de 24 horas. ¡Gracias por elegir Don Facundo!</p>
+      </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <aside>
+      <div class="sidebar-card">
+        <h3>📍 Información Útil</h3>
+
+        <div class="sidebar-item">
+          <div class="ic">📍</div>
+          <div>
+            <strong>Dirección</strong>
+            <p>Mariano Castex 5700<br>Canning, Buenos Aires</p>
+          </div>
+        </div>
+
+        <div class="sidebar-item">
+          <div class="ic">🕐</div>
+          <div>
+            <strong>Horarios</strong>
+            <p>Lun–Vie: 12:00–15:30 y 20:00–00:00<br>Sáb–Dom: 12:00–16:00 y 20:00–01:00</p>
+          </div>
+        </div>
+
+        <div class="sidebar-item">
+          <div class="ic">📞</div>
+          <div>
+            <strong>Teléfono</strong>
+            <p><a href="tel:+541148520000" style="color:var(--rojo)">+54 11 4852-0000</a></p>
+          </div>
+        </div>
+
+        <div class="sidebar-item">
+          <div class="ic">🅿️</div>
+          <div>
+            <strong>Estacionamiento</strong>
+            <p>Gratuito dentro del predio</p>
+          </div>
+        </div>
+
+        <div class="sidebar-item">
+          <div class="ic">♿</div>
+          <div>
+            <strong>Accesibilidad</strong>
+            <p>Rampas y espacios adaptados disponibles</p>
+          </div>
+        </div>
+
+        <hr class="sidebar-hr" />
+
+        <div class="sidebar-aviso">
+          <strong>⚠️ Cancelaciones</strong>
+          Podés cancelar hasta 1 hora antes sin cargo. 
+        </div>
+
+        <hr class="sidebar-hr" />
+
+        <div class="sidebar-aviso" style="background:#fdf1f1;border-color:#f5c0c0;color:#7a0000;margin-top:0;">
+          <strong>🥩 Grupos grandes</strong>
+          Para eventos o grupos de más de 10 personas, contactanos directamente por teléfono o email para una propuesta a medida.
+        </div>
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- CTA INFERIOR -->
+  <section class="cta-banner" style="padding:3rem 1.5rem;">
+    <h2 style="font-size:1.6rem;">¿Preferís llamar?</h2>
+    <p>Atendemos de lunes a domingo en nuestros horarios de servicio.</p>
+    <a href="tel:+541148520000" class="btn btn-dorado btn-lg">📞 +54 11 4852-0000</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-marca">
+        <h3>Don Facundo</h3>
+        <p class="tagline">Parrilla Argentina</p>
+        <p>Desde 1987, el sabor auténtico del asado argentino en el corazón de Buenos Aires.</p>
+      </div>
+      <div>
+        <h4>Navegación</h4>
+        <ul>
+          <li><a href="{{ url_for('frontend.home') }}">Inicio</a></li>
+          <li><a href="{{ url_for('frontend.menu') }}">Menú</a></li>
+          <li><a href="{{ url_for('frontend.reserva') }}">Reservas</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="tel:+541148520000">+54 11 4852-0000</a></li>
+          <li><a href="mailto:hola@donfacundo.com.ar">hola@donfacundo.com.ar</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Don Facundo Parrilla Argentina. Todos los derechos reservados.</span>
+      <span>Mariano Castex 5700, Canning, Buenos Aires</span>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script> 
+  
+</body>
+</html>
