@@ -1,3 +1,5 @@
+USE parrilla_argentina
+
 CREATE TABLE IF NOT EXISTS combos (
     id_combo        INT AUTO_INCREMENT PRIMARY KEY,
     nombre          VARCHAR(30) NOT NULL,
@@ -13,8 +15,8 @@ CREATE TABLE IF NOT EXISTS usuarios (
 CREATE TABLE IF NOT EXISTS combo_detalle (
     id_combo        INT NOT NULL,
     id_producto     INT NOT NULL,
-    FOREIGN KEY (id_combo) REFERENCES Combos(id_combo),
-    FOREIGN KEY (id_producto) REFERENCES Productos(id_producto)
+    FOREIGN KEY (id_combo) REFERENCES combos(id_combo),
+    FOREIGN KEY (id_producto) REFERENCES productos(id_producto)
 );
 
 CREATE TABLE IF NOT EXISTS combo_version (
@@ -23,7 +25,7 @@ CREATE TABLE IF NOT EXISTS combo_version (
     personas        INT NOT NULL,
     precio          DECIMAL(8, 2) NOT NULL,
     id_combo        INT NOT NULL,
-    FOREIGN KEY (id_combo) REFERENCES Combos(id_combo)
+    FOREIGN KEY (id_combo) REFERENCES combos(id_combo)
 );
 
 CREATE TABLE IF NOT EXISTS productos (
@@ -40,12 +42,11 @@ CREATE TABLE IF NOT EXISTS productos (
 
 CREATE TABLE IF NOT EXISTS reservas (
     id_reserva      INT AUTO_INCREMENT PRIMARY KEY,
-    id_usuario      INT NOT NULL,
     cant_personas   INT NOT NULL CHECK (cant_personas > 0),
     horario         TIME NOT NULL,
     dia             DATE NOT NULL,
     mesa            INT NOT NULL,
-    FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario)
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
 );
 
 CREATE TABLE IF NOT EXISTS reseñas (
