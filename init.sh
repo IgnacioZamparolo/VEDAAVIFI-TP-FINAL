@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "Activando entorno virtual..."
+source .env/bin/activate
 echo "Instalando dependencias del backend..."
 cd backend
 pip install -r requirements.txt
