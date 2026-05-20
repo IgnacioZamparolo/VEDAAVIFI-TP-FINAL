@@ -1,12 +1,12 @@
 from flask import Flask
 
-from routes.menu import combos
-from routes.menu import combo_detalle
-from routes.menu import combo_version
-from routes.menu import productos
+from routes.combos import combos
+from routes.combo_detalle import combo_detalle
+from routes.combo_version import combo_version
+from routes.productos import productos
 from routes.reservas import reservas
 from routes.resenias import resenias
-from routes.servicios_extras import servicios_extra
+from routes.servicios_extra import servicios_extra
 
 app = Flask(__name__)
 
