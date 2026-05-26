@@ -12,7 +12,6 @@ CREATE TABLE IF NOT EXISTS productos (
     sin_tacc        BOOLEAN DEFAULT FALSE
 );
 
-
 CREATE TABLE IF NOT EXISTS combos (
     id_combo        INT AUTO_INCREMENT PRIMARY KEY,
     nombre          VARCHAR(30) NOT NULL,
@@ -22,6 +21,7 @@ CREATE TABLE IF NOT EXISTS combos (
 CREATE TABLE IF NOT EXISTS usuarios (
     id_usuario      INT AUTO_INCREMENT PRIMARY KEY,
     nombre          VARCHAR(30) NOT NULL,
+    mail            VARCHAR(100) NOT NULL,
     contraseña      VARCHAR(10) NOT NULL
 );
 
@@ -41,18 +41,22 @@ CREATE TABLE IF NOT EXISTS combo_version (
     FOREIGN KEY (id_combo) REFERENCES combos(id_combo)
 );
 
-
-
 CREATE TABLE IF NOT EXISTS reservas (
     id_reserva      INT AUTO_INCREMENT PRIMARY KEY,
+    mail            VARCHAR(100) NOT NULL,
     cant_personas   INT NOT NULL CHECK (cant_personas > 0),
     horario         TIME NOT NULL,
     dia             DATE NOT NULL,
-    mesa            INT NOT NULL
+    mesa            INT NOT NULL,
+    pendiente       BOOLEAN DEFAULT TRUE,
+    confirmada      BOOLEAN DEFAULT FALSE,
+    cancelada       BOOLEAN DEFAULT FALSE,
+    finalizada      BOOLEAN DEFAULT FALSE,
+    vencida         BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE IF NOT EXISTS resenias (
-    id_resenias       INT AUTO_INCREMENT PRIMARY KEY,
+    id_resenias     INT AUTO_INCREMENT PRIMARY KEY,
     descripcion     VARCHAR(1000) NOT NULL
 );
 
@@ -66,9 +70,8 @@ INSERT INTO combos (nombre, precio) VALUES
 ('Ejecutivo', 12500),
 ('Infantil', 6500);
 
-INSERT INTO usuarios (nombre, contraseña) VALUES
-('Admin', 'admin1234'),
-('Martina Bencardino', 'mart1234');
+INSERT INTO usuarios (nombre, mail, contraseña) VALUES
+('Admin', 'parrillaargentina@gmail.com', 'admin1234');
 
 INSERT INTO productos (nombre, descripcion, precio, categoria, lactosa, vegetariano, vegano, sin_tacc) VALUES
 ('Mini hamburguesita con papas fritas', 'Hamburguesa en pan chico con queso cheddar y papas crocantes', 2500, 'principal', TRUE, FALSE, FALSE, FALSE),
@@ -84,9 +87,9 @@ INSERT INTO productos (nombre, descripcion, precio, categoria, lactosa, vegetari
 ('Agua mineral', '500ml sin gas o con gas', 900, 'bebida', FALSE, TRUE, TRUE, TRUE),
 ('Gaseosa', 'Coca-Cola, Sprite o Fanta 350ml', 1200, 'bebida', FALSE, TRUE, TRUE, TRUE);
 
-INSERT INTO reservas (cant_personas, dia, horario, mesa) VALUES
-(4, '2026-06-15', '20:00:00', 1),
-(2, '2026-06-20', '13:00:00', 2);
+INSERT INTO reservas (mail, cant_personas, dia, horario, mesa, pendiente, confirmada, cancelada, finalizada, vencida ) VALUES
+('carlos@gmail.com', 4, '2026-06-15', '20:00:00', 1, TRUE, FALSE, FALSE, FALSE, FALSE),
+('marta@gmail.com', 2, '2026-06-20', '13:00:00', 2, FALSE, TRUE, FALSE, FALSE, FALSE);
 
 INSERT INTO resenias (descripcion) VALUES
 ('Excelente experiencia. La carne llegó en el punto justo, súper tierna y con mucho sabor. Sin duda volvería.'),
