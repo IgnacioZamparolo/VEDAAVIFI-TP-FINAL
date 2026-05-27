@@ -1,5 +1,7 @@
 from flask import Blueprint, jsonify, request
-from db_connection import get_connection 
+from db_connection import get_connection
+from utils import generar_qr, enviar_qr
+
 
 reservas = Blueprint("reservas", __name__)
 
@@ -25,11 +27,17 @@ def crear_reserva():
     if data is None: 
         return jsonify({"error" :"Ingrese todos los datos, por favor"}), 400
 
-    if "id_usuario" not in data or "total_personas" not in data or "fecha" not in data or "hora" not in data: 
+    if "mail" not in data or "cant_personas" not in data or "dia" not in data or "horario" not in data: 
         return jsonify({"error" : "Datos no correspondientes"}), 400    
     
-    cursor.execute(""" INSERT INTO Reservas(id_usuario, total_personas, fecha, hora) VALUES (%s, %s, %s, %s)""", (data["id_usuario"], data["total_personas"], data["fecha"], data["hora"]))
+    id_reserva = cursor.lastrowid
+
+    cursor.execute(""" INSERT INTO reservas(cant_personas, dia, horario) VALUES (%s, %s, %s)""", (data["cant_personas"], data["dia"], data["horario"]))
     
+    qr_bytes = generar_qr(id_reserva)
+    enviar_qr(data["mail"], qr_bytes)
+    
+
     conn.commit()  
     cursor.close()
     conn.close()

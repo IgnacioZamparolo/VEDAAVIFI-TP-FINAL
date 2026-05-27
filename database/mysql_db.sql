@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS reservas (
     cant_personas   INT NOT NULL CHECK (cant_personas > 0),
     horario         TIME NOT NULL,
     dia             DATE NOT NULL,
-    mesa            INT NOT NULL,
+    mesa            INT NULL,
     pendiente       BOOLEAN DEFAULT TRUE,
     confirmada      BOOLEAN DEFAULT FALSE,
     cancelada       BOOLEAN DEFAULT FALSE,
