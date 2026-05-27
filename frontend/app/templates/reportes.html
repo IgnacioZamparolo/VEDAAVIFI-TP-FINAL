@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Reportes - Parrilla Argentina{% endblock %}
+
+{% block content %}
+
+<section class="seccion">
+  <div class="contenedor">
+    <div class="divisor"><span>📊</span></div>
+
+    <h1 class="seccion-titulo">Reportes administrativos</h1>
+    <p class="seccion-sub">
+      Desde esta sección se pueden descargar estadísticas del restaurante en formato PDF.
+    </p>
+
+    <div class="form-card">
+      <h2>Reporte de estadísticas</h2>
+      <p>
+        El reporte incluye información sobre reservas, productos, reseñas, combos,
+        reservas por estado, productos por categoría y horarios más reservados.
+      </p>
+
+      <button id="btnDescargarReporte" class="btn btn-dorado">
+        Descargar reporte PDF
+      </button>
+
+      <p class="form-legal">
+        Sección pensada para uso administrativo.
+      </p>
+    </div>
+  </div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<script src="{{ url_for('static', filename='js/reportes.js') }}"></script>
+
+{% endblock %}
