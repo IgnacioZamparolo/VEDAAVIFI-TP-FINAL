@@ -7,6 +7,7 @@ from routes.productos import productos
 from routes.reservas import reservas
 from routes.resenias import resenias
 from routes.servicios_extra import servicios_extra
+from routes.reportes import reportes
 
 app = Flask(__name__)
 
@@ -17,6 +18,7 @@ app.register_blueprint(productos)
 app.register_blueprint(reservas)
 app.register_blueprint(resenias)
 app.register_blueprint(servicios_extra)
+app.register_blueprint(reportes)
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
