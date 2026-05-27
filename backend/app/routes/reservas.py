@@ -10,7 +10,7 @@ CAPACIDAD_MAX = 20
 @reservas.route("/reservas", methods = ["GET"]) # admin
 def ver_reservas():
     
-      try:
+    try:
         conn = get_connection() 
         cursor = conn.cursor() 
     
@@ -20,7 +20,7 @@ def ver_reservas():
         return jsonify(resultado), 200
         
     except Exception as e:
-        return jsonify({"error": f"Error al obtener reservas: {str(e)}"}, 500
+        return jsonify({"error": f"Error al obtener reservas: {str(e)}"}), 500
                        
     finally:
         cursor.close()
@@ -43,7 +43,7 @@ def crear_reserva():
         try:
             fecha_reserva = datetime.strptime(data["dia"], "%Y-%m-%d").date()
         except ValueError:
-            return jsonify({"error": "Formato de fecha invalido}), 400
+            return jsonify({"error": "Formato de fecha invalido"}), 400
         
         if fecha_reserva < date.today():
             return jsonify({"error": "No se puede reservar para una fecha que ya paso"}), 400
@@ -73,7 +73,7 @@ def crear_reserva():
         return jsonify({"mensaje": "Reserva creada correctamente"}), 201
                       
     except Exception as e:
-        return jsonify({"error": f"Error al crear la reserva: {str(e)}"}, 500
+        return jsonify({"error": f"Error al crear la reserva: {str(e)}"}), 500
                        
     finally:
         cursor.close()
@@ -88,9 +88,9 @@ def actualizar_reserva(id_reserva):
             
         cursor.execute("SELECT * FROM reservas WHERE id_reserva = %s", (id_reserva,))
         if cursor.fetchone() is None:
-             return jsonify({"error": f"No exite reserva con ese id {id_reserva}"}, 404
+             return jsonify({"error": f"No exite reserva con ese id {id_reserva}"}), 404
         if data is None:
-            return jsonify({"error": "Ingrese todos los datos"}, 400
+            return jsonify({"error": "Ingrese todos los datos"}), 400
 
         for campo in ["cant_personas", "horario", "dia" ,"mesa"]:
             if campo not in data: 
@@ -103,7 +103,7 @@ def actualizar_reserva(id_reserva):
         return jsonify(reserva_actualizada), 200
     
     except Exception as e:
-        return jsonify({"error": f"Error al actualizar reserva: {str(e)}"}, 500
+        return jsonify({"error": f"Error al actualizar reserva: {str(e)}"}), 500
                        
     finally:
         cursor.close()
@@ -120,7 +120,7 @@ def eliminar_reserva(id_reserva):
         reserva = cursor.fetchone()
         
         if reserva is None:
-             return jsonify({"error": f"No exite reserva con ese id {id_reserva}"}, 404
+             return jsonify({"error": f"No exite reserva con ese id {id_reserva}"}), 404
         
         cursor.execute("DELETE FROM Reservas WHERE id_reserva = %s", (id_reserva,))  
         conn.commit()
@@ -128,7 +128,7 @@ def eliminar_reserva(id_reserva):
         return jsonify(reserva), 200
 
     except Exception as e:
-        return jsonify({"error": f"Error al eliminar reserva: {str(e)}"}, 500
+        return jsonify({"error": f"Error al eliminar reserva: {str(e)}"}), 500
                        
     finally:
         cursor.close()
