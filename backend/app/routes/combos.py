@@ -5,78 +5,110 @@ combos = Blueprint("combos", __name__)
 
 @combos.route("/combos", methods = ["GET"]) # cliente y admin
 def ver_combo():
-    conn = get_connection() 
-    cursor = conn.cursor(dictionary=True) 
+    conn = None
+    cursor = None
+    try: 
+        conn = get_connection() 
+        cursor = conn.cursor(dictionary=True) 
 
-    cursor.execute("SELECT * FROM combos")
-    resultado = cursor.fetchall()
-    
-    cursor.close()
-    conn.close()
-
-    return jsonify(resultado), 200
+        cursor.execute("SELECT * FROM combos")
+        resultado = cursor.fetchall()
+        return jsonify(resultado), 200
+    except Exception as e:
+        return jsonify({"error": f"Error interno del servidor: {str(e)}"}), 500
+    finally:
+        if cursor: cursor.close()
+        if conn: conn.close()
+        
 
 
 @combos.route("/combos/<int:id_combo>", methods=["PUT"]) # admin
 def actualizar_combos(id_combo):  
-    conn = get_connection()
-    cursor = conn.cursor(dictionary=True)
-    data = request.get_json()  
+    conn = None
+    cursor = None
+    try: 
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+        data = request.get_json() 
 
-    cursor.execute("SELECT * FROM combos WHERE id_combo = %s", (id_combo,))
-    combo = cursor.fetchone()
-    if not combo:
-        cursor.close()
-        conn.close()
-        return jsonify({"error": "Combo no encontrado"}), 404
+        if data is None:
+            return jsonify({"error": "Ingrese todos los datos"}), 400
+
+        for campo in ["nombre", "precio"]:
+            if campo not in data:
+                return jsonify({"error": f"Falta el campo requerido {campo}"}), 400 
+
+        cursor.execute("SELECT * FROM combos WHERE id_combo = %s", (id_combo,))
+        combo = cursor.fetchone()
+        if combo is None:
+            return jsonify({"error": "Combo no encontrado"}), 404
+        
+        cursor.execute("UPDATE combos SET nombre = %s, precio = %s WHERE id_combo = %s", (data["nombre"], data["precio"], id_combo)) 
+        conn.commit()  
+
+        cursor.execute("SELECT * FROM combos WHERE id_combo = %s", (id_combo,))
+        combo_actualizado = cursor.fetchone()
+        return jsonify(combo_actualizado), 200
+    except Exception as e:
+        return jsonify({"error": f"Error al actualizar el combo: {str(e)}"}), 500
     
-    cursor.execute("UPDATE combos SET nombre = %s, precio = %s WHERE id_combo = %s", (data["nombre"], data["precio"], id_combo)) 
-    conn.commit()  
-
-    cursor.execute("SELECT * FROM combos WHERE id_combo = %s", (id_combo,))
-    combo_actualizado = cursor.fetchone()
-
-    cursor.close()
-    conn.close()
-    
-    return jsonify(combo_actualizado), 200
+    finally:
+        if cursor: cursor.close()
+        if conn: conn.close()
+ 
 
 @combos.route("/combos", methods=["POST"]) # admin
 def agregar_combo():
-    conn = get_connection()
-    cursor = conn.cursor(dictionary=True)
-    data = request.get_json()
+    conn = None
+    cursor = None
+    try: 
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+        data = request.get_json()
 
-    cursor.execute("INSERT INTO combos (nombre, precio) VALUES (%s, %s)", (data["nombre"], data["precio"]))
-    conn.commit()
+        if data is None:
+            return jsonify({"error": "Ingrese todos los datos"}), 400
 
-    id_nuevo = cursor.lastrowid 
+        for campo in ["nombre", "precio"]:
+            if campo not in data:
+                return jsonify({"error": f"Falta el campo requerido {campo}"}), 400
 
-    cursor.execute("SELECT * FROM combos WHERE id_combo = %s", (id_nuevo,))
-    nuevo_combo = cursor.fetchone()
+        cursor.execute("INSERT INTO combos (nombre, precio) VALUES (%s, %s)", (data["nombre"], data["precio"]))
+        conn.commit()
 
-    cursor.close()
-    conn.close()
+        id_nuevo = cursor.lastrowid 
 
-    return jsonify(nuevo_combo), 201
+        cursor.execute("SELECT * FROM combos WHERE id_combo = %s", (id_nuevo,))
+        nuevo_combo = cursor.fetchone()
+
+        return jsonify(nuevo_combo), 201
+    except Exception as e:
+        return jsonify({"error": f"Error al agregar el combo: {str(e)}"}), 500
+    finally:
+        if cursor: cursor.close()
+        if conn: conn.close()
+
 
 @combos.route("/combos/<int:id_combo>", methods=["DELETE"]) # admin
 def eliminar_combo(id_combo):
-    conn = get_connection()
-    cursor = conn.cursor(dictionary=True)
+    conn = None
+    cursor = None
+    try: 
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
 
-    cursor.execute("SELECT * FROM combos WHERE id_combo = %s", (id_combo,))
-    combo_eliminado = cursor.fetchone()
+        cursor.execute("SELECT * FROM combos WHERE id_combo = %s", (id_combo,))
+        combo_eliminado = cursor.fetchone()
 
-    if not combo_eliminado:
-        cursor.close()
-        conn.close()
-        return jsonify({"error": "Combo no encontrado"}), 404
+        if combo_eliminado is None:
+            return jsonify({"error": "Combo no encontrado"}), 404
 
-    cursor.execute("DELETE FROM combos WHERE id_combo = %s", (id_combo,))
-    conn.commit()
+        cursor.execute("DELETE FROM combos WHERE id_combo = %s", (id_combo,))
+        conn.commit()
 
-    cursor.close()
-    conn.close()
-
-    return jsonify(combo_eliminado), 200
+        return jsonify(combo_eliminado), 200
+    except Exception as e:
+        return jsonify({"error": f"Error al eliminar el combo: {str(e)}"}), 500
+    finally:
+        if cursor: cursor.close()
+        if conn: conn.close()
