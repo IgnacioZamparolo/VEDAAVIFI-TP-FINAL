@@ -5,7 +5,7 @@ resenias = Blueprint("resenias", __name__)
 
 @resenias.route("/resenias", methods = ["GET"]) # cliente y admin
 def ver_resenias():
-     try:
+    try:
         conn = get_connection() 
         cursor = conn.cursor() 
     
@@ -14,7 +14,7 @@ def ver_resenias():
         return jsonify(resenias), 200
         
     except Exception as e:
-        return jsonify({"error": f"Error al obtener resenias: {str(e)}"}, 500
+        return jsonify({"error": f"Error al obtener resenias: {str(e)}"}), 500
                        
     finally:
         cursor.close()
@@ -22,7 +22,7 @@ def ver_resenias():
 
 @resenias.route("/resenias", methods=["POST"])  # cliente 
 def agregar_resenia(): 
-     try:
+    try:
         conn = get_connection()
         cursor = conn.cursor()
         data = request.get_json() 
@@ -38,7 +38,7 @@ def agregar_resenia():
         return jsonify(resenia_creada), 201
          
     except Exception as e:
-        return jsonify({"error": f"Error al agregar resenia: {str(e)}"}, 500
+        return jsonify({"error": f"Error al agregar resenia: {str(e)}"}), 500
                        
     finally:
         cursor.close()
@@ -62,7 +62,7 @@ def eliminar_resenias(id_resenias):
         return jsonify(resenia), 200
 
     except Exception as e:
-        return jsonify({"error": f"Error al eliminar resenia: {str(e)}"}, 500
+        return jsonify({"error": f"Error al eliminar resenia: {str(e)}"}), 500
                        
     finally:
         cursor.close()

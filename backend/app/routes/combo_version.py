@@ -15,7 +15,7 @@ def ver_combo_version():
         return jsonify(resultado), 200
         
     except Exception as e:
-        return jsonify({"error": f"Error al obtener las versiones del combo: {str(e)}"}, 500
+        return jsonify({"error": f"Error al obtener las versiones del combo: {str(e)}"}), 500
                        
     finally:
         cursor.close()
@@ -45,10 +45,10 @@ def actualizar_combos_version(id_version):
         version_actualizada = cursor.fetchone()
         return jsonify(version_actualizada), 200
         
-     except Exception as e:
-        return jsonify({"error": f"Error al actualizar la version del combo: {str(e)}"}, 500
+    except Exception as e:
+        return jsonify({"error": f"Error al actualizar la version del combo: {str(e)}"}), 500
                        
-     finally:
+    finally:
          cursor.close()
          conn.close()
     
@@ -77,12 +77,12 @@ def agregar_combo_version():
         cursor.execute("INSERT INTO combo_version (descripcion, personas, precio, id_combo) VALUES (%s, %s, %s, %s)", (data["descripcion"], data["personas"], data["precio"], data["id_combo"]))
         conn.commit()
 
-        cursor.execute("SELECT * FROM combo_version WHERE descripcion = %s AND personas = %s AND precio = %s AND id_combo = %s", (data["descripcion"], data["personas"], data["precio"], data["id_combo"])
+        cursor.execute("SELECT * FROM combo_version WHERE descripcion = %s AND personas = %s AND precio = %s AND id_combo = %s", (data["descripcion"], data["personas"], data["precio"], data["id_combo"]))
         version_creada = cursor.fetchone()
         return jsonify(version_creada), 201
 
     except Exception as e:
-        return jsonify({"error": f"Error al agregar la version del combo: {str(e)}"}, 500
+        return jsonify({"error": f"Error al agregar la version del combo: {str(e)}"}), 500
                        
     finally:
         cursor.close()
@@ -103,7 +103,7 @@ def eliminar_combo_version(id_version):
         return jsonify(version), 200
 
     except Exception as e:
-        return jsonify({"error": f"Error al eliminar la version del combo: {str(e)}"}, 500
+        return jsonify({"error": f"Error al eliminar la version del combo: {str(e)}"}), 500
                        
     finally:
         cursor.close()
