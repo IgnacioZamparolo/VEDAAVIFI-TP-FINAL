@@ -1,44 +1,8 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Don Facundo — Parrilla Argentina</title>
-  <meta name="description" content="Parrilla argentina con cortes premium, ambiente cálido y tradición desde 1987." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lato:wght@400;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" /> 
-  
-</head>
-<body>
+{% extends "base.html" %}
 
-  <!-- NAVBAR -->
-  <nav class="navbar">
-    <div class="navbar-inner">
-      <a href="index.html" class="brand">
-        Don Facundo
-        <small>Parrilla Argentina</small>
-      </a>
-      <ul class="nav-links">
-        <li><a href="{{ url_for('frontend.home') }}" class="activo">Inicio</a></li>
-        <li><a href="{{ url_for('frontend.menu') }}">Menú</a></li>
-        <li><a href="{{ url_for('frontend.reserva') }}">Reservas</a></li>
-        <li><a href="{{ url_for('frontend.reserva') }}" class="btn btn-dorado">Reservar Mesa</a></li>
-      </ul>
-      <button class="hamburger" aria-label="Menú">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-    <div class="mobile-nav">
-      <a href="{{ url_for('frontend.home') }}">Inicio</a>
-      <a href="{{ url_for('frontend.menu') }}">Menú</a>
-      <a href="{{ url_for('frontend.reserva') }}">Reservas</a>
-      <a href="{{ url_for('frontend.reserva') }}" class="btn btn-dorado btn-block">Reservar Mesa</a>
-    </div>
-  </nav>
+{% block title %}Parrilla Argentina — Inicio{% endblock %}
 
-  <!-- HERO -->
+{% block content %}
   <section class="hero">
     <div class="hero-fondo"></div>
     <div class="hero-contenido">
@@ -52,7 +16,6 @@
     </div>
   </section>
 
-  <!-- INFO RÁPIDA -->
   <section class="seccion">
     <div class="contenedor">
       <div class="divisor"><span>🔥</span></div>
@@ -62,14 +25,13 @@
         <div class="info-card">
           <div class="ic">📍</div>
           <h3>Dirección</h3>
-          <p>Mariano Castex 5700<br>Canning, Buenos Aires, Argentina</p>
+          <p>Av. Paseo Colón 850<br>Ciudad Autónoma de Buenos Aires</p>
         </div>
         <div class="info-card">
           <div class="ic">🕐</div>
           <h3>Horarios</h3>
           <p>
-            <strong>Lunes a Viernes</strong><br>12:00–15:30 · 20:00–00:00<br><br>
-            <strong>Sáb y Dom</strong><br>12:00–16:00 · 20:00–01:00
+            <strong>Martes a Domingo</strong><br>11:00h a 01:00h
           </p>
         </div>
         <div class="info-card">
@@ -77,7 +39,7 @@
           <h3>Contacto</h3>
           <p>
             <a href="tel:+541148520000" style="color:var(--rojo)">+54 11 4852-0000</a><br><br>
-            <a href="mailto:hola@donfacundo.com.ar" style="color:var(--rojo)">hola@donfacundo.com.ar</a>
+            <a href="mailto:hola@parrillaargentina.com.ar" style="color:var(--rojo)">hola@parrillaargentina.com.ar</a>
           </p>
         </div>
         <div class="info-card">
@@ -89,14 +51,12 @@
     </div>
   </section>
 
-  <!-- SERVICIOS EXTRA -->
   <section class="seccion seccion-alt">
     <div class="contenedor">
       <div class="divisor"><span>⭐</span></div>
       <h2 class="seccion-titulo">Servicios incluidos</h2>
       <p class="seccion-sub">Para que tu visita sea perfecta en todo sentido</p>
       <div class="servicios-grid">
-
         <div class="servicio-card">
           <div class="ic">♿</div>
           <div>
@@ -104,7 +64,6 @@
             <p>Rampas y espacios adaptados para personas con movilidad reducida.</p>
           </div>
         </div>
-
         <div class="servicio-card">
           <div class="ic">🅿️</div>
           <div>
@@ -112,7 +71,6 @@
             <p>Playa de estacionamiento gratuita dentro de la Parrilla.</p>
           </div>
         </div>
-
         <div class="servicio-card">
           <div class="ic">🥩</div>
           <div>
@@ -120,79 +78,35 @@
             <p>Degustación de cortes premium con show en vivo del asador. Una experiencia única.</p>
           </div>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- RESEÑAS -->
   <section class="seccion">
     <div class="contenedor">
       <div class="divisor"><span>💬</span></div>
       <h2 class="seccion-titulo">Lo que dicen nuestros clientes</h2>
       <p class="seccion-sub">Opiniones reales de personas que vivieron la experiencia</p>
       <div class="reseñas-grid">
-
         <div class="reseña-card">
           <p>Excelente experiencia. La carne llegó en el punto justo, súper tierna y con mucho sabor. Sin duda volvería.</p>
           <div class="reseña-estrellas">★★★★★</div>
         </div>
-
         <div class="reseña-card">
           <p>La provoleta una bomba. El servicio muy atento, re recomendado.</p>
           <div class="reseña-estrellas">★★★★★</div>
         </div>
-
         <div class="reseña-card">
           <p>El menú infantil estuvo genial, los chicos felices con las milanesitas.</p>
           <div class="reseña-estrellas">★★★★★</div>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- CTA -->
   <section class="cta-banner">
     <h2>¿Listo para una noche memorable?</h2>
     <p>Reservá tu mesa y dejanos preparar la experiencia perfecta para vos y tus acompañantes.</p>
     <a href="{{ url_for('frontend.reserva') }}" class="btn btn-dorado btn-lg">Hacer una Reserva</a>
   </section>
-
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer-inner">
-      <div class="footer-marca">
-        <h3>Don Facundo</h3>
-        <p class="tagline">Parrilla Argentina</p>
-        <p>Desde 1987, el sabor auténtico del asado argentino en el corazón de Buenos Aires.</p>
-      </div>
-      <div>
-        <h4>Navegación</h4>
-        <ul>
-          <li><a href="index.html">Inicio</a></li>
-          <li><a href="menu.html">Menú</a></li>
-          <li><a href="reserva.html">Reservas</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>Contacto</h4>
-        <ul>
-          <li><a href="tel:+541148520000">+54 11 4852-0000</a></li>
-          <li><a href="mailto:hola@donfacundo.com.ar">hola@donfacundo.com.ar</a></li>
-          <li><a href="#">Instagram</a></li>
-          <li><a href="#">Facebook</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span>© 2025 Don Facundo Parrilla Argentina. Todos los derechos reservados.</span>
-      <span>Mariano Castex, Canning, Buenos Aires</span>
-    </div>
-  </footer>
-
-  <script src="{{ url_for('static', filename='js/main.js') }}"></script> 
-  
-</body>
-</html>
-
+{% endblock %}
