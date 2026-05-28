@@ -11,7 +11,7 @@ def ver_resenias():
     
         cursor.execute("SELECT * FROM resenias")
         lista_resenias = cursor.fetchall()
-        return jsonify(resenias), 200
+        return jsonify(lista_resenias), 200
         
     except Exception as e:
         return jsonify({"error": f"Error al obtener resenias: {str(e)}"}), 500
