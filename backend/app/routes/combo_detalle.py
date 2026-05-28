@@ -53,7 +53,7 @@ def agregar_combo_detalle():
         cursor.execute(""" INSERT INTO combo_detalle (id_combo, id_producto) VALUES (%s, %s)""", (data["id_combo"], data["id_producto"]))
         conn.commit()
         
-        cursor.execute( "SELECT * FROM combo_detalle WHERE id combo = %s AND id_producto = %s", (data["id_combo"], data["id_producto"]))
+        cursor.execute( "SELECT * FROM combo_detalle WHERE id_combo = %s AND id_producto = %s", (data["id_combo"], data["id_producto"]))
         detalle_creado = cursor.fetchone ()
         return jsonify (detalle_creado), 201
         
