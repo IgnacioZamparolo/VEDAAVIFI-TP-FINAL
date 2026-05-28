@@ -75,7 +75,7 @@ def crear_reserva():
         cursor.close()
         conn.close()
 
-@reservas.route("/reservas/<int:id_reserva>", methods=["PATCH"]) # admin
+@reservas.route("/reservas/<int:id_reserva>", methods=["PUT"]) # admin
 def actualizar_reserva(id_reserva):  
     try:             
         conn = get_connection()
