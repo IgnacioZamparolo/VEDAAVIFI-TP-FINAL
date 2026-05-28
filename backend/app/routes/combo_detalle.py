@@ -30,21 +30,21 @@ def agregar_combo_detalle():
         if data is None:
             return jsonify({"error": "Ingrese todos los datos"}), 400
 
-        for campo in ["id combo", "id producto"]:
+        for campo in ["id_combo", "id_producto"]:
             if campo not in data:
                 return jsonify({"error": f"Falta el campo requerido: {campo}"}), 400
                 
-        cursor.execute("SELECT id_combo FROM combos WHERE id combo = %s", (data["id_combo"],))
+        cursor.execute("SELECT id_combo FROM combos WHERE id_combo = %s", (data["id_combo"],))
         if cursor.fetchone() is None:
             cursor.close()
-            conn.close
-            return jsonify({"error": f"No existe un combo con id {data["id_combo"]}"}), 404
+            conn.close()
+            return jsonify({"error": f"No existe un combo con id {data['id_combo']}"}), 404
         
         cursor.execute ("SELECT id_producto FROM productos WHERE id_producto = %s", (data["id_producto"],))
         if cursor.fetchone() is None:
             cursor.close()
             conn.close()
-            return jsonify({"error": f"No existe un producto con id {data["id_producto"]}"}), 404
+            return jsonify({"error": f"No existe un producto con id {data['id_producto']}"}), 404
                        
         cursor. execute ("SELECT * FROM combo_detalle WHERE id_combo = %s AND id_producto = %s", (data["id_combo"], data["id_producto"]))
         if cursor.fetchone() is not None:
