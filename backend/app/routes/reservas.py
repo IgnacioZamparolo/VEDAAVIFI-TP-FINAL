@@ -53,10 +53,8 @@ def crear_reserva():
 
         if data["cant_personas"] > CAPACIDAD_MAX:
             return jsonify({"error": f"La cantidad de personas no puede superar {CAPACIDAD_MAX}"}), 400
-
-        id_reserva = cursor.lastrowid
     
-        cursor.execute(""" INSERT INTO reservas(mail, cant_personas, dia, horario) VALUES (%s, %s, %s)""", (data["mail"], data["cant_personas"], data["dia"], data["horario"]))
+        cursor.execute(""" INSERT INTO reservas(mail, cant_personas, dia, horario) VALUES (%s, %s, %s, %s)""", (data["mail"], data["cant_personas"], data["dia"], data["horario"]))
         conn.commit()
 
         id_reserva = cursor.lastrowid 
@@ -92,7 +90,7 @@ def actualizar_reserva(id_reserva):
             if campo not in data: 
                 return jsonify({"error": f"Falta campo requerido  {campo}"}), 400
     
-        cursor.execute(""""UPDATE reservas SET cant_personas = %s, horario = %s, dia = %s, mesa = %s WHERE id_reserva = %s"""",
+        cursor.execute("UPDATE reservas SET cant_personas = %s, horario = %s, dia = %s, mesa = %s WHERE id_reserva = %s",
             (data["cant_personas"], data["horario"], data["dia"], data["mesa"], id_reserva))
          
         conn.commit()  
