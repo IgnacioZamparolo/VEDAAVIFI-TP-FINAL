@@ -66,10 +66,10 @@ def agregar_combo_version():
         for campo in ["descripcion", "personas", "precio", "id_combo"]:
             if campo not in data:
                 return jsonify({"error": f"Falta el campo requerido {campo}"}), 400
-        cursor.execute("SELECT id_combo FROM combos WHERE id_combo = %s", (data["id_combo"]))
+        cursor.execute("SELECT id_combo FROM combos WHERE id_combo = %s", (data["id_combo"],))
 
         if cursor.fetchone() is None:
-            return jsonify({"error": f"No existe un combo con el id {data["id_combo"]}"}), 404
+            return jsonify({"error": f"No existe un combo con el id {data['id_combo']}"}), 404
             
         if data["personas"] <= 0:
              return jsonify({"error": "La cantidad de personas debe ser mayor a 0"}), 400
