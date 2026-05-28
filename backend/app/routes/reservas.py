@@ -56,22 +56,18 @@ def crear_reserva():
 
         id_reserva = cursor.lastrowid
     
-        cursor.execute(""" INSERT INTO reservas(cant_personas, dia, horario) VALUES (%s, %s, %s)""", (data["cant_personas"], data["dia"], data["horario"]))
+        cursor.execute(""" INSERT INTO reservas(mail, cant_personas, dia, horario) VALUES (%s, %s, %s)""", (data["mail"], data["cant_personas"], data["dia"], data["horario"]))
+        conn.commit()
+
+        id_reserva = cursor.lastrowid 
         
         qr_bytes = generar_qr(id_reserva)
         enviar_qr(data["mail"], qr_bytes)
-        
     
-        conn.commit() 
         cursor.execute("SELECT * FROM reservas WHERE id_reserva = %s", (id_reserva,))
         reserva_creada = cursor.fetchone()
         return jsonify(reserva_creada), 201
-                      
-        cursor.close()
-        conn.close()
-    
-        return jsonify({"mensaje": "Reserva creada correctamente"}), 201
-                      
+                       
     except Exception as e:
         return jsonify({"error": f"Error al crear la reserva: {str(e)}"}), 500
                        
@@ -96,7 +92,9 @@ def actualizar_reserva(id_reserva):
             if campo not in data: 
                 return jsonify({"error": f"Falta campo requerido  {campo}"}), 400
     
-        cursor.execute("""UPDATE Reservas SET mesa = %s WHERE id_reserva = %s """, (data["mesa"], id_reserva)) 
+        cursor.execute(""""UPDATE reservas SET cant_personas = %s, horario = %s, dia = %s, mesa = %s WHERE id_reserva = %s"""",
+            (data["cant_personas"], data["horario"], data["dia"], data["mesa"], id_reserva))
+         
         conn.commit()  
         cursor.execute("SELECT * FROM reservas WHERE id_reserva = %s", (id_reserva,))
         reserva_actualizada = cursor.fetchone()
@@ -122,7 +120,7 @@ def eliminar_reserva(id_reserva):
         if reserva is None:
              return jsonify({"error": f"No exite reserva con ese id {id_reserva}"}), 404
         
-        cursor.execute("DELETE FROM Reservas WHERE id_reserva = %s", (id_reserva,))  
+        cursor.execute("DELETE FROM reservas WHERE id_reserva = %s", (id_reserva,))  
         conn.commit()
 
         return jsonify(reserva), 200
