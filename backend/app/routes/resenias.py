@@ -10,7 +10,7 @@ def ver_resenias():
         cursor = conn.cursor() 
     
         cursor.execute("SELECT * FROM resenias")
-        resenias = cursor.fetchall()
+        lista_resenias = cursor.fetchall()
         return jsonify(resenias), 200
         
     except Exception as e:
