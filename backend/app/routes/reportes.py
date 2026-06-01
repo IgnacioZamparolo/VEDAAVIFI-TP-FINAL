@@ -1,9 +1,12 @@
 from flask import Blueprint, jsonify
 from db_connection import get_connection
+from utils import requiere_admin
+
 
 reportes = Blueprint("reportes", __name__)
 
 @reportes.route("/reportes/estadisticas", methods=["GET"])  # admin
+@requiere_admin
 def obtener_estadisticas():
     conn = None
     cursor = None

@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
 from db_connection import get_connection 
+from utils import requiere_admin
 
 productos = Blueprint("productos", __name__)
 
@@ -23,6 +24,7 @@ def ver_menu():
 
 
 @productos.route("/productos/<int:id_producto>", methods=["PUT"]) # admin
+@requiere_admin
 def actualizar_productos(id_producto):  
     conn = None
     cursor = None
@@ -60,6 +62,7 @@ def actualizar_productos(id_producto):
        
 
 @productos.route("/productos", methods=["POST"]) # admin
+@requiere_admin
 def agregar_producto():
     conn = None
     cursor = None
@@ -93,6 +96,7 @@ def agregar_producto():
    
 
 @productos.route("/productos/<int:id_producto>", methods=["DELETE"]) # admin
+@requiere_admin
 def eliminar_producto(id_producto):
     conn = None
     cursor = None

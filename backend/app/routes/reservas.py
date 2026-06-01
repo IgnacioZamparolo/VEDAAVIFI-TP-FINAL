@@ -2,12 +2,14 @@ from flask import Blueprint, jsonify, request
 from db_connection import get_connection
 from utils import generar_qr, enviar_qr
 from datetime import date, datetime, timedelta
+from utils import requiere_admin
 
 reservas = Blueprint("reservas", __name__)
 
 CAPACIDAD_MAX = 10
 
 @reservas.route("/reservas", methods = ["GET"]) # admin
+@requiere_admin
 def ver_reservas():
     
     try:
@@ -107,6 +109,7 @@ def actualizar_reserva(id_reserva):
     
        
 @reservas.route("/reservas/<int:id_reserva>", methods=["DELETE"]) # admin
+@requiere_admin
 def eliminar_reserva(id_reserva):
     try:
         conn = get_connection() 
@@ -131,6 +134,7 @@ def eliminar_reserva(id_reserva):
         conn.close()
 
 @reservas.route("/reservas/<int:id_reserva>/confirmar", methods=["PATCH"]) # admin
+@requiere_admin
 def confirmar_reserva(id_reserva):
     try: 
         conn = get_connection() 

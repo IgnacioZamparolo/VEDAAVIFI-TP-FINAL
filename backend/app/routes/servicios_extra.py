@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
 from db_connection import get_connection 
+from utils import requiere_admin
 
 servicios_extra = Blueprint("servicios_extra", __name__)
 
@@ -23,6 +24,7 @@ def ver_servicios():
         
 
 @servicios_extra.route("/servicios_extra/<int:id_servicio>", methods=["PUT"]) # admin
+@requiere_admin
 def actualizar_servicio(id_servicio):  
     conn = None
     cursor = None
@@ -57,6 +59,7 @@ def actualizar_servicio(id_servicio):
        
 
 @servicios_extra.route("/servicios_extra", methods=["POST"]) # admin
+@requiere_admin
 def agregar_servicio():
     conn = None
     cursor = None
@@ -88,6 +91,7 @@ def agregar_servicio():
         
 
 @servicios_extra.route("/servicios_extra/<int:id_servicio>", methods=["DELETE"]) # admin
+@requiere_admin
 def eliminar_servicio(id_servicio):
     conn = None
     cursor = None
