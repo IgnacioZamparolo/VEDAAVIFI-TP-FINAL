@@ -1,9 +1,11 @@
 from flask import Blueprint, jsonify, request
 from db_connection import get_connection 
+from utils import requiere_admin
 
 combo_detalle = Blueprint("combo_detalle", __name__)
 
 @combo_detalle.route("/combo_detalle", methods = ["GET"]) # admin
+@requiere_admin
 def ver_combo_detalle():
     try:
         
@@ -21,6 +23,7 @@ def ver_combo_detalle():
         conn.close()
         
 @combo_detalle.route("/combo_detalle", methods=["POST"]) # admin
+@requiere_admin
 def agregar_combo_detalle():
     try:
         conn = get_connection()
