@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
     id_usuario      INT AUTO_INCREMENT PRIMARY KEY,
     nombre          VARCHAR(30) NOT NULL,
     mail            VARCHAR(100) NOT NULL,
-    contraseña      VARCHAR(10) NOT NULL
+    password        VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS combo_detalle (
@@ -70,8 +70,8 @@ INSERT INTO combos (nombre, precio) VALUES
 ('Ejecutivo', 12500),
 ('Infantil', 6500);
 
-INSERT INTO usuarios (nombre, mail, contraseña) VALUES
-('Admin', 'parrillaargentina@gmail.com', 'admin1234');
+INSERT INTO usuarios (nombre, mail, password) VALUES
+('Admin', 'parrillaargentina@gmail.com', '936a185caaa266bb9cbe981e9e05cb78cd732b0b3280eb944412bb6f8f8f07af');
 
 INSERT INTO productos (nombre, descripcion, precio, categoria, lactosa, vegetariano, vegano, sin_tacc) VALUES
 ('Mini hamburguesita con papas fritas', 'Hamburguesa en pan chico con queso cheddar y papas crocantes', 2500, 'principal', TRUE, FALSE, FALSE, FALSE),
