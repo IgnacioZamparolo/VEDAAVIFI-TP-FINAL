@@ -1,3 +1,4 @@
+import os
 from db_connection import get_connection
 import qrcode
 import io
@@ -9,6 +10,8 @@ import logging
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
+from dotenv import load_dotenv
+
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from malas_palabras import MALAS_PALABRAS
@@ -33,9 +36,14 @@ from constants import (
     ERROR_CODE_INVALID_EMAIL,
 )
 
+load_dotenv()
+
 logger = logging.getLogger(__name__)
 
 REGEX_EMAIL = re.compile(r'^[^@\s]+@[^@\s]+\.[^@\s]+$')
+
+SMTP_USER=os.environ.get("SMTP_USER")
+SMTP_PASSWORD=os.environ.get("SMTP_PASSWORD")
 
 
 def contiene_malas_palabras(texto):
@@ -79,8 +87,8 @@ def enviar_qr(mail, qr_bytes):
         msg.attach(imagen)
 
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
-            server.login("apestana@fi.uba.ar", "jcny mame egnq eqsh")
-            server.sendmail("apestana@fi.uba.ar", mail, msg.as_string())
+            server.login(SMTP_USER, SMTP_PASSWORD)
+            server.sendmail(SMTP_USER, mail, msg.as_string())
         return True
     except Exception as e:
         print(f"Error al enviar mail: {e}")
@@ -90,13 +98,13 @@ def enviar_mail_resenia(mail):
     try:
         msg = MIMEMultipart("related")
         msg["Subject"] = "¡Dejanos tu reseña! - Parrilla Argentina"
-        msg["From"] = "apestana@fi.uba.ar"
+        msg["From"] = SMTP_USER
         msg["To"] = mail
         msg.attach(MIMEText("<h1>¡Gracias por visitarnos!</h1><h3>Nos encantaría conocer tu experiencia. Podés enviarnos tu reseña respondiendo este mail.</h3>", "html"))
         
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
-            server.login("apestana@fi.uba.ar", "jcny mame egnq eqsh")
-            server.sendmail("apestana@fi.uba.ar", mail, msg.as_string())
+            server.login(SMTP_USER, SMTP_PASSWORD)
+            server.sendmail(SMTP_USER, mail, msg.as_string())
         return True
     
     except Exception as e:
