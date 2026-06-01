@@ -1,6 +1,8 @@
 from flask import Blueprint, jsonify, request
 from db_connection import get_connection 
 from utils import enviar_mail_resenia, contiene_malas_palabras
+from utils import requiere_admin
+
 
 resenias = Blueprint("resenias", __name__)
 
@@ -56,6 +58,7 @@ def agregar_resenia():
         conn.close()
 
 @resenias.route("/resenias/<int:id_resenias>", methods = ["DELETE"]) # admin 
+@requiere_admin
 def eliminar_resenias(id_resenias):
     try:
         conn = get_connection() 
