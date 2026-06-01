@@ -1,5 +1,7 @@
 from flask import Blueprint, jsonify, request
 from db_connection import get_connection 
+from utils import requiere_admin
+
 
 combos = Blueprint("combos", __name__)
 
@@ -23,6 +25,7 @@ def ver_combo():
 
 
 @combos.route("/combos/<int:id_combo>", methods=["PUT"]) # admin
+@requiere_admin
 def actualizar_combos(id_combo):  
     conn = None
     cursor = None
@@ -58,6 +61,7 @@ def actualizar_combos(id_combo):
  
 
 @combos.route("/combos", methods=["POST"]) # admin
+@requiere_admin
 def agregar_combo():
     conn = None
     cursor = None
@@ -90,6 +94,7 @@ def agregar_combo():
 
 
 @combos.route("/combos/<int:id_combo>", methods=["DELETE"]) # admin
+@requiere_admin
 def eliminar_combo(id_combo):
     conn = None
     cursor = None
