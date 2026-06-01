@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
 from db_connection import get_connection 
+from utils import enviar_mail_resenia, contiene_malas_palabras
 
 resenias = Blueprint("resenias", __name__)
 
@@ -29,11 +30,21 @@ def agregar_resenia():
          
         if data is None or "descripcion" not in data:
             return jsonify({"error": f"Falta el campo requerido: descripcion"}), 400
-            
+        
+        cursor.execute("SELECT * FROM reservas WHERE mail = %s AND finalizada = TRUE", (data["mail"],))
+        if cursor.fetchone() is None:
+            return jsonify({"error": "Solo se puede dejar una reseña si tenes una reserva finalizada"}), 403
+        
+        if contiene_malas_palabras(data["descripcion"]):
+            return jsonify({"mensaje": "Tu reseña no pudo ser publicada por contener contenido inadecuado"}), 200
+        
         cursor.execute("""INSERT INTO resenias (descripcion) VALUES (%s)""", (data["descripcion"],))
         conn.commit()
-         
-        cursor.execute("SELECT * FROM resenias WHERE descripcion = %s", (data["descripcion"],) )
+
+        enviar_mail_resenia(data["mail"])
+
+        id_resenia = cursor.lastrowid 
+        cursor.execute("SELECT * FROM resenias WHERE id_resenias = %s", (id_resenia,))
         resenia_creada = cursor.fetchone()
         return jsonify(resenia_creada), 201
          
