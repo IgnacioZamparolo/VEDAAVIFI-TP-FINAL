@@ -7,4 +7,3 @@ MarkupSafe
 mysql-connector-python
 Werkzeug
 apscheduler
-python-dotenv
