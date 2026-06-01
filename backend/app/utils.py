@@ -2,6 +2,8 @@ from db_connection import get_connection
 import qrcode
 import io
 import smtplib
+import hashlib
+import secrets
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
@@ -16,6 +18,9 @@ def contiene_malas_palabras(texto):
             return True
         return False
     
+PASSWORD_RESET_TOKEN_BYTES = 32
+LOGIN_CODE_LEN = 6
+
 def generar_qr(id_reserva):
     qr = qrcode.QRCode(
         version=1,
@@ -93,3 +98,31 @@ def actualizar_estados():
 scheduler = BackgroundScheduler()
 scheduler.add_job(actualizar_estados, "interval", minutes=1)
 scheduler.start()
+
+def hashear_password(password):
+    
+    hash_string = hashlib.sha256(password.encode('utf-8')).hexdigest()
+    return hash_string
+
+
+def verificar_password(password, password_hash):
+    
+    try:
+        return hashear_password(password) == password_hash
+    except (ValueError, TypeError):
+        return False
+
+def generar_reset_token():
+    
+    return secrets.token_urlsafe(PASSWORD_RESET_TOKEN_BYTES)
+
+def generar_codigo_login():
+
+    maximo = 10 ** LOGIN_CODE_LEN
+    numero = secrets.randbelow(maximo)
+
+    return str(numero).zfill(LOGIN_CODE_LEN)
+
+def hashear_token(valor):
+
+    return hashlib.sha256(valor.encode('utf-8')).hexdigest()
