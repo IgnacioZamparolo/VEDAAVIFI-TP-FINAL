@@ -1,9 +1,11 @@
 from flask import Blueprint, jsonify, request
 from db_connection import get_connection 
+from utils import requiere_admin
 
 combo_version = Blueprint("combo_version", __name__)
 
 @combo_version.route("/combo_version", methods = ["GET"]) # admin
+@requiere_admin
 def ver_combo_version():
     try:
         
@@ -22,6 +24,7 @@ def ver_combo_version():
         conn.close()
 
 @combo_version.route("/combo_version/<int:id_version>", methods=["PUT"]) # admin
+@requiere_admin
 def actualizar_combos_version(id_version):  
     try:
         conn = get_connection()
@@ -54,6 +57,7 @@ def actualizar_combos_version(id_version):
     
 
 @combo_version.route("/combo_version", methods=["POST"]) # admin
+@requiere_admin
 def agregar_combo_version():
     try:
         conn = get_connection()
@@ -89,6 +93,7 @@ def agregar_combo_version():
         conn.close()
 
 @combo_version.route("/combo_version/<int:id_version>", methods=["DELETE"]) # admin
+@requiere_admin
 def eliminar_combo_version(id_version):
     try:
         conn = get_connection()
