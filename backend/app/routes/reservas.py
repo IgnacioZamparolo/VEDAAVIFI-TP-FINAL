@@ -1,11 +1,11 @@
 from flask import Blueprint, jsonify, request
 from db_connection import get_connection
 from utils import generar_qr, enviar_qr
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 
 reservas = Blueprint("reservas", __name__)
 
-CAPACIDAD_MAX = 20
+CAPACIDAD_MAX = 10
 
 @reservas.route("/reservas", methods = ["GET"]) # admin
 def ver_reservas():
@@ -53,15 +53,14 @@ def crear_reserva():
 
         if data["cant_personas"] > CAPACIDAD_MAX:
             return jsonify({"error": f"La cantidad de personas no puede superar {CAPACIDAD_MAX}"}), 400
-    
-        cursor.execute(""" INSERT INTO reservas(mail, cant_personas, dia, horario) VALUES (%s, %s, %s, %s)""", (data["mail"], data["cant_personas"], data["dia"], data["horario"]))
-        conn.commit()
 
-        id_reserva = cursor.lastrowid 
+        cursor.execute(""" INSERT INTO reservas(mail, cant_personas, dia, horario) VALUES (%s, %s, %s, %s)""", (data["mail"], data["cant_personas"], data["dia"], data["horario"]))
         
+        id_reserva = cursor.lastrowid  
         qr_bytes = generar_qr(id_reserva)
         enviar_qr(data["mail"], qr_bytes)
-    
+        conn.commit()
+
         cursor.execute("SELECT * FROM reservas WHERE id_reserva = %s", (id_reserva,))
         reserva_creada = cursor.fetchone()
         return jsonify(reserva_creada), 201
@@ -83,6 +82,7 @@ def actualizar_reserva(id_reserva):
         cursor.execute("SELECT * FROM reservas WHERE id_reserva = %s", (id_reserva,))
         if cursor.fetchone() is None:
              return jsonify({"error": f"No exite reserva con ese id {id_reserva}"}), 404
+        
         if data is None:
             return jsonify({"error": "Ingrese todos los datos"}), 400
 
@@ -129,5 +129,57 @@ def eliminar_reserva(id_reserva):
     finally:
         cursor.close()
         conn.close()
-   
-    
+
+@reservas.route("/reservas/<int:id_reserva>/confirmar", methods=["PATCH"]) # admin
+def confirmar_reserva(id_reserva):
+    try: 
+        conn = get_connection() 
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT * FROM reservas WHERE id_reserva = %s", (id_reserva,)) 
+        
+        if cursor.fetchone() is None: 
+            return jsonify({"error": f"No existe reserva con ese id {id_reserva}"}), 404 
+        
+        cursor.execute(""" UPDATE reservas SET pendiente = FALSE, confirmada = TRUE WHERE id_reserva = %s """, (id_reserva,))
+        conn.commit()
+        
+        cursor.execute("SELECT * FROM reservas WHERE id_reserva = %s", (id_reserva,)) 
+        return jsonify(cursor.fetchone()), 200 
+     
+    except Exception as e:
+        return jsonify({"error": f"Error al confirmar reserva: {str(e)}"}), 500 
+     
+    finally: 
+        cursor.close() 
+        conn.close()  
+
+@reservas.route("/reservas/<int:id_reserva>/cancelar", methods=["GET"])  # cliente via mail
+def cancelar_reserva_link(id_reserva):
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT * FROM reservas WHERE id_reserva = %s", (id_reserva,))
+        reserva = cursor.fetchone()
+
+        if reserva is None:
+            return jsonify({"error": f"No existe reserva con id {id_reserva}"}), 404
+
+        fecha = reserva["dia"]
+        horario = reserva["horario"]
+        horario_reserva = datetime.combine(fecha, (datetime.min + horario).time())
+        if datetime.now() >= horario_reserva - timedelta(hours=1):
+            return jsonify({"error": "No se puede cancelar con menos de una hora de anticipación"}), 400
+
+        cursor.execute("DELETE FROM reservas WHERE id_reserva = %s", (id_reserva,))
+        conn.commit()
+
+        return jsonify({"mensaje": "Reserva cancelada correctamente", "reserva": reserva}), 200
+
+    except Exception as e:
+        return jsonify({"error": f"Error al cancelar la reserva: {str(e)}"}), 500
+
+    finally:
+        cursor.close()
+        conn.close()
