@@ -1,0 +1,26 @@
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+ 
+# JWT
+JWT_SECRET    = os.environ.get("JWT_SECRET", "clave_secreta_parrilla")
+JWT_ALGORITHM = "HS256"
+JWT_EXP_HORAS = int(os.environ.get("JWT_EXP_HORAS", "8"))
+ 
+# Roles
+ROL_ADMIN = "admin"
+ 
+# Codigos de error
+ERROR_CODE_INVALID_BODY         = "invalid.body"
+ERROR_CODE_CAMPO_REQUERIDO      = "required.field"
+ERROR_CODE_INVALID_MIN_VALUE    = "invalid.min.value"
+ERROR_CODE_INVALID_MAX_VALUE    = "invalid.max.value"
+ERROR_CODE_INVALID_EMAIL        = "invalid.email.format"
+ERROR_CODE_CREDENCIALES         = "invalid.credentials"
+ERROR_CODE_TOKEN_FALTANTE       = "auth.token.missing"
+ERROR_CODE_TOKEN_INVALIDO       = "auth.token.invalid"
+ERROR_CODE_TOKEN_EXPIRADO       = "auth.token.expired"
+ERROR_CODE_ACCESO_NO_AUTORIZADO = "auth.forbidden"
+ERROR_CODE_USUARIO_NOT_FOUND    = "usuario.not.found"
+ 
