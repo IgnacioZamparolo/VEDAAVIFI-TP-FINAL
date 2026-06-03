@@ -74,14 +74,36 @@ def generar_qr(id_reserva):
     qr_bytes = buffer.getvalue()
     return qr_bytes
 
-def enviar_qr(mail, qr_bytes):
+def enviar_qr(mail, qr_bytes, id_reserva):
     try:
         msg = MIMEMultipart("related")
         msg["Subject"]="Confirmación reserva - Parrilla Argentina"
         msg["From"]="apestana@fi.uba.ar"
         msg["To"]= mail
 
-        msg.attach(MIMEText("<h1>Tu Reserva</h1><h3>Gracias por elegirnos, te esperamos!</h3><img src='cid:qr'>","html"))
+        html_content = f"""
+        <html>
+            <body style="font-family: Arial, sans-serif; color: #333; line-height: 1.6;">
+                <h2>¡Tu Reserva está Confirmada!</h2>
+                <p>Gracias por elegirnos. Te esperamos para disfrutar de la mejor parrilla.</p>
+                
+                <div style="margin: 20px 0;">
+                    <img src="cid:qr" alt="Código QR de tu reserva" style="border: 1px solid #ddd; padding: 10px; border-radius: 5px;">
+                </div>
+                
+                <p style="color: #666; font-size: 14px;">¿Tuviste un imprevisto? Podés cancelar tu reserva haciendo clic abajo:</p>
+                
+                <div style="margin-top: 15px;">
+                    <a href="http://127.0.0.1:5001/cancelar-reserva/{id_reserva}" 
+                       style="background-color: #dc3545; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; display: inline-block; font-weight: bold; font-size: 15px;">
+                       Cancelar Reserva
+                    </a>
+                </div>
+            </body>
+        </html>
+        """
+
+        msg.attach(MIMEText(html_content, "html"))
         imagen = MIMEImage(qr_bytes, subtype="png")
         imagen.add_header("Content-ID","<qr>")
         msg.attach(imagen)
