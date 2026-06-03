@@ -1,4 +1,9 @@
 import mysql.connector
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 DB_CONFIG = {
     "host": "localhost",
