@@ -1,8 +1,8 @@
 from flask import Blueprint, jsonify, request
  
-from ..constants import ERROR_CODE_USUARIO_NOT_FOUND
-from ..utils import construir_error_api, requiere_admin
-from ..services.services_usuarios import buscar_usuario_por_id, construir_usuario_dto
+from constants import ERROR_CODE_USUARIO_NOT_FOUND
+from utils import construir_error_api, requiere_admin
+from services.services_usuarios import buscar_usuario_por_id, construir_usuario_dto
  
 usuarios = Blueprint("usuarios", __name__)
  

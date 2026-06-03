@@ -1,5 +1,5 @@
 import logging
-from flask import Blueprint, render_template, request, redirect, url_for, flash, session
+from flask import Blueprint, render_template, request, redirect, url_for, flash, session, jsonify
  
 from ..services import api
 from ..utils import guardar_sesion, limpiar_sesion, usuario_actual, token_actual, extraer_mensajes_error, requiere_login
@@ -47,4 +47,23 @@ def logout():
 def dashboard():
     usuario = usuario_actual()
     return render_template('dashboard.html', usuario=usuario)
+
+@auth_bp.route('/reportes')
+@requiere_login()
+def reportes():
+    usuario = usuario_actual()
+    return render_template('reportes.html', usuario=usuario)
+
+
+@auth_bp.route('/reportes/estadisticas')
+@requiere_login()
+def obtener_estadisticas_reportes():
+    resultado = api.obtener_estadisticas(token_actual())
+
+    if resultado.get('ok'):
+        return jsonify(resultado['data']), 200
+
+    return jsonify(
+        resultado.get('error_response') or {"error": "No se pudieron obtener las estadísticas"}
+    ), resultado.get('status', 500)
  
