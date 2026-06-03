@@ -10,7 +10,7 @@ def login_con_password(body: dict):
  
     usuario = buscar_usuario_por_mail(datos["mail"])
 
-    if not usuario or not verificar_password(datos["contraseña"], usuario["contraseña"]):
+    if not usuario or not verificar_password(datos["contraseña"], usuario["password"]):
         raise ValueError(construir_error_api(
             code=ERROR_CODE_CREDENCIALES,
             message="Credenciales invalidas",
