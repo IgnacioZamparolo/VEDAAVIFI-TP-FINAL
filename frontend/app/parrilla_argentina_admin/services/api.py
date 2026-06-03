@@ -34,7 +34,7 @@ def _get(path: str, token: str = ''):
         return None
     
 def login(mail: str, password: str) -> dict:
-    response = _post('/auth/login', {'mail': mail, 'password': password})
+    response = _post('/login', {'mail': mail, 'contraseña': password})
     if response is None:
         return _error_conexion()
     if response.status_code == 200:
