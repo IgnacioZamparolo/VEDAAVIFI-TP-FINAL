@@ -8,11 +8,6 @@ logger = logging.getLogger(__name__)
  
 auth_bp = Blueprint('auth', __name__)
 
-@auth_bp.route('/')
-def home():
-    if usuario_actual():
-        return redirect(url_for('auth.dashboard'))
-    return redirect(url_for('auth.login'))
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
