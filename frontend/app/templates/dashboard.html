@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Parrilla Argentina — Dashboard{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div class="hero__content">
+    <h1 class="hero__title">¡Hola, {{ usuario.nombre }}!</h1>
+    <p class="hero__subtitle">Bienvenido al panel de administración de Parrilla Argentina.</p>
+  </div>
+</section>
+
+<section class="table-section">
+  <div class="search-card" style="max-width: 600px; width: 100%;">
+
+    <h2 style="margin-bottom: 1.2rem;">Tu cuenta</h2>
+    <dl class="datalist">
+      <dt>Nombre</dt><dd>{{ usuario.nombre }}</dd>
+      <dt>Email</dt><dd>{{ usuario.mail }}</dd>
+      <dt>ID</dt><dd>{{ usuario.id_usuario }}</dd>
+    </dl>
+
+    <form action="{{ url_for('auth.logout') }}" method="POST" style="margin-top: 1.75rem;">
+      <button type="submit" class="form__btn form__btn--danger" style="padding: .7rem 1.4rem; font-size: .95rem;">
+        Cerrar sesión
+      </button>
+    </form>
+  </div>
+</section>
+{% endblock %}
