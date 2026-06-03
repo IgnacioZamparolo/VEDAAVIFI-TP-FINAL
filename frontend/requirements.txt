@@ -7,3 +7,4 @@ MarkupSafe
 mysql-connector-python
 Werkzeug
 requests
+python-dotenv

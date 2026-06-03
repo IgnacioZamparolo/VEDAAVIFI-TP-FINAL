@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Parrilla Argentina — Admin{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lato:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+  {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <a href="{{ url_for('auth.home') }}" class="nav__logo">
+                Parrilla Argentina
+                <small>Panel Admin</small>
+            </a>
+             <ul class="nav__links">
+                {% if session.get('usuario') %}
+                <li><a href="{{ url_for('auth.dashboard') }}" class="nav__link">Dashboard</a></li>
+                <li class="nav__user">{{ session['usuario']['nombre'] }}</li>
+                <li>
+                    <form action="{{ url_for('auth.logout') }}" method="POST" class="nav__form">
+                        <button type="submit" class="nav__btn">Cerrar sesión</button>
+                    </form>
+                </li>
+                  </li>
+                {% else %}
+                    <li><a href="{{ url_for('auth.login') }}" class="nav__link">Iniciar sesión</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+  </header>
+   <main class="main">
+        {% include 'components/flash_messages.html' %}
+
+        {% block content %}{% endblock %}
+    </main>
+    <footer class="footer">
+        <p>&copy; 2026 Parrilla Argentina &mdash; Administrador</p>
+    </footer>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
+ 
