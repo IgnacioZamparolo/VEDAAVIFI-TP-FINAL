@@ -23,6 +23,7 @@
         <li><a href="{{ url_for('frontend.menu') }}">Menú</a></li>
         <li><a href="{{ url_for('frontend.reserva') }}">Reservas</a></li>
         <li><a href="{{ url_for('frontend.reserva') }}" class="btn btn-dorado">Reservar Mesa</a></li>
+        <li><a href="{{ url_for('auth.login') }}" class="btn btn-rojo">Admin</a></li> 
       </ul>
       <button class="hamburger" aria-label="Menú">
         <span></span><span></span><span></span>
@@ -33,6 +34,7 @@
       <a href="{{ url_for('frontend.menu') }}">Menú</a>
       <a href="{{ url_for('frontend.reserva') }}">Reservas</a>
       <a href="{{ url_for('frontend.reserva') }}" class="btn btn-dorado btn-block">Reservar Mesa</a>
+      <a href="{{ url_for('auth.login') }}" class="btn btn-rojo btn-block">Admin</a> 
     </div>
   </nav>
 
