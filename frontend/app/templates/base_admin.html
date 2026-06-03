@@ -13,7 +13,7 @@
 <body>
     <header class="header">
         <nav class="nav">
-            <a href="{{ url_for('auth.home') }}" class="nav__logo">
+            <a href="{{ url_for('frontend.home') }}" class="nav__logo">
                 Parrilla Argentina
                 <small>Panel Admin</small>
             </a>
@@ -26,7 +26,6 @@
                         <button type="submit" class="nav__btn">Cerrar sesión</button>
                     </form>
                 </li>
-                  </li>
                 {% else %}
                     <li><a href="{{ url_for('auth.login') }}" class="nav__link">Iniciar sesión</a></li>
                 {% endif %}

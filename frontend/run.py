@@ -14,8 +14,8 @@ app = Flask(
 app.json.sort_keys = False
 app.secret_key = os.getenv('SECRET_KEY', 'change-me-please-frontend')
 
-app.register_blueprint(auth_bp)
 app.register_blueprint(frontend_bp)
+app.register_blueprint(auth_bp, url_prefix='/admin')
 
 @app.errorhandler(404)
 def page_not_found(error):
