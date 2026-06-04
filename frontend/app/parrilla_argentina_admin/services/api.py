@@ -34,7 +34,7 @@ def _get(path: str, token: str = ''):
         return None
     
 def login(mail: str, password: str) -> dict:
-    response = _post('/auth/login', {'mail': mail, 'password': password})
+    response = _post('/login', {'mail': mail, 'contraseña': password})
     if response is None:
         return _error_conexion()
     if response.status_code == 200:
@@ -42,6 +42,8 @@ def login(mail: str, password: str) -> dict:
         return {'ok': True, 'token': data['token'], 'usuario': data['usuario']}
     return _respuesta_error(response)
 
+
+#ABM RESERVAS
 def obtener_reservas(token: str) -> dict:
     response = _get('/reservas', token=token)
     if response is None:
@@ -58,7 +60,7 @@ def obtener_resenias(token: str) -> dict:
         return {'ok': True, 'data': response.json()}
     return _respuesta_error(response)
  
- 
+#ABM RESEÑAS 
 def eliminar_resenia(id_resenia: int, token: str) -> dict:
     headers = {'Authorization': f'Bearer {token}'}
     try:
@@ -183,7 +185,7 @@ def agregar_producto(datos: dict, token:str) -> dict:
         return {'ok': True}
     return _respuesta_error(response)
 
-def obtener_producto(token:str) -> dict:
+def obtener_productos(token:str) -> dict:
     response = _get(f'/productos', token=token)
     if response is None:
         return _error_conexion()

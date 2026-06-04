@@ -1,7 +1,7 @@
-from ..constants import (
+from constants import (
     ERROR_CODE_INVALID_BODY,
 )
-from ..utils import (
+from utils import (
     construir_error_api,
     validar_string_no_vacio,
     validar_formato_email,

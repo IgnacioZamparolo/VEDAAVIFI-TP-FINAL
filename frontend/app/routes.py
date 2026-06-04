@@ -18,6 +18,7 @@ def menu():
 def reserva():
     return render_template("reserva.html")
 
+
 @frontend_bp.route("/admin/reportes")
 def reportes():
     return render_template("reportes.html")
@@ -35,7 +36,7 @@ def editar_resenias():
 @requiere_login()
 def eliminar_resenias():
     token = token_actual()
-    resenia = request.form.get('id')
+    resenia = request.form.get('id_resenias')
     api.eliminar_resenia(int(resenia), token)
     return redirect(url_for('frontend.editar_resenias'))
 
@@ -236,3 +237,4 @@ def obtener_estadisticas_reportes():
 
     except Exception as e:
         return jsonify({"error": f"Error al conectar con el backend: {str(e)}"}), 500
+

@@ -20,6 +20,7 @@
              <ul class="nav__links">
                 {% if session.get('usuario') %}
                 <li><a href="{{ url_for('auth.dashboard') }}" class="nav__link">Dashboard</a></li>
+                <li><a href="{{ url_for('auth.reportes') }}" class="nav__link">Reportes</a></li>
                 <li class="nav__user">{{ session['usuario']['nombre'] }}</li>
                 <li>
                     <form action="{{ url_for('auth.logout') }}" method="POST" class="nav__form">

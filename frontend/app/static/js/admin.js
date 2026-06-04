@@ -1,5 +1,3 @@
-const botonCerrarSesion = document.getElementById("btn-cerrar-sesion")
-
 const botonAgregarProd = document.getElementById("btn-agregar-menu")
 const botonEliminarProd = document.getElementById("btn-eliminar-menu")
 const botonEditarProd = document.getElementById("btn-editar-menu")
