@@ -1,0 +1,38 @@
+{% extends "base_admin.html" %}
+
+{% block title %}Editar Resenias - Parrilla Argentina{% endblock %}
+
+{% block content %}
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID Reseña</th>
+            <th>Descripción</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for resenia in resenias %}
+        <tr>
+            <td>{{ resenia.id_resenias }}</td> 
+            <td>{{ resenia.descripcion }}</td>                   
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<div>
+    <ul class="botones-form">
+        <li><button id="btn-ver-resenias">Ver</button></li>
+        <li><button id="btn-eliminar-resenia">Eliminar</button></li>
+    </ul>
+</div>
+
+<div class="form" id="eliminar_resenia" style="display:none">
+    <form action="/admin/eliminarReseniaAdmi" method="POST">
+        <label for="id_resenias">Id de la resenia: </label>
+        <input type="number" id="id_resenias" name="id_resenias" placeholder="Id Resenia" required>
+
+
+        <button type="submit">Enviar</button>
+    </form>
+</div>

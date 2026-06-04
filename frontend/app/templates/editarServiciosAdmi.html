@@ -1,0 +1,68 @@
+{% extends "base_admin.html" %}
+
+{% block title %}Editar Servicios Extras - Parrilla Argentina{% endblock %}
+
+{% block content %}
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID Servicio</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for servicio in servicios %}
+        <tr>
+            <td>{{ servicio.id_servicio }}</td> 
+            <td>{{ servicio.nombre }}</td> 
+            <td>{{ servicio.descripcion }}</td>                     
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<div>
+    <ul class="botones-form">
+        <li><button id="btn-editar-servicio">Editar</button></li>
+        <li><button id="btn-agregar-servicio">Agregar</button></li>
+        <li><button id="btn-eliminar-servicio">Eliminar</button></li>
+    </ul>
+</div>
+<div class="form" id="agregar_servicio" style="display:none">
+    <form action="/admin/agregarServicio" method="POST">
+        <label for="nombre">Nombre del servicio:</label>
+        <input type="text" id="nombre" name="nombre" placeholder="Nombre" required>
+
+        <label for="descripcion">Descripción:</label>
+        <input type="text" id="descripcion" rows=4 name="descripcion" placeholder="descripcion" required>
+
+        <button type="submit">Enviar</button>
+    </form>
+</div>
+
+<div class="form" id="eliminar_servicio" style="display:none">
+    <form action="/admin/eliminarServicio" method="POST">
+        <label for="id_servicio">Id del servicio: </label>
+        <input type="text" id="id_servicio" name="id_servicio" placeholder="Id Servicio" required>
+
+
+        <button type="submit">Enviar</button>
+    </form>
+</div>
+
+<div class="form" id="editar_servicio" style="display:none">
+    <form action="/admin/editarServicio" method="POST">
+        <label for="id_servicio">Id del servicio: </label>
+        <input type="text" id="id_servicio" name="id_servicio" placeholder="Id Servicio" required>
+
+        <label for="nombre">Nombre del servicio:</label>
+        <input type="text" id="nombre" name="nombre" placeholder="Nombre" required>
+
+        <label for="descripcion">Descripción:</label>
+        <input type="text" id="descripcion" rows=4 name="descripcion" placeholder="descripcion" required>
+
+
+        <button type="submit">Enviar</button>
+    </form>
+</div>
