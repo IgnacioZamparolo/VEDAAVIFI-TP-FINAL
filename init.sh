@@ -1,15 +1,73 @@
 #!/bin/bash
 
-echo "Activando entorno virtual..."
-source .env/bin/activate
-echo "Instalando dependencias del backend..."
-cd backend
-pip install -r requirements.txt
-cd ..
 
-echo "Instalando dependencias del frontend..."
-cd frontend
-pip install -r requirements.txt
-cd ..
+echo "======================================================================"
+echo "  Iniciando configuración del entorno para Front y Back [Parrilla]    "
+echo "======================================================================"
 
-echo "Listo para correr el proyecto."
+ROOT_DIR=$(pwd)
+
+if [ ! -d "backend" ] || [ ! -d "frontend" ]; then
+    echo "[ERROR] No se encontraron las carpetas 'backend' y/or 'frontend' en el directorio actual."
+    echo "Por favor, ejecutá este script desde la raíz del proyecto estructurado."
+    exit 1
+fi
+
+echo ""
+echo "[1/2] Configurando el entorno del BACKEND..."
+cd "$ROOT_DIR/backend"
+
+
+if [ ! -d ".venv" ]; then
+    echo "Creando entorno virtual (.venv) para el Backend..."
+    python3 -m venv .venv
+else
+    echo "El entorno virtual del Backend ya existe."
+fi
+
+
+echo "Activando entorno virtual e instalando dependencias desde tu requirements.txt..."
+source .venv/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
+deactivate
+echo "¡Backend configurado exitosamente!"
+
+
+echo ""
+echo "[2/2] Configurando el entorno del FRONTEND..."
+cd "$ROOT_DIR/frontend"
+
+
+if [ ! -d ".venv" ]; then
+    echo "Creando entorno virtual (.venv) para el Frontend..."
+    python3 -m venv .venv
+else
+    echo "El entorno virtual del Frontend ya existe."
+fi
+
+
+echo "Activando entorno virtual e instalando dependencias desde tu requirements.txt..."
+source .venv/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
+deactivate
+echo "¡Frontend configurado exitosamente!"
+
+
+echo ""
+echo "======================================================================"
+echo "  ¡Configuración completada con éxito! Todo listo para trabajar.     "
+echo "======================================================================"
+echo ""
+echo "Para ejecutar el proyecto, abrí dos terminales separadas y ejecutá:"
+echo "Terminal 1 (Backend):"
+echo "  cd backend"
+echo "  source .venv/bin/activate"
+echo "  python app/app.py"
+echo ""
+echo "Terminal 2 (Frontend):"
+echo "  cd frontend"
+echo "  source .venv/bin/activate"
+echo "  python run.py"
+echo "======================================================================"
