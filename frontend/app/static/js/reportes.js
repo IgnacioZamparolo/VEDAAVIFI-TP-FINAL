@@ -3,25 +3,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!boton) return;
 
-  boton.addEventListener("click", async () => {
+  boton.addEventListener("click", () => {
     try {
       boton.disabled = true;
       boton.innerText = "Generando PDF...";
 
-      const response = await fetch("/admin/reportes/estadisticas");
+      const elementoDatos = document.getElementById("estadisticas-data");
 
-      if (!response.ok) {
-        throw new Error("No se pudieron obtener las estadísticas");
+      if (!elementoDatos) {
+        throw new Error("No hay estadísticas disponibles");
       }
-
-      const datos = await response.json();
+      
+      const datos = JSON.parse(elementoDatos.textContent);
 
       const { jsPDF } = window.jspdf;
       const pdf = new jsPDF();
 
       const fechaActual = new Date().toLocaleDateString("es-AR");
 
-      // Título
       pdf.setFontSize(18);
       pdf.text("Reporte de Estadísticas", 14, 20);
 
@@ -29,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
       pdf.text("Parrilla Argentina", 14, 28);
       pdf.text(`Fecha de generación: ${fechaActual}`, 14, 35);
 
-      // Resumen general
+      
       pdf.setFontSize(14);
       pdf.text("Resumen general", 14, 50);
 
@@ -44,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ]
       });
 
-      // Reservas por estado
+      
       pdf.setFontSize(14);
       pdf.text("Reservas por estado", 14, pdf.lastAutoTable.finalY + 15);
 
@@ -60,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ]
       });
 
-      // Productos por categoría
+      
       pdf.setFontSize(14);
       pdf.text("Productos por categoría", 14, pdf.lastAutoTable.finalY + 15);
 
@@ -73,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ])
       });
 
-      // Reservas por día
+      
       pdf.setFontSize(14);
       pdf.text("Reservas por día", 14, pdf.lastAutoTable.finalY + 15);
 
@@ -86,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ])
       });
 
-      // Horario más reservado
+      
       let yFinal = pdf.lastAutoTable.finalY + 15;
 
       pdf.setFontSize(14);
@@ -104,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
         pdf.text("No hay reservas registradas.", 14, yFinal + 8);
       }
 
-      // Descargar PDF
+      
       pdf.save("reporte-estadisticas.pdf");
 
     } catch (error) {
