@@ -14,8 +14,6 @@ from dotenv import load_dotenv
 
 
 from apscheduler.schedulers.background import BackgroundScheduler
-from malas_palabras import MALAS_PALABRAS
-
 import jwt 
 from datetime import datetime, timedelta, timezone
 from functools import wraps
@@ -34,7 +32,11 @@ from constants import (
     ERROR_CODE_INVALID_MIN_VALUE,
     ERROR_CODE_INVALID_MAX_VALUE,
     ERROR_CODE_INVALID_EMAIL,
+    SMTP_USER,         
+    SMTP_PASSWORD,
+    MALAS_PALABRAS_LISTA,
 )
+
 
 load_dotenv()
 
@@ -42,16 +44,21 @@ logger = logging.getLogger(__name__)
 
 REGEX_EMAIL = re.compile(r'^[^@\s]+@[^@\s]+\.[^@\s]+$')
 
-SMTP_USER=os.environ.get("SMTP_USER")
-SMTP_PASSWORD=os.environ.get("SMTP_PASSWORD")
-
 
 def contiene_malas_palabras(texto):
-    texto_lower = texto.lower()
-    for palabra in MALAS_PALABRAS:
-        if palabra in texto_lower:
-            return True
+
+    if not texto:
         return False
+        
+    
+    texto_lower = texto.lower()
+    
+   
+    for palabra in MALAS_PALABRAS_LISTA:
+        if palabra in texto_lower:
+            return True  
+            
+    return False  
     
 PASSWORD_RESET_TOKEN_BYTES = 32
 LOGIN_CODE_LEN = 6
