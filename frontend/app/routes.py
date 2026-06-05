@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, jsonify, request, redirect, url_for
-from ..services import api
-from ..utils import token_actual, requiere_login 
+from .parrilla_argentina_admin.services import api
+from .parrilla_argentina_admin.utils import token_actual, requiere_login 
 import requests
 
 
@@ -18,10 +18,6 @@ def menu():
 def reserva():
     return render_template("reserva.html")
 
-
-@frontend_bp.route("/admin/reportes")
-def reportes():
-    return render_template("reportes.html")
 
 
 #ABM RESEÑAS
@@ -225,16 +221,5 @@ def agregar_combo_detalle():
     return redirect(url_for('frontend.editar_menu'))  
 
 
-@frontend_bp.route("/admin/reportes/estadisticas")
-def obtener_estadisticas_reportes():
-    try:
-        response = requests.get("http://127.0.0.1:5000/reportes/estadisticas")
 
-        if response.status_code != 200:
-            return jsonify({"error": "No se pudieron obtener las estadísticas"}), response.status_code
-
-        return jsonify(response.json()), 200
-
-    except Exception as e:
-        return jsonify({"error": f"Error al conectar con el backend: {str(e)}"}), 500
 
