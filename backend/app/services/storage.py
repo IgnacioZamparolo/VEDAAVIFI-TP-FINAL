@@ -3,7 +3,7 @@ import logging
 import uuid
 
 from supabase import create_client
-from ..constants import SUPABASE_URL, SUPABASE_KEY, SUPABASE_BUCKET, EXTENSIONES_PERMITIDAS
+from constants import SUPABASE_URL, SUPABASE_KEY, SUPABASE_BUCKET, EXTENSIONES_PERMITIDAS
 
 logger = logging.getLogger(__name__)
 

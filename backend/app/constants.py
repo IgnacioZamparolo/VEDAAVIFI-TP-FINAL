@@ -24,12 +24,17 @@ ERROR_CODE_TOKEN_EXPIRADO       = "auth.token.expired"
 ERROR_CODE_ACCESO_NO_AUTORIZADO = "auth.forbidden"
 ERROR_CODE_USUARIO_NOT_FOUND    = "usuario.not.found"
 
-# Credenciales
+# Credenciales Supabase
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 SUPABASE_BUCKET = os.getenv("SUPABASE_BUCKET")
+ 
+# Credenciales Email
+SMTP_USER = os.environ.get("SMTP_USER")
+SMTP_PASSWORD = os.environ.get("SMTP_PASSWORD")
 SMTP_USER=os.environ.get("SMTP_USER")
 SMTP_PASSWORD=os.environ.get("SMTP_PASSWORD")
+
 
 # Malas palabras
 malas_palabras_raw = os.getenv("MALAS_PALABRAS", "")
@@ -38,4 +43,6 @@ MALAS_PALABRAS_LISTA = [
     for palabra in malas_palabras_raw.split(",") 
     if palabra.strip()
 ]
+
+EXTENSIONES_PERMITIDAS = {'png', 'jpg', 'jpeg', 'webp'}
 
