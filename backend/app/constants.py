@@ -23,4 +23,9 @@ ERROR_CODE_TOKEN_INVALIDO       = "auth.token.invalid"
 ERROR_CODE_TOKEN_EXPIRADO       = "auth.token.expired"
 ERROR_CODE_ACCESO_NO_AUTORIZADO = "auth.forbidden"
 ERROR_CODE_USUARIO_NOT_FOUND    = "usuario.not.found"
+
+# Credenciales
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_KEY = os.getenv("SUPABASE_KEY")
+SUPABASE_BUCKET = os.getenv("SUPABASE_BUCKET")
  
