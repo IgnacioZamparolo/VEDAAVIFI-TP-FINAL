@@ -14,12 +14,9 @@ echo "[1/2] Configurando el entorno del BACKEND..."
 cd "$ROOT_DIR/backend"
 
 
-if [ -d "$ROOT_DIR/.env" ]; then
+if [ "${USE_ROOT_VENV:-0}" = "1" ] && [ -d "$ROOT_DIR/.env" ]; then
     VENV_PATH="$ROOT_DIR/.env"
-elif [ -d "$ROOT_DIR/venv" ]; then
-    VENV_PATH="$ROOT_DIR/venv"
 else
-    
     if [ ! -d ".venv" ]; then
         echo "Creando entorno virtual (.venv) para el Backend..."
         python3 -m venv .venv
@@ -40,12 +37,9 @@ echo "[2/2] Configurando el entorno del FRONTEND..."
 cd "$ROOT_DIR/frontend"
 
 
-if [ -d "$ROOT_DIR/.env" ]; then
+if [ "${USE_ROOT_VENV:-0}" = "1" ] && [ -d "$ROOT_DIR/.env" ]; then
     VENV_PATH="$ROOT_DIR/.env"
-elif [ -d "$ROOT_DIR/venv" ]; then
-    VENV_PATH="$ROOT_DIR/venv"
 else
-    
     if [ ! -d ".venv" ]; then
         echo "Creando entorno virtual (.venv) para el Frontend..."
         python3 -m venv .venv
