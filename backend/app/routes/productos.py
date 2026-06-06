@@ -2,6 +2,7 @@ from services.storage import subir_imagen
 from flask import Blueprint, jsonify, request
 from db_connection import get_connection 
 from utils import requiere_admin
+from constants import EXTENSIONES_PERMITIDAS
 
 def archivo_permitido(nombre_archivo):
     return '.' in nombre_archivo and nombre_archivo.rsplit('.', 1)[1].lower() in EXTENSIONES_PERMITIDAS
