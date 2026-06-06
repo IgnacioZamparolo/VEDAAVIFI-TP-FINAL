@@ -17,7 +17,7 @@ def buscar_usuario_por_mail(mail: str):
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
         cursor.execute(
-            "SELECT id_usuario, nombre, mail, contraseña FROM usuarios WHERE mail = %s",
+            "SELECT id_usuario, nombre, mail, password FROM usuarios WHERE mail = %s",
             (mail,)
         )
         resultado = cursor.fetchone()

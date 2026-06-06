@@ -34,7 +34,7 @@ def _get(path: str, token: str = ''):
         return None
     
 def login(mail: str, password: str) -> dict:
-    response = _post('/auth/login', {'mail': mail, 'password': password})
+    response = _post('/login', {'mail': mail, 'contraseña': password})
     if response is None:
         return _error_conexion()
     if response.status_code == 200:
@@ -42,6 +42,8 @@ def login(mail: str, password: str) -> dict:
         return {'ok': True, 'token': data['token'], 'usuario': data['usuario']}
     return _respuesta_error(response)
 
+
+#ABM RESERVAS
 def obtener_reservas(token: str) -> dict:
     response = _get('/reservas', token=token)
     if response is None:
@@ -58,7 +60,7 @@ def obtener_resenias(token: str) -> dict:
         return {'ok': True, 'data': response.json()}
     return _respuesta_error(response)
  
- 
+#ABM RESEÑAS 
 def eliminar_resenia(id_resenia: int, token: str) -> dict:
     headers = {'Authorization': f'Bearer {token}'}
     try:
@@ -79,4 +81,248 @@ def obtener_estadisticas(token: str) -> dict:
         return _error_conexion()
     if response.status_code == 200:
         return {'ok': True, 'data': response.json()}
+    return _respuesta_error(response)
+
+#ABM SERVICIOS EXTRAS
+def editar_servicio(id_servicio: int, datos: dict, token:str) -> dict:
+    headers = {'Authorization': f'Bearer {token}'}
+    
+    try:
+        response = requests.put(
+            f'{API_BASE_URL}/servicios_extra/{id_servicio}',
+            headers=headers,
+            json=datos,
+            timeout=REQUEST_TIMEOUT
+        )
+    except requests.exceptions.ConnectionError:
+        return _error_conexion()
+    if response.status_code == 200:
+        return {'ok': True}
+    return _respuesta_error(response)
+
+def eliminar_servicio(id_servicio: int, token: str) -> dict:
+    headers = {'Authorization': f'Bearer {token}'}
+    try:
+        response = requests.delete(
+            f'{API_BASE_URL}/servicios_extra/{id_servicio}',
+            headers=headers,
+            timeout=REQUEST_TIMEOUT
+        )
+    except requests.exceptions.ConnectionError:
+        return _error_conexion()
+    if response.status_code == 200:
+        return {'ok': True}
+    return _respuesta_error(response)
+
+def agregar_servicio(datos: dict, token:str) -> dict:
+    headers = {'Authorization': f'Bearer {token}'}
+    try:
+        response = requests.post(
+            f'{API_BASE_URL}/servicios_extra',
+            headers=headers,
+            json=datos,
+            timeout=REQUEST_TIMEOUT
+        )
+    except requests.exceptions.ConnectionError:
+        return _error_conexion()
+    if response.status_code == 201:
+        return {'ok': True}
+    return _respuesta_error(response)
+
+def obtener_servicio(token:str) -> dict:
+    response = _get(f'/servicios_extra', token=token)
+    if response is None:
+        return _error_conexion()
+    if response.status_code == 200:
+        return {'ok': True, 'data': response.json()}
+    return _respuesta_error(response)
+
+
+
+#ABM PRODUCTOS
+def editar_producto(id_producto: int, datos: dict, token:str) -> dict:
+    headers = {'Authorization': f'Bearer {token}'}
+    
+    try:
+        response = requests.put(
+            f'{API_BASE_URL}/productos/{id_producto}',
+            headers=headers,
+            json=datos,
+            timeout=REQUEST_TIMEOUT
+        )
+    except requests.exceptions.ConnectionError:
+        return _error_conexion()
+    if response.status_code == 200:
+        return {'ok': True}
+    return _respuesta_error(response)
+
+def eliminar_producto(id_producto: int, token: str) -> dict:
+    headers = {'Authorization': f'Bearer {token}'}
+    try:
+        response = requests.delete(
+            f'{API_BASE_URL}/productos/{id_producto}',
+            headers=headers,
+            timeout=REQUEST_TIMEOUT
+        )
+    except requests.exceptions.ConnectionError:
+        return _error_conexion()
+    if response.status_code == 200:
+        return {'ok': True}
+    return _respuesta_error(response)
+
+def agregar_producto(datos: dict, token:str) -> dict:
+    headers = {'Authorization': f'Bearer {token}'}
+    try:
+        response = requests.post(
+            f'{API_BASE_URL}/productos',
+            headers=headers,
+            json=datos,
+            timeout=REQUEST_TIMEOUT
+        )
+    except requests.exceptions.ConnectionError:
+        return _error_conexion()
+    if response.status_code == 201:
+        return {'ok': True}
+    return _respuesta_error(response)
+
+def obtener_productos(token:str) -> dict:
+    response = _get(f'/productos', token=token)
+    if response is None:
+        return _error_conexion()
+    if response.status_code == 200:
+        return {'ok': True, 'data': response.json()}
+    return _respuesta_error(response)
+
+
+#ABM COMBOS
+def editar_combo(id_combo: int, datos: dict, token:str) -> dict:
+    headers = {'Authorization': f'Bearer {token}'}
+    
+    try:
+        response = requests.put(
+            f'{API_BASE_URL}/combos/{id_combo}',
+            headers=headers,
+            json=datos,
+            timeout=REQUEST_TIMEOUT
+        )
+    except requests.exceptions.ConnectionError:
+        return _error_conexion()
+    if response.status_code == 200:
+        return {'ok': True}
+    return _respuesta_error(response)
+
+def agregar_combo(datos: dict, token:str) -> dict:
+    headers = {'Authorization': f'Bearer {token}'}
+    try:
+        response = requests.post(
+            f'{API_BASE_URL}/combos',
+            headers=headers,
+            json=datos,
+            timeout=REQUEST_TIMEOUT
+        )
+    except requests.exceptions.ConnectionError:
+        return _error_conexion()
+    if response.status_code == 201:
+        return {'ok': True}
+    return _respuesta_error(response)
+
+def eliminar_combo(id_combo: int, token:str) -> dict:
+    headers = {'Authorization': f'Bearer {token}'}
+    try:
+        response = requests.delete(
+            f'{API_BASE_URL}/combos/{id_combo}',
+            headers=headers,
+            timeout=REQUEST_TIMEOUT
+        )
+    except requests.exceptions.ConnectionError:
+        return _error_conexion()
+    if response.status_code == 200:
+        return {'ok': True}
+    return _respuesta_error(response)
+
+def obtener_combo(token:str) -> dict:
+    response = _get(f'/combos', token=token)
+    if response is None:
+        return _error_conexion()
+    if response.status_code == 200:
+        return {'ok': True, 'data': response.json()}
+    return _respuesta_error(response)
+
+#ABM COMBOS VERSION
+def editar_combo_version(id_version: int, datos: dict, token:str) -> dict:
+    headers = {'Authorization': f'Bearer {token}'}
+    
+    try:
+        response = requests.put(
+            f'{API_BASE_URL}/combo_version/{id_version}',
+            headers=headers,
+            json=datos,
+            timeout=REQUEST_TIMEOUT
+        )
+    except requests.exceptions.ConnectionError:
+        return _error_conexion()
+    if response.status_code == 200:
+        return {'ok': True}
+    return _respuesta_error(response)
+
+def agregar_combo_version(datos: dict, token:str) -> dict:
+    headers = {'Authorization': f'Bearer {token}'}
+    try:
+        response = requests.post(
+            f'{API_BASE_URL}/combo_version',
+            headers=headers,
+            json=datos,
+            timeout=REQUEST_TIMEOUT
+        )
+    except requests.exceptions.ConnectionError:
+        return _error_conexion()
+    if response.status_code == 201:
+        return {'ok': True}
+    return _respuesta_error(response)
+
+def eliminar_combo_version(id_version: int, token:str) -> dict:
+    headers = {'Authorization': f'Bearer {token}'}
+    try:
+        response = requests.delete(
+            f'{API_BASE_URL}/combo_version/{id_version}',
+            headers=headers,
+            timeout=REQUEST_TIMEOUT
+        )
+    except requests.exceptions.ConnectionError:
+        return _error_conexion()
+    if response.status_code == 200:
+        return {'ok': True}
+    return _respuesta_error(response)
+
+def obtener_combo_version(token:str) -> dict:
+    response = _get(f'/combo_version', token=token)
+    if response is None:
+        return _error_conexion()
+    if response.status_code == 200:
+        return {'ok': True, 'data': response.json()}
+    return _respuesta_error(response)
+
+#ABM Combo Detalle
+
+def obtener_combo_detalle(token:str) -> dict:
+    response = _get(f'/combo_detalle', token=token)
+    if response is None:
+        return _error_conexion()
+    if response.status_code == 200:
+        return {'ok': True, 'data': response.json()}
+    return _respuesta_error(response)
+
+def agregar_combo_detalle(datos: dict, token:str) -> dict:
+    headers = {'Authorization': f'Bearer {token}'}
+    try:
+        response = requests.post(
+            f'{API_BASE_URL}/combo_detalle',
+            headers=headers,
+            json=datos,
+            timeout=REQUEST_TIMEOUT
+        )
+    except requests.exceptions.ConnectionError:
+        return _error_conexion()
+    if response.status_code == 201:
+        return {'ok': True}
     return _respuesta_error(response)

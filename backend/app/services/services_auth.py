@@ -1,7 +1,7 @@
 from .services_usuarios import buscar_usuario_por_mail, construir_usuario_dto
-from ..utils import verificar_password, construir_error_api, generar_jwt
-from ..constants import ERROR_CODE_CREDENCIALES
-from ..validators.validators_auth import validar_body_login
+from utils import verificar_password, construir_error_api, generar_jwt
+from constants import ERROR_CODE_CREDENCIALES
+from validators.validators_auth import validar_body_login
 
  
  
@@ -10,7 +10,7 @@ def login_con_password(body: dict):
  
     usuario = buscar_usuario_por_mail(datos["mail"])
 
-    if not usuario or not verificar_password(datos["contraseña"], usuario["contraseña"]):
+    if not usuario or not verificar_password(datos["contraseña"], usuario["password"]):
         raise ValueError(construir_error_api(
             code=ERROR_CODE_CREDENCIALES,
             message="Credenciales invalidas",

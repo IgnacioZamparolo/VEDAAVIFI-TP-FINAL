@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_admin.html" %}
 
 {% block title %}Reportes - Parrilla Argentina{% endblock %}
 
@@ -20,16 +20,32 @@
         reservas por estado, productos por categoría y horarios más reservados.
       </p>
 
-      <button id="btnDescargarReporte" class="btn btn-dorado">
+      <button id="btnDescargarReporte" class="btn btn-dorado"{% if not estadisticas %}disabled{% endif %}>
         Descargar reporte PDF
       </button>
 
-      <p class="form-legal">
-        Sección pensada para uso administrativo.
-      </p>
+      {% if estadisticas %}
+        <p class="form-legal">
+          Sección pensada para uso administrativo.
+        </p>
+      {% else %}
+        <p class="form-legal">
+        No hay estadísticas disponibles para generar el reporte.
+        </p>
+      {% endif %}
     </div>
   </div>
 </section>
+
+{% endblock %}
+
+{% block extra_js %}
+
+{% if estadisticas %}
+  <script id="estadisticas-data" type="application/json">
+    {{ estadisticas | tojson }}
+  </script>
+{% endif %}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
