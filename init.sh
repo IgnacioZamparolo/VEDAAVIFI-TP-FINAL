@@ -1,10 +1,6 @@
 #!/bin/bash
 
 
-echo "======================================================================"
-echo "  Iniciando configuración del entorno para Front y Back [Parrilla]    "
-echo "======================================================================"
-
 ROOT_DIR=$(pwd)
 
 if [ ! -d "backend" ] || [ ! -d "frontend" ]; then
@@ -18,16 +14,21 @@ echo "[1/2] Configurando el entorno del BACKEND..."
 cd "$ROOT_DIR/backend"
 
 
-if [ ! -d ".venv" ]; then
-    echo "Creando entorno virtual (.venv) para el Backend..."
-    python3 -m venv .venv
+if [ -d "$ROOT_DIR/.env" ]; then
+    VENV_PATH="$ROOT_DIR/.env"
+elif [ -d "$ROOT_DIR/venv" ]; then
+    VENV_PATH="$ROOT_DIR/venv"
 else
-    echo "El entorno virtual del Backend ya existe."
+    
+    if [ ! -d ".venv" ]; then
+        echo "Creando entorno virtual (.venv) para el Backend..."
+        python3 -m venv .venv
+    fi
+    VENV_PATH="$PWD/.venv"
 fi
 
-
-echo "Activando entorno virtual e instalando dependencias desde tu requirements.txt..."
-source .venv/bin/activate
+echo "Usando entorno virtual: $VENV_PATH"
+source "$VENV_PATH/bin/activate"
 pip install --upgrade pip
 pip install -r requirements.txt
 deactivate
@@ -39,16 +40,21 @@ echo "[2/2] Configurando el entorno del FRONTEND..."
 cd "$ROOT_DIR/frontend"
 
 
-if [ ! -d ".venv" ]; then
-    echo "Creando entorno virtual (.venv) para el Frontend..."
-    python3 -m venv .venv
+if [ -d "$ROOT_DIR/.env" ]; then
+    VENV_PATH="$ROOT_DIR/.env"
+elif [ -d "$ROOT_DIR/venv" ]; then
+    VENV_PATH="$ROOT_DIR/venv"
 else
-    echo "El entorno virtual del Frontend ya existe."
+    
+    if [ ! -d ".venv" ]; then
+        echo "Creando entorno virtual (.venv) para el Frontend..."
+        python3 -m venv .venv
+    fi
+    VENV_PATH="$PWD/.venv"
 fi
 
-
-echo "Activando entorno virtual e instalando dependencias desde tu requirements.txt..."
-source .venv/bin/activate
+echo "Usando entorno virtual: $VENV_PATH"
+source "$VENV_PATH/bin/activate"
 pip install --upgrade pip
 pip install -r requirements.txt
 deactivate
