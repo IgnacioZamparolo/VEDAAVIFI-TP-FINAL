@@ -34,81 +34,81 @@
 </table>
 <div>
     <ul class="botones-form">
-        <li><button id="btn-editar-menu">Editar</button></li>
-        <li><button id="btn-agregar-menu">Agregar</button></li>
-        <li><button id="btn-eliminar-menu">Eliminar</button></li>
+        <li><button class="form__btn"  id="btn-editar-menu">Editar</button></li>
+        <li><button class="form__btn" id="btn-agregar-menu">Agregar</button></li>
+        <li><button class="form__btn" id="btn-eliminar-menu">Eliminar</button></li>
     </ul>
 </div>
 <div class="form" id="agregar_prod" style="display:none">
     <form action="/admin/agregarProducto" method="POST">
-        <label for="nombre">Nombre del producto:</label>
-        <input type="text" id="nombre" name="nombre" placeholder="Nombre" required>
+        <label class="form__label" for="nombre">Nombre del producto:</label>
+        <input class="form__input" type="text" id="nombre" name="nombre" placeholder="Nombre" required>
 
-        <label for="descripcion">Descripción:</label>
-        <input type="text" id="descripcion" rows=4 name="descripcion" placeholder="descripcion" required>
+        <label class="form__label" for="descripcion">Descripción:</label>
+        <input class="form__input" type="text" id="descripcion" rows=4 name="descripcion" placeholder="descripcion" required>
 
-        <label for="precio">Precio:</label>
-        <input type="number" id="precio" name="precio" placeholder="precio" required>
+        <label class="form__label" for="precio">Precio:</label>
+        <input class="form__input" type="number" id="precio" name="precio" placeholder="precio" required>
 
-        <label for="categoria">Categoria:</label>
-        <input type="text" id="categoria" name="categoria" placeholder="categoria" required>
+        <label class="form__label" for="categoria">Categoria:</label>
+        <input class="form__input" type="text" id="categoria" name="categoria" placeholder="categoria" required>
 
-        <label for="lactosa">Lactosa:</label>
-        <input type="checkbox" id="lactosa" name="lactosa">
+        <label class="form__label" for="lactosa">Lactosa:</label>
+        <input  type="checkbox" id="lactosa" name="lactosa">
 
-        <label for="vegetariano">Vegetariano:</label>
-        <input type="checkbox" id="vegetariano" name="vegetariano">
+        <label class="form__label" for="vegetariano">Vegetariano:</label>
+        <input  type="checkbox" id="vegetariano" name="vegetariano">
 
-        <label for="vegano">Vegano:</label>
+        <label class="form__label" for="vegano">Vegano:</label>
         <input type="checkbox" id="vegano" name="vegano">
 
-        <label for="sin_tacc">Sin Tacc:</label>
+        <label class="form__label" for="sin_tacc">Sin Tacc:</label>
         <input type="checkbox" id="sin_tacc" name="sin_tacc">
 
-        <button type="submit">Enviar</button>
+        <button class="form__btn--submit" type="submit">Enviar</button>
     </form>
 </div>
 
 <div class="form" id="eliminar_prod" style="display:none">
     <form action="/admin/eliminarProducto" method="POST">
-        <label for="id_producto">Id del producto: </label>
-        <input type="text" id="id_producto" name="id_producto" placeholder="Id Producto" required>
+        <label class="form__label" for="id_producto">Id del producto: </label>
+        <input class="form__input" type="text" id="id_producto" name="id_producto" placeholder="Id Producto" required>
 
 
-        <button type="submit">Enviar</button>
+        <button class="form__btn--submit" type="submit">Enviar</button>
     </form>
 </div>
 
 <div class="form" id="editar_prod" style="display:none">
     <form action="/admin/editarProducto" method="POST">
-        <label for="id_producto">Id del producto: </label>
-        <input type="text" id="id_producto" name="id_producto" placeholder="Id Producto" required>
+        <label class="form__label" for="id_producto">Id del producto: </label>
+        <input class="form__input" type="text" id="id_producto" name="id_producto" placeholder="Id Producto" required>
 
-        <label for="nombre">Nombre del producto:</label>
-        <input type="text" id="nombre" name="nombre" placeholder="Nombre" required>
+        <label class="form__label" for="nombre">Nombre del producto:</label>
+        <input class="form__input" type="text" id="nombre" name="nombre" placeholder="Nombre" required>
 
-        <label for="descripcion">Descripción:</label>
-        <input type="text" id="descripcion" rows=4 name="descripcion" placeholder="descripcion" required>
+        <label class="form__label" for="descripcion">Descripción:</label>
+        <input class="form__input" type="text" id="descripcion" rows=4 name="descripcion" placeholder="descripcion" required>
 
-        <label for="precio">Precio:</label>
-        <input type="number" id="precio" name="precio" placeholder="precio" required>
+        <label class="form__label" for="precio">Precio:</label>
+        <input class="form__input" type="number" id="precio" name="precio" placeholder="precio" required>
 
-        <label for="categoria">Categoria:</label>
-        <input type="text" id="categoria" name="categoria" placeholder="categoria" required>
+        <label class="form__label" for="categoria">Categoria:</label>
+        <input class="form__input" type="text" id="categoria" name="categoria" placeholder="categoria" required>
 
-        <label for="lactosa">Lactosa:</label>
+        <label class="form__label" for="lactosa">Lactosa:</label>
         <input type="checkbox" id="lactosa" name="lactosa">
 
-        <label for="vegetariano">Vegetariano:</label>
+        <label class="form__label" for="vegetariano">Vegetariano:</label>
         <input type="checkbox" id="vegetariano" name="vegetariano">
 
-        <label for="vegano">Vegano:</label>
+        <label class="form__label" for="vegano">Vegano:</label>
         <input type="checkbox" id="vegano" name="vegano">
 
-        <label for="sin_tacc">Sin Tacc:</label>
+        <label class="form__label" for="sin_tacc">Sin Tacc:</label>
         <input type="checkbox" id="sin_tacc" name="sin_tacc">
 
-        <button type="submit">Enviar</button>
+        <button class="form__btn--submit" type="submit">Enviar</button>
     </form>
 </div>
 
@@ -132,44 +132,44 @@
 </table>
 <div>
     <ul class="botones-form-combos">
-        <li><button id="btn-editar-combo">Editar</button></li>
-        <li><button id="btn-agregar-combo">Agregar</button></li>
-        <li><button id="btn-eliminar-combo">Eliminar</button></li>
+        <li><button class="form__btn" id="btn-editar-combo">Editar</button></li>
+        <li><button class="form__btn" id="btn-agregar-combo">Agregar</button></li>
+        <li><button class="form__btn" id="btn-eliminar-combo">Eliminar</button></li>
     </ul>
 </div>
 <div class="form" id="agregar_combo" style="display:none">
     <form action="/admin/agregarCombo" method="POST">
-        <label for="nombre">Nombre del combo:</label>
-        <input type="text" id="nombre" name="nombre" placeholder="Nombre" required>
+        <label class="form__label" for="nombre">Nombre del combo:</label>
+        <input class="form__input" type="text" id="nombre" name="nombre" placeholder="Nombre" required>
 
-        <label for="precio">Precio:</label>
-        <input type="number" id="precio" name="precio" placeholder="precio" required>
+        <label class="form__label" for="precio">Precio:</label>
+        <input class="form__input" type="number" id="precio" name="precio" placeholder="precio" required>
 
-        <button type="submit">Enviar</button>
+        <button class="form__btn--submit" type="submit">Enviar</button>
     </form>
 </div>
 
 <div class="form" id="eliminar_combo" style="display:none">
     <form action="/admin/eliminarCombo" method="POST">
-        <label for="id_combo">Id del combo: </label>
-        <input type="text" id="id_combo" name="id_combo" placeholder="Id Combo" required>
+        <label class="form__label" for="id_combo">Id del combo: </label>
+        <input class="form__input" type="text" id="id_combo" name="id_combo" placeholder="Id Combo" required>
 
-        <button type="submit">Enviar</button>
+        <button class="form__btn--submit" type="submit">Enviar</button>
     </form>
 </div>
 
 <div class="form" id="editar_combo" style="display:none">
     <form action="/admin/editarCombo" method="POST">
-        <label for="id_combo">Id del combo: </label>
-        <input type="text" id="id_combo" name="id_combo" placeholder="Id Combo" required>
+        <label class="form__label" for="id_combo">Id del combo: </label>
+        <input class="form__input" type="text" id="id_combo" name="id_combo" placeholder="Id Combo" required>
 
-        <label for="nombre">Nombre del combo:</label>
-        <input type="text" id="nombre" name="nombre" placeholder="Nombre" required>
+        <label class="form__label" for="nombre">Nombre del combo:</label>
+        <input class="form__input" type="text" id="nombre" name="nombre" placeholder="Nombre" required>
 
-        <label for="precio">Precio:</label>
-        <input type="number" id="precio" name="precio" placeholder="precio" required>
+        <label class="form__label" for="precio">Precio:</label>
+        <input class="form__input" type="number" id="precio" name="precio" placeholder="precio" required>
 
-        <button type="submit">Enviar</button>
+        <button class="form__btn--submit" type="submit">Enviar</button>
     </form>
 </div>
 
@@ -194,54 +194,54 @@
 </table>
 <div>
     <ul class="botones-form-combos-version">
-        <li><button id="btn-editar-combo-version">Editar</button></li>
-        <li><button id="btn-agregar-combo-version">Agregar</button></li>
-        <li><button id="btn-eliminar-combo-version">Eliminar</button></li>
-        <li><button id="btn-ver-combo-version">Ver</button></li>
+        <li><button class="form__btn" id="btn-editar-combo-version">Editar</button></li>
+        <li><button class="form__btn" id="btn-agregar-combo-version">Agregar</button></li>
+        <li><button class="form__btn" id="btn-eliminar-combo-version">Eliminar</button></li>
+        <li><button class="form__btn" id="btn-ver-combo-version">Ver</button></li>
     </ul>
 </div>
 <div class="form" id="agregar_combo_version" style="display:none">
     <form action="/admin/agregarComboVersion" method="POST">
-        <label for="descripcion">Nombre de la version:</label>
-        <input type="text" id="descripcion" name="descripcion" placeholder="Descripcion" required>
+        <label class="form__label" for="descripcion">Nombre de la version:</label>
+        <input class="form__input" type="text" id="descripcion" name="descripcion" placeholder="Descripcion" required>
 
-        <label for="personas">Personas:</label>
-        <input type="number" id="personas" name="personas" placeholder="Personas" required>
+        <label class="form__label" for="personas">Personas:</label>
+        <input class="form__input" type="number" id="personas" name="personas" placeholder="Personas" required>
 
-        <label for="precio">Precio:</label>
-        <input type="number" id="precio" name="precio" placeholder="precio" required>
+        <label class="form__label" for="precio">Precio:</label>
+        <input class="form__input" type="number" id="precio" name="precio" placeholder="precio" required>
 
-        <label for="id_combo">Precio:</label>
-        <input type="number" id="id_combo" name="id_combo" placeholder="id combo" required>
+        <label class="form__label" for="id_combo">Id Combo Version:</label>
+        <input class="form__input" type="number" id="id_combo" name="id_combo" placeholder="id combo" required>
 
-        <button type="submit">Enviar</button>
+        <button class="form__btn--submit" type="submit">Enviar</button>
     </form>
 </div>
 
 <div class="form" id="eliminar_combo_version" style="display:none">
     <form action="/admin/eliminarComboVersion" method="POST">
-        <label for="id_version">Id de la version: </label>
-        <input type="number" id="id_version" name="id_version" placeholder="Id Version" required>
+        <label class="form__label" for="id_version">Id de la version: </label>
+        <input class="form__input" type="number" id="id_version" name="id_version" placeholder="Id Version" required>
 
-        <button type="submit">Enviar</button>
+        <button class="form__btn--submit" type="submit">Enviar</button>
     </form>
 </div>
 
 <div class="form" id="editar_combo_version" style="display:none">
     <form action="/admin/editarComboVersion" method="POST">
-        <label for="id_version">Id de la version: </label>
-        <input type="number" id="id_version" name="id_version" placeholder="Id Version" required>
+        <label class="form__label" for="id_version">Id de la version: </label>
+        <input class="form__input" type="number" id="id_version" name="id_version" placeholder="Id Version" required>
 
-        <label for="personas">Personas:</label>
-        <input type="number" id="personas" name="personas" placeholder="Personas" required>
+        <label class="form__label" for="personas">Personas:</label>
+        <input class="form__input" type="number" id="personas" name="personas" placeholder="Personas" required>
 
-        <label for="Descripcion">Nombre de la version:</label>
-        <input type="text" id="descripcion" name="descripcion" placeholder="Descripcion" required>
+        <label class="form__label" for="Descripcion">Nombre de la version:</label>
+        <input class="form__input" type="text" id="descripcion" name="descripcion" placeholder="Descripcion" required>
 
-        <label for="precio">Precio:</label>
-        <input type="number" id="precio" name="precio" placeholder="precio" required>
+        <label class="form__label" for="precio">Precio:</label>
+        <input class="form__input" type="number" id="precio" name="precio" placeholder="precio" required>
 
-        <button type="submit">Enviar</button>
+        <button class="form__btn--submit" type="submit">Enviar</button>
     </form>
 </div>
 
@@ -266,27 +266,27 @@
 </table>
 <div>
     <ul class="botones-form-combos-detalle">
-        <li><button id="btn-agregar-combo-detalle">Agregar</button></li>
-        <li><button id="btn-ver-combo-detalle">Ver</button></li>
+        <li><button class="form__btn" id="btn-agregar-combo-detalle">Agregar</button></li>
+        <li><button class="form__btn" id="btn-ver-combo-detalle">Ver</button></li>
     </ul>
 </div>
 <div class="form" id="agregar_combo_detalle" style="display:none">
     <form action="/admin/agregarComboDetalle" method="POST">
-        <label for="id_combo">Id del combo:</label>
-        <input type="number" id="id_combo" name="id_combo" placeholder="id_combo" required>
+        <label class="form__label" for="id_combo">Id del combo:</label>
+        <input class="form__input" type="number" id="id_combo" name="id_combo" placeholder="id_combo" required>
 
-        <label for="id_producto">id_producto:</label>
-        <input type="number" id="id_producto" name="id_producto" placeholder="id_producto" required>
+        <label class="form__label" for="id_producto">id_producto:</label>
+        <input class="form__input" type="number" id="id_producto" name="id_producto" placeholder="id_producto" required>
 
-        <button type="submit">Enviar</button>
+        <button class="form__btn" type="submit">Enviar</button>
     </form>
 </div>
 <div class="form" id="obtener_combo_detalle" style="display:none">
     <form action="/admin/obtenerComboDetalle" method="GET">
-        <label for="id_combo">Id del combo:</label>
-        <input type="number" id="id_combo" name="id_combo" placeholder="id_combo" required>
+        <label class="form__label" for="id_combo">Id del combo:</label>
+        <input class="form__input" type="number" id="id_combo" name="id_combo" placeholder="id_combo" required>
 
-        <button type="submit">Enviar</button>
+        <button class="form__btn--submit" type="submit">Enviar</button>
     </form>
 </div>
 
