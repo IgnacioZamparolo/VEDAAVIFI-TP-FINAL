@@ -3,6 +3,11 @@ from flask import Blueprint, jsonify, request
 from db_connection import get_connection 
 from utils import requiere_admin
 
+EXTENSIONES_PERMITIDAS = {'png', 'jpg', 'jpeg', 'webp'}
+
+def archivo_permitido(nombre_archivo):
+    return '.' in nombre_archivo and nombre_archivo.rsplit('.', 1)[1].lower() in EXTENSIONES_PERMITIDAS
+
 productos = Blueprint("productos", __name__)
 
 @productos.route("/productos", methods = ["GET"]) # cliente y admin
@@ -58,41 +63,6 @@ def actualizar_productos(id_producto):
     finally:
         if cursor: cursor.close()
         if conn: conn.close()
-      
-        
-       
-
-@productos.route("/productos", methods=["POST"]) # admin
-@requiere_admin
-def agregar_producto():
-    conn = None
-    cursor = None
-    try: 
-        conn = get_connection()
-        cursor = conn.cursor(dictionary=True)
-        data = request.get_json()
-
-        if data is None:
-            return jsonify({"error": "Ingrese todos los datos"}), 400
-
-        campos_obligatorios = ["nombre", "descripcion", "precio", "categoria", "lactosa", "vegetariano", "vegano", "sin_tacc"]
-        for campo in campos_obligatorios:
-            if campo not in data:
-                return jsonify({"error": f"Falta el campo requerido {campo}"}), 400
-
-        cursor.execute("INSERT INTO productos (nombre, descripcion, precio, categoria, lactosa, vegetariano, vegano, sin_tacc) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", (data["nombre"], data["descripcion"], data["precio"], data["categoria"], data["lactosa"], data["vegetariano"], data["vegano"], data["sin_tacc"]))
-        conn.commit()
-
-        id_nuevo = cursor.lastrowid
-
-        cursor.execute("SELECT * FROM productos WHERE id_producto = %s", (id_nuevo,))
-        nuevo_producto = cursor.fetchone()
-        return jsonify(nuevo_producto), 201
-    except Exception as e:
-        return jsonify({"error": f"Error al agregar el producto: {str(e)}"}), 500
-    finally:
-        if cursor: cursor.close()
-        if conn: conn.close()
 
 @productos.route("/productos", methods=["POST"]) # admin
 @requiere_admin
@@ -105,6 +75,10 @@ def agregar_producto():
         
         data = request.form
         archivo_imagen = request.files.get("imagen") 
+
+        if archivo_imagen:
+            if not archivo_permitido(archivo_imagen.filename):
+                return jsonify({"error": "Formato no permitido. Solo podés subir jpg, png, jpeg o webp"}), 400
 
         if not data:
             return jsonify({"error": "Ingrese todos los datos"}), 400

@@ -29,8 +29,6 @@ SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 SUPABASE_BUCKET = os.getenv("SUPABASE_BUCKET")
  
-=======
- 
 # Credenciales
 SMTP_USER=os.environ.get("SMTP_USER")
 SMTP_PASSWORD=os.environ.get("SMTP_PASSWORD")
@@ -42,4 +40,4 @@ MALAS_PALABRAS_LISTA = [
     for palabra in malas_palabras_raw.split(",") 
     if palabra.strip()
 ]
->>>>>>> 0fb4130419988628cb995c4a683d96e8212c0524
+
