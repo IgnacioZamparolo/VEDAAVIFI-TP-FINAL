@@ -41,3 +41,5 @@ MALAS_PALABRAS_LISTA = [
     if palabra.strip()
 ]
 
+EXTENSIONES_PERMITIDAS = {'png', 'jpg', 'jpeg', 'webp'}
+

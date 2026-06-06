@@ -141,6 +141,8 @@ def enviar_mail_resenia(mail):
         return False
 
 def actualizar_estados():
+    conn = None
+    cursor = None
     try:
         conn = get_connection()
         cursor = conn.cursor()
@@ -156,13 +158,14 @@ def actualizar_estados():
         print(f"Error al actualizar estados: {e}")
     
     finally:
+    if cursor:
         cursor.close()
+    if conn:
         conn.close()
 
 scheduler = BackgroundScheduler()
 scheduler.add_job(actualizar_estados, "interval", minutes=1)
 scheduler.start()
-
 
 # Errores
 def construir_error_api(code: str, message: str, description: str):
