@@ -7,8 +7,8 @@ load_dotenv()
 
 DB_CONFIG = {
     "host": "localhost",
-    "user": "root",
-    "password": "my_password",
+    "user": "admin",
+    "password": "1234",
     "database": "parrilla_argentina"
 }
 
