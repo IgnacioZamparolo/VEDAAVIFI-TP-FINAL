@@ -71,11 +71,11 @@ def agregar_ServiciosExtras():
     api.agregar_servicio(datos, token)
     return redirect(url_for('frontend.editar_SEAdmi'))
 
-@frontend_bp.route("/admin/eliminarSEAdmi", methods=['POST'])
+@frontend_bp.route("/admin/eliminarServicio", methods=['POST'])
 @requiere_login()
 def eliminar_servicio():
     token = token_actual()
-    servicio = request.form.get('id')
+    servicio = request.form.get('id_servicio')
     api.eliminar_servicio(int(servicio), token)
     return redirect(url_for('frontend.editar_SEAdmi'))
 
@@ -114,7 +114,7 @@ def agregar_producto():
 @requiere_login()
 def eliminar_producto():
     token = token_actual()
-    producto = request.form.get('id')
+    producto = request.form.get('id_producto')
     api.eliminar_producto(int(producto), token)
     return redirect(url_for('frontend.editar_menu'))
 
@@ -154,7 +154,7 @@ def agregar_combo():
 @requiere_login()
 def eliminar_combo():
     token = token_actual()
-    combo = request.form.get('id')
+    combo = request.form.get('id_combo')
     api.eliminar_combo(int(combo), token)
     return redirect(url_for('frontend.editar_menu'))
 
@@ -208,7 +208,7 @@ def editar_combo_version():
     return redirect(url_for('frontend.editar_menu'))
 
 #ABM COMBOS DETALLE
-@frontend_bp.route("/admin/editarComboDetalle", methods=['POST'])
+@frontend_bp.route("/admin/agregarComboDetalle", methods=['POST'])
 @requiere_login()
 def agregar_combo_detalle():
     token = token_actual()
