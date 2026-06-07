@@ -1,0 +1,259 @@
+{% extends "base_admin.html" %}
+
+{% block title %}
+  Reservas — Panel Admin
+{% endblock %}
+
+{% block extra_css %}
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/reservas_admin.css') }}"
+  >
+{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+  <div class="hero__content">
+    <h1 class="hero__title">Administración de reservas</h1>
+
+    <p class="hero__subtitle">
+      Consultá, editá, confirmá o eliminá las reservas registradas.
+    </p>
+  </div>
+</section>
+
+<section class="table-section">
+  <div class="reservas-card">
+
+    {% if reservas %}
+
+      <div class="table-responsive">
+        <table class="reservas-table">
+
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Cliente</th>
+              <th>Fecha</th>
+              <th>Horario</th>
+              <th>Personas</th>
+              <th>Mesa</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {% for reserva in reservas %}
+
+              <tr>
+                <td>{{ reserva.id_reserva }}</td>
+
+                <td>{{ reserva.mail }}</td>
+
+                <td>{{ reserva.dia }}</td>
+
+                <td>{{ reserva.horario }}</td>
+
+                <td>{{ reserva.cant_personas }}</td>
+
+                <td>
+                  {% if reserva.mesa %}
+                    {{ reserva.mesa }}
+                  {% else %}
+                    Sin asignar
+                  {% endif %}
+                </td>
+
+                <td>
+                  {% if reserva.cancelada %}
+                    <span class="estado estado--cancelada">
+                      Cancelada
+                    </span>
+
+                  {% elif reserva.finalizada %}
+                    <span class="estado estado--finalizada">
+                      Finalizada
+                    </span>
+
+                  {% elif reserva.vencida %}
+                    <span class="estado estado--vencida">
+                      Vencida
+                    </span>
+
+                  {% elif reserva.confirmada %}
+                    <span class="estado estado--confirmada">
+                      Confirmada
+                    </span>
+
+                  {% elif reserva.pendiente %}
+                    <span class="estado estado--pendiente">
+                      Pendiente
+                    </span>
+
+                  {% else %}
+                    <span class="estado">
+                      Sin estado
+                    </span>
+                  {% endif %}
+                </td>
+
+                <td class="reservas-actions">
+
+                  {% if reserva.pendiente %}
+                    <form
+                      action="{{ url_for(
+                        'reservas_admin.confirmar_reserva',
+                        id_reserva=reserva.id_reserva
+                      ) }}"
+                      method="POST"
+                    >
+                      <button
+                        type="submit"
+                        class="form__btn form__btn--confirmar"
+                      >
+                        Confirmar
+                      </button>
+                    </form>
+                  {% endif %}
+
+                  <details class="editar-reserva">
+                    <summary class="form__btn form__btn--editar">
+                      Editar
+                    </summary>
+
+                    <form
+                      action="{{ url_for(
+                        'reservas_admin.editar_reserva',
+                        id_reserva=reserva.id_reserva
+                      ) }}"
+                      method="POST"
+                      class="editar-reserva__form"
+                    >
+
+                      <div class="form__group">
+                        <label
+                          class="form__label"
+                          for="cant_personas_{{ reserva.id_reserva }}"
+                        >
+                          Cantidad de personas
+                        </label>
+
+                        <input
+                          class="form__input"
+                          type="number"
+                          id="cant_personas_{{ reserva.id_reserva }}"
+                          name="cant_personas"
+                          value="{{ reserva.cant_personas }}"
+                          min="1"
+                          max="10"
+                          required
+                        >
+                      </div>
+
+                      <div class="form__group">
+                        <label
+                          class="form__label"
+                          for="dia_{{ reserva.id_reserva }}"
+                        >
+                          Fecha
+                        </label>
+
+                        <input
+                          class="form__input"
+                          type="date"
+                          id="dia_{{ reserva.id_reserva }}"
+                          name="dia"
+                          value="{{ reserva.dia }}"
+                          required
+                        >
+                      </div>
+
+                      <div class="form__group">
+                        <label
+                          class="form__label"
+                          for="horario_{{ reserva.id_reserva }}"
+                        >
+                          Horario
+                        </label>
+
+                        <input
+                          class="form__input"
+                          type="time"
+                          id="horario_{{ reserva.id_reserva }}"
+                          name="horario"
+                          value="{{ reserva.horario[:5] }}"
+                          required
+                        >
+                      </div>
+
+                      <div class="form__group">
+                        <label
+                          class="form__label"
+                          for="mesa_{{ reserva.id_reserva }}"
+                        >
+                          Mesa
+                        </label>
+
+                        <input
+                          class="form__input"
+                          type="number"
+                          id="mesa_{{ reserva.id_reserva }}"
+                          name="mesa"
+                          value="{{ reserva.mesa if reserva.mesa else '' }}"
+                          min="1"
+                          placeholder="Sin asignar"
+                        >
+                      </div>
+
+                      <button
+                        type="submit"
+                        class="form__btn form__btn--submit"
+                      >
+                        Guardar cambios
+                      </button>
+
+                    </form>
+                  </details>
+
+                  <form
+                    action="{{ url_for(
+                      'reservas_admin.eliminar_reserva',
+                      id_reserva=reserva.id_reserva
+                    ) }}"
+                    method="POST"
+                  >
+                    <button
+                      type="submit"
+                      class="form__btn form__btn--danger"
+                    >
+                      Eliminar
+                    </button>
+                  </form>
+
+                </td>
+              </tr>
+
+            {% endfor %}
+          </tbody>
+
+        </table>
+      </div>
+
+    {% else %}
+
+      <div class="reservas-empty">
+        <h2>No hay reservas registradas</h2>
+
+        <p>
+          Cuando se creen nuevas reservas, aparecerán en esta sección.
+        </p>
+      </div>
+
+    {% endif %}
+
+  </div>
+</section>
+
+{% endblock %}
