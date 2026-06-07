@@ -1,0 +1,27 @@
+{% extends 'base_admin.html' %}
+{% block title %}Parrilla Argentina — Gestión{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero__content">
+    <h1 class="hero__title">Gestión</h1>
+    <p class="hero__subtitle">Administrá todos los recursos del restaurante.</p>
+  </div>
+</section>
+<section class="table-section">
+  <div class="search-card" style="max-width: 700px; width: 100%;">
+    <dl class="datalist">
+      <dt>Menú (Productos y Combos)</dt>
+      <dd><a href="{{ url_for('auth.menu') }}" class="form__btn form__btn--submit" style="padding: .7rem 1.4rem; font-size: .95rem; text-decoration: none;">Gestionar</a></dd>
+
+      <dt>Reseñas</dt>
+      <dd><a href="{{ url_for('auth.resenias') }}" class="form__btn form__btn--submit" style="padding: .7rem 1.4rem; font-size: .95rem; text-decoration: none;">Gestionar</a></dd>
+
+      <dt>Reservas</dt>
+      <dd><a href="{{ url_for('auth.reservas') }}" class="form__btn form__btn--submit" style="padding: .7rem 1.4rem; font-size: .95rem; text-decoration: none;">Gestionar</a></dd>
+
+      <dt>Servicios extra</dt>
+      <dd><a href="{{ url_for('auth.servicios') }}" class="form__btn form__btn--submit" style="padding: .7rem 1.4rem; font-size: .95rem; text-decoration: none;">Gestionar</a></dd>
+    </dl>
+  </div>
+</section>
+{% endblock %}

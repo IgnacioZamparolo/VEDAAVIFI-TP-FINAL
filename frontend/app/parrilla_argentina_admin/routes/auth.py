@@ -63,6 +63,11 @@ def reportes():
     return render_template('reportes.html', usuario=usuario, estadisticas=resultado['data']
     )
 
+@auth_bp.route('/gestion')
+@requiere_login()
+def gestion():
+    return render_template('gestion.html')
+
 
 
  
