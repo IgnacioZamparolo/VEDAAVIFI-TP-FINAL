@@ -1,13 +1,13 @@
 import logging
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 
-from ..services.productos import (
+from services.productos import (
     obtener_productos_disponibles,
     obtener_producto_por_id,
     crear_producto,
 )
-from ..constants import CATEGORIAS_VALIDAS, MAX_FILE_SIZE_MB
-from ..utils import token_actual, requiere_login
+from constants import CATEGORIAS_VALIDAS, MAX_FILE_SIZE_MB
+from utils import token_actual, requiere_login
 
 logger = logging.getLogger(__name__)
 
@@ -23,15 +23,6 @@ def index():
     return render_template('editarMenuAdmi.html', productos=productos)
 
 
-@productos_bp.route('/producto/<int:id>')
-@requiere_login()
-def detalle_producto(id):
-    """Página de detalle de un producto."""
-    token = token_actual()
-    producto = obtener_producto_por_id(id, token)
-    return render_template('detalle_producto.html', producto=producto)
-
-
 @productos_bp.route('/productos/nuevo', methods=['GET', 'POST'])
 @requiere_login()
 def nuevo_producto():
@@ -40,7 +31,7 @@ def nuevo_producto():
 
     if request.method == 'GET':
         return render_template(
-            'nueva_producto.html',
+            'nuevo_producto.html',
             categorias=sorted(CATEGORIAS_VALIDAS),
         )
 
@@ -98,7 +89,7 @@ def nuevo_producto():
 
     if 'errores' in resultado:
         return render_template(
-            'nueva_producto.html',
+            'nuevo_producto.html',
             categorias=sorted(CATEGORIAS_VALIDAS),
             errores=resultado['errores'],
             form=request.form,
