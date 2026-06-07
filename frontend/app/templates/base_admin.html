@@ -27,8 +27,6 @@
                         <button type="submit" class="nav__btn">Cerrar sesión</button>
                     </form>
                 </li>
-                {% else %}
-                    <li><a href="{{ url_for('auth.login') }}" class="nav__link">Iniciar sesión</a></li>
                 {% endif %}
             </ul>
         </nav>
