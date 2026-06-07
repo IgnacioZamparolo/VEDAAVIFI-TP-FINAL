@@ -43,6 +43,10 @@ MALAS_PALABRAS_LISTA = [
     for palabra in malas_palabras_raw.split(",") 
     if palabra.strip()
 ]
-
+# Imagenes
 EXTENSIONES_PERMITIDAS = {'png', 'jpg', 'jpeg', 'webp'}
 
+# Credenciales DB
+DB_USER = os.getenv("DB_USER")
+DB_PASSWORD = os.getenv("DB_PASSWORD")
+DATABASE = os.getenv("DATABASE")
