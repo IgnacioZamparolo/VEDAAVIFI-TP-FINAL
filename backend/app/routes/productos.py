@@ -142,7 +142,9 @@ def eliminar_producto(id_producto):
     except Exception as e:
         return jsonify({"error": f"Error al eliminar el producto: {str(e)}"}), 500
     finally:
-        if cursor: cursor.close()
-        if conn: conn.close()
+        if cursor: 
+            cursor.close()
+        if conn:
+            conn.close()
 
         
