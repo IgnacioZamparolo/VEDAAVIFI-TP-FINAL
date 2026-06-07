@@ -1,6 +1,6 @@
 import logging
 import requests
-from constants import API_BASE_URL, REQUEST_TIMEOUT
+from ..constants import API_BASE_URL, REQUEST_TIMEOUT
 
 logger = logging.getLogger(__name__)
 

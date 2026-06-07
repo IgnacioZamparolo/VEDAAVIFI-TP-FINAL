@@ -1,13 +1,13 @@
 import logging
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 
-from services.productos import (
+from ..services.productos import (
     obtener_productos_disponibles,
     obtener_producto_por_id,
     crear_producto,
 )
-from constants import CATEGORIAS_VALIDAS, MAX_FILE_SIZE_MB
-from utils import token_actual, requiere_login
+from ..constants import CATEGORIAS_VALIDAS, MAX_FILE_SIZE_MB
+from ..utils import token_actual, requiere_login
 
 logger = logging.getLogger(__name__)
 
