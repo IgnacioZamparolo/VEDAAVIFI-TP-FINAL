@@ -4,6 +4,7 @@ from flask import Flask, render_template
 from app.routes import frontend_bp
 from app.parrilla_argentina_admin.routes.auth import auth_bp
 from app.parrilla_argentina_admin.routes.productos import productos_bp
+from app.parrilla_argentina_admin.routes.reservas import reservas_bp
 
 logging.basicConfig(level=logging.DEBUG, format='%(levelname)s - %(name)s - %(message)s')
 
@@ -18,6 +19,7 @@ app.secret_key = os.getenv('SECRET_KEY', 'change-me-please-frontend')
 app.register_blueprint(frontend_bp)
 app.register_blueprint(auth_bp, url_prefix='/admin')
 app.register_blueprint(productos_bp, url_prefix='/admin')
+app.register_blueprint(reservas_bp, url_prefix="/admin")
 
 @app.errorhandler(404)
 def page_not_found(error):
