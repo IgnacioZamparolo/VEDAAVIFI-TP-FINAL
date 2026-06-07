@@ -3,6 +3,7 @@ from db_connection import get_connection
 from utils import generar_qr, enviar_qr
 from datetime import date, datetime, timedelta
 from utils import requiere_admin
+import traceback
 
 reservas = Blueprint("reservas", __name__)
 
@@ -14,10 +15,14 @@ def ver_reservas():
     
     try:
         conn = get_connection() 
-        cursor = conn.cursor() 
+        cursor = conn.cursor(dictionary=True) 
     
         cursor.execute("SELECT * FROM reservas")
         resultado = cursor.fetchall()
+
+        for reserva in resultado:
+            reserva["dia"] = reserva["dia"].isoformat()
+            reserva["horario"] = str(reserva["horario"])
           
         return jsonify(resultado), 200
         
@@ -75,6 +80,7 @@ def crear_reserva():
         conn.close()
 
 @reservas.route("/reservas/<int:id_reserva>", methods=["PUT"]) # admin
+@requiere_admin
 def actualizar_reserva(id_reserva):  
     try:             
         conn = get_connection()
@@ -96,11 +102,13 @@ def actualizar_reserva(id_reserva):
             (data["cant_personas"], data["horario"], data["dia"], data["mesa"], id_reserva))
          
         conn.commit()  
-        cursor.execute("SELECT * FROM reservas WHERE id_reserva = %s", (id_reserva,))
-        reserva_actualizada = cursor.fetchone()
-        return jsonify(reserva_actualizada), 200
+        return jsonify({
+            "mensaje": "Reserva actualizada correctamente",
+            "id_reserva": id_reserva}), 200
     
     except Exception as e:
+        print(f"Error al actualizar reserva: {e}")
+        traceback.print_exc()
         return jsonify({"error": f"Error al actualizar reserva: {str(e)}"}), 500
                        
     finally:
@@ -124,9 +132,13 @@ def eliminar_reserva(id_reserva):
         cursor.execute("DELETE FROM reservas WHERE id_reserva = %s", (id_reserva,))  
         conn.commit()
 
-        return jsonify(reserva), 200
+        return jsonify({
+            "mensaje": "Reserva eliminada correctamente",
+            "id_reserva": id_reserva}), 200
 
     except Exception as e:
+        print(f"Error al editar reserva: {e}")
+        traceback.print_exc()
         return jsonify({"error": f"Error al eliminar reserva: {str(e)}"}), 500
                        
     finally:
@@ -147,11 +159,14 @@ def confirmar_reserva(id_reserva):
         
         cursor.execute(""" UPDATE reservas SET pendiente = FALSE, confirmada = TRUE WHERE id_reserva = %s """, (id_reserva,))
         conn.commit()
-        
-        cursor.execute("SELECT * FROM reservas WHERE id_reserva = %s", (id_reserva,)) 
-        return jsonify(cursor.fetchone()), 200 
+
+        return jsonify({
+            "mensaje": "Reserva confirmada correctamente",
+            "id_reserva": id_reserva}), 200
      
     except Exception as e:
+        print(f"Error al confirmar reserva: {e}")
+        traceback.print_exc()
         return jsonify({"error": f"Error al confirmar reserva: {str(e)}"}), 500 
      
     finally: 

@@ -52,6 +52,67 @@ def obtener_reservas(token: str) -> dict:
         return {'ok': True, 'data': response.json()}
     return _respuesta_error(response)
 
+def actualizar_reserva(id_reserva: int, datos: dict, token: str) -> dict:
+    headers = {'Authorization': f'Bearer {token}'}
+
+    try:
+        response = requests.put(
+            f'{API_BASE_URL}/reservas/{id_reserva}',
+            headers=headers,
+            json=datos,
+            timeout=REQUEST_TIMEOUT
+        )
+    except requests.exceptions.ConnectionError:
+        return _error_conexion()
+
+    if response.status_code == 200:
+        return {
+            'ok': True,
+            'data': response.json()
+        }
+
+    return _respuesta_error(response)
+
+def confirmar_reserva(id_reserva: int, token: str) -> dict:
+    headers = {'Authorization': f'Bearer {token}'}
+
+    try:
+        response = requests.patch(
+            f'{API_BASE_URL}/reservas/{id_reserva}/confirmar',
+            headers=headers,
+            timeout=REQUEST_TIMEOUT
+        )
+    except requests.exceptions.ConnectionError:
+        return _error_conexion()
+
+    if response.status_code == 200:
+        return {
+            'ok': True,
+            'data': response.json()
+        }
+
+    return _respuesta_error(response)
+
+def eliminar_reserva(id_reserva: int, token: str) -> dict:
+    headers = {'Authorization': f'Bearer {token}'}
+
+    try:
+        response = requests.delete(
+            f'{API_BASE_URL}/reservas/{id_reserva}',
+            headers=headers,
+            timeout=REQUEST_TIMEOUT
+        )
+    except requests.exceptions.ConnectionError:
+        return _error_conexion()
+
+    if response.status_code == 200:
+        return {
+            'ok': True,
+            'data': response.json()
+        }
+
+    return _respuesta_error(response)
+
 def obtener_resenias(token: str) -> dict:
     response = _get('/resenias', token=token)
     if response is None:

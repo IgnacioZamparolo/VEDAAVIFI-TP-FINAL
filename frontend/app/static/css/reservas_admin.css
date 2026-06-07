@@ -1,0 +1,191 @@
+.table-section {
+  width: 100%;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.reservas-card {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.reservas-table {
+  width: 100%;
+  min-width: 1000px;
+  border-collapse: collapse;
+  table-layout: auto;
+}
+
+.reservas-table th,
+.reservas-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #dddddd;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.reservas-table th {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.reservas-table tbody tr:hover {
+  background-color: #f7f7f7;
+}
+
+.estado {
+  display: inline-block;
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.estado--pendiente {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.estado--confirmada {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.estado--cancelada {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.estado--finalizada {
+  background-color: #d1ecf1;
+  color: #0c5460;
+}
+
+.estado--vencida {
+  background-color: #e2e3e5;
+  color: #383d41;
+}
+
+.reservas-actions {
+  min-width: 260px;
+  white-space: nowrap;
+}
+
+.reservas-actions form,
+.reservas-actions .editar-reserva {
+  display: inline-block;
+  margin: 0 0.4rem 0.4rem 0;
+  vertical-align: top;
+}
+
+.reservas-actions .form__btn {
+  width: auto;
+  min-width: 95px;
+  padding: 0.55rem 0.8rem;
+  border: none;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+}
+
+.form__btn--confirmar {
+  background-color: #2e7d32;
+  color: #ffffff;
+}
+
+.form__btn--editar {
+  display: block;
+  background-color: #d4a017;
+  color: #ffffff;
+  list-style: none;
+}
+
+.form__btn--submit {
+  background-color: #2e7d32;
+  color: #ffffff;
+}
+
+.form__btn--danger {
+  background-color: #a83232;
+  color: #ffffff;
+}
+
+.reservas-actions .form__btn:hover {
+  opacity: 0.85;
+}
+
+.editar-reserva {
+  margin: 0;
+}
+
+.editar-reserva[open] {
+  background-color: #f8f8f8;
+  border-radius: 8px;
+  padding: 0.6rem;
+}
+
+.editar-reserva__form {
+  margin-top: 0.8rem;
+}
+
+.editar-reserva__form .form__group {
+  margin-bottom: 0.8rem;
+}
+
+.editar-reserva__form .form__label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.editar-reserva__form .form__input {
+  width: 100%;
+  padding: 0.55rem;
+  border: 1px solid #cccccc;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.85rem;
+  box-sizing: border-box;
+}
+
+.editar-reserva__form .form__input:focus {
+  outline: none;
+  border-color: #d4a017;
+}
+
+.reservas-empty {
+  padding: 3rem 1.5rem;
+  text-align: center;
+  background-color: #f8f8f8;
+  border: 1px dashed #cccccc;
+  border-radius: 10px;
+}
+
+.reservas-empty h2 {
+  margin-bottom: 0.6rem;
+  font-family: "Playfair Display", serif;
+  font-size: 1.5rem;
+}
+
+.reservas-empty p {
+  margin: 0;
+  color: #666666;
+}
+
