@@ -158,10 +158,10 @@ def actualizar_estados():
         print(f"Error al actualizar estados: {e}")
     
     finally:
-    if cursor:
-        cursor.close()
-    if conn:
-        conn.close()
+        if cursor:
+            cursor.close()
+        if conn:
+            conn.close()
 
 scheduler = BackgroundScheduler()
 scheduler.add_job(actualizar_estados, "interval", minutes=1)
