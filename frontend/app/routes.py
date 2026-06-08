@@ -19,7 +19,6 @@ def reserva():
     return render_template("reserva.html")
 
 
-
 #ABM RESEÑAS
 @frontend_bp.route("/admin/editarReseniasAdmi")
 @requiere_login()

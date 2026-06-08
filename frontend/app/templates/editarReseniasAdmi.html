@@ -14,8 +14,8 @@
     <tbody>
         {% for resenia in resenias %}
         <tr>
-            <td>{{ resenia.id_resenias }}</td> 
-            <td>{{ resenia.descripcion }}</td>                   
+            <td>{{ resenia[0] }}</td> 
+            <td>{{ resenia[1] }}</td>                   
         </tr>
         {% endfor %}
     </tbody>
@@ -36,3 +36,7 @@
         <button class="form__btn--submit" type="submit">Enviar</button>
     </form>
 </div>
+{% block extra_js %}
+    <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+{% endblock %}
+{% endblock %}
