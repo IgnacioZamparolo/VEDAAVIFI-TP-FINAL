@@ -13,7 +13,7 @@ CAPACIDAD_MAX = 10
 def ver_reservas():
     try:
         conn = get_connection() 
-        cursor = conn.cursor() 
+        cursor = conn.cursor(dictionary=True) 
     
         
         cursor.execute("SELECT id_reserva, mail, cant_personas, dia, horario, mesa FROM reservas")
@@ -61,7 +61,7 @@ def crear_reserva():
         print("[BACKEND] ¡PETICIÓN POST DETECTADA EN /reservas!")
         print("="*50)
         conn = get_connection()
-        cursor = conn.cursor()
+        cursor = conn.cursor(dictionary=True)
         data = request.get_json()  
         # 🚨 CONTROL 2: Ver exactamente qué datos llegaron del front
         print(f"[BACKEND] Datos JSON recibidos: {data}")
