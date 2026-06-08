@@ -3,9 +3,14 @@ import os
 from flask import Flask, render_template
 from app.routes import frontend_bp
 from app.parrilla_argentina_admin.routes.auth import auth_bp
-from app.parrilla_argentina_admin.routes.productos import productos_bp
-from app.parrilla_argentina_admin.routes.reservas import reservas_bp
-
+from app.parrilla_argentina_admin.routes.combos_bp import combos_bp
+from app.parrilla_argentina_admin.routes.combo_version_bp import combo_version_bp
+from app.parrilla_argentina_admin.routes.combo_detalle_bp import combo_detalle_bp
+from app.parrilla_argentina_admin.routes.resenias_bp import resenias_bp
+from app.parrilla_argentina_admin.routes.reservas_bp import reservas_bp
+from app.parrilla_argentina_admin.routes.servicios_extra_bp import servicios_bp
+from app.parrilla_argentina_admin.routes.productos_bp import productos_bp
+from app.parrilla_argentina_admin.routes.menu_bp import menu_bp
 logging.basicConfig(level=logging.DEBUG, format='%(levelname)s - %(name)s - %(message)s')
 
 app = Flask(
@@ -18,8 +23,14 @@ app.secret_key = os.getenv('SECRET_KEY', 'change-me-please-frontend')
 
 app.register_blueprint(frontend_bp)
 app.register_blueprint(auth_bp, url_prefix='/admin')
-app.register_blueprint(productos_bp, url_prefix='/admin')
-app.register_blueprint(reservas_bp, url_prefix="/admin")
+app.register_blueprint(productos_bp)
+app.register_blueprint(combos_bp)
+app.register_blueprint(combo_version_bp)
+app.register_blueprint(combo_detalle_bp)
+app.register_blueprint(resenias_bp)
+app.register_blueprint(reservas_bp)
+app.register_blueprint(servicios_bp)
+app.register_blueprint(menu_bp)
 
 @app.errorhandler(404)
 def page_not_found(error):
