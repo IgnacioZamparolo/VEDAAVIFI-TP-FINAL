@@ -27,7 +27,7 @@ def ver_combo_detalle():
 def agregar_combo_detalle():
     try:
         conn = get_connection()
-        cursor = conn.cursor()
+        cursor = conn.cursor(dictionary=True)
         data = request.get_json()
 
         if data is None:
