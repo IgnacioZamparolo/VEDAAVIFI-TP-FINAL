@@ -52,50 +52,24 @@ def obtener_reservas(token: str) -> dict:
         return {'ok': True, 'data': response.json()}
     return _respuesta_error(response)
 
-def actualizar_reserva(id_reserva: int, datos: dict, token: str) -> dict:
+def actualizar_reservas(id_reserva, datos: dict, token: str) -> dict:
     headers = {'Authorization': f'Bearer {token}'}
-
+        
     try:
         response = requests.put(
             f'{API_BASE_URL}/reservas/{id_reserva}',
             headers=headers,
             json=datos,
             timeout=REQUEST_TIMEOUT
-        )
+            )
     except requests.exceptions.ConnectionError:
         return _error_conexion()
-
     if response.status_code == 200:
-        return {
-            'ok': True,
-            'data': response.json()
-        }
-
+        return {'ok': True}
     return _respuesta_error(response)
 
-def confirmar_reserva(id_reserva: int, token: str) -> dict:
+def eliminar_reservas(id_reserva, token: str) -> dict:
     headers = {'Authorization': f'Bearer {token}'}
-
-    try:
-        response = requests.patch(
-            f'{API_BASE_URL}/reservas/{id_reserva}/confirmar',
-            headers=headers,
-            timeout=REQUEST_TIMEOUT
-        )
-    except requests.exceptions.ConnectionError:
-        return _error_conexion()
-
-    if response.status_code == 200:
-        return {
-            'ok': True,
-            'data': response.json()
-        }
-
-    return _respuesta_error(response)
-
-def eliminar_reserva(id_reserva: int, token: str) -> dict:
-    headers = {'Authorization': f'Bearer {token}'}
-
     try:
         response = requests.delete(
             f'{API_BASE_URL}/reservas/{id_reserva}',
@@ -104,15 +78,42 @@ def eliminar_reserva(id_reserva: int, token: str) -> dict:
         )
     except requests.exceptions.ConnectionError:
         return _error_conexion()
-
     if response.status_code == 200:
-        return {
-            'ok': True,
-            'data': response.json()
-        }
-
+        return {'ok': True}
     return _respuesta_error(response)
 
+def confirmar_reservas(id_reserva, token: str) -> dict:
+    headers = {'Authorization': f'Bearer {token}'}
+    try:
+        response = requests.patch(
+            f'{API_BASE_URL}/reservas/{id_reserva}/confirmar',
+            headers=headers,
+            timeout=REQUEST_TIMEOUT
+        )
+    except requests.exceptions.ConnectionError:
+        return _error_conexion()
+    if response.status_code == 200:
+        return {'ok': True}
+    return _respuesta_error(response)
+
+#CLIENTES RESERVAS
+def crear_reservas(datos: dict) -> dict:
+    response = _post('/reservas', datos)
+    if response is None:
+        return _error_conexion()
+    if response.status_code == 201:
+        return {'ok': True, 'data': response.json()}
+    return _respuesta_error(response)
+
+def cancelar_reservas(id_reserva: int) -> dict:
+    response = _get(f'/reservas/{id_reserva}/cancelar')
+    if response is None:
+        return _error_conexion()
+    if response.status_code == 200:
+        return {'ok': True, 'data': response.json()}
+    return _respuesta_error(response)
+
+#ABM RESEÑAS 
 def obtener_resenias(token: str) -> dict:
     response = _get('/resenias', token=token)
     if response is None:
@@ -121,7 +122,6 @@ def obtener_resenias(token: str) -> dict:
         return {'ok': True, 'data': response.json()}
     return _respuesta_error(response)
  
-#ABM RESEÑAS 
 def eliminar_resenia(id_resenia: int, token: str) -> dict:
     headers = {'Authorization': f'Bearer {token}'}
     try:
@@ -141,6 +141,23 @@ def obtener_estadisticas(token: str) -> dict:
     if response is None:
         return _error_conexion()
     if response.status_code == 200:
+        return {'ok': True, 'data': response.json()}
+    return _respuesta_error(response)
+
+#CLIENTE RESEÑAS
+def obtener_resenias_clientes() -> dict:
+    response = _get ('/resenias')
+    if response is None:
+        return _error_conexion()
+    if response.status_code == 200:
+        return {'ok': True, 'data': response.json()}
+    return _respuesta_error(response)
+
+def crear_resenias(datos: dict) -> dict:
+    response = _post('/resenias', datos)
+    if response is None:
+            return _error_conexion()
+    if response.status_code == 201:
         return {'ok': True, 'data': response.json()}
     return _respuesta_error(response)
 
@@ -198,17 +215,30 @@ def obtener_servicio(token:str) -> dict:
         return {'ok': True, 'data': response.json()}
     return _respuesta_error(response)
 
-
+#CLIENTE SERVICIOS EXTRA
+def obtener_servicio_extra_cliente() -> dict:
+    response = _get ('/servicios_extra')
+    if response is None:
+        return _error_conexion()
+    if response.status_code == 200:
+        return {'ok': True, 'data': response.json()}
+    return _respuesta_error(response)
 
 #ABM PRODUCTOS
-def editar_producto(id_producto: int, datos: dict, token:str) -> dict:
+def editar_producto(id_producto: int, datos: dict, token:str, archivo=None) -> dict:
     headers = {'Authorization': f'Bearer {token}'}
     
     try:
+        files = {}
+    
+        if archivo and archivo.filename:
+            files['imagen'] = (archivo.filename, archivo.stream, archivo.content_type)
+
         response = requests.put(
             f'{API_BASE_URL}/productos/{id_producto}',
             headers=headers,
-            json=datos,
+            data=datos,                                     
+            files=files if files else None,                 
             timeout=REQUEST_TIMEOUT
         )
     except requests.exceptions.ConnectionError:
@@ -231,19 +261,24 @@ def eliminar_producto(id_producto: int, token: str) -> dict:
         return {'ok': True}
     return _respuesta_error(response)
 
-def agregar_producto(datos: dict, token:str) -> dict:
+def agregar_producto(form_data: dict, token: str, archivo=None) -> dict:
     headers = {'Authorization': f'Bearer {token}'}
     try:
+        files = {}
+        if archivo and archivo.filename:
+            files['imagen'] = (archivo.filename, archivo.stream, archivo.content_type)
+
         response = requests.post(
             f'{API_BASE_URL}/productos',
             headers=headers,
-            json=datos,
+            data=form_data,          
+            files=files if files else None,
             timeout=REQUEST_TIMEOUT
         )
     except requests.exceptions.ConnectionError:
         return _error_conexion()
     if response.status_code == 201:
-        return {'ok': True}
+        return {'ok': True, 'data': response.json()}
     return _respuesta_error(response)
 
 def obtener_productos(token:str) -> dict:
@@ -254,6 +289,14 @@ def obtener_productos(token:str) -> dict:
         return {'ok': True, 'data': response.json()}
     return _respuesta_error(response)
 
+#CLIENTE PRODUCTOS
+def obtener_productos_cliente() -> dict:
+    response = _get('/productos')
+    if response is None:
+        return _error_conexion()
+    if response.status_code == 200:
+        return {'ok': True, 'data': response.json()}
+    return _respuesta_error(response)
 
 #ABM COMBOS
 def editar_combo(id_combo: int, datos: dict, token:str) -> dict:
@@ -303,6 +346,15 @@ def eliminar_combo(id_combo: int, token:str) -> dict:
 
 def obtener_combo(token:str) -> dict:
     response = _get(f'/combos', token=token)
+    if response is None:
+        return _error_conexion()
+    if response.status_code == 200:
+        return {'ok': True, 'data': response.json()}
+    return _respuesta_error(response)
+
+#CLIENTE COMBOS
+def obtener_combos_cliente() -> dict:
+    response = _get('/combos')
     if response is None:
         return _error_conexion()
     if response.status_code == 200:
@@ -364,7 +416,6 @@ def obtener_combo_version(token:str) -> dict:
     return _respuesta_error(response)
 
 #ABM Combo Detalle
-
 def obtener_combo_detalle(token:str) -> dict:
     response = _get(f'/combo_detalle', token=token)
     if response is None:
@@ -387,3 +438,4 @@ def agregar_combo_detalle(datos: dict, token:str) -> dict:
     if response.status_code == 201:
         return {'ok': True}
     return _respuesta_error(response)
+
