@@ -151,7 +151,7 @@ def crear_reserva():
 def actualizar_reserva(id_reserva):  
     try:             
         conn = get_connection()
-        cursor = conn.cursor(dictionary=True)  
+        cursor = conn.cursor()  
         data = request.get_json() 
             
  
@@ -171,10 +171,11 @@ def actualizar_reserva(id_reserva):
 
         try:
             data["cant_personas"] = int(data["cant_personas"])
-            data["mesa"] = int(data["mesa"])
+            data["mesa"] = int(data["mesa"]) if data["mesa"] else None
         except (ValueError, TypeError):
             return jsonify({"error": "Los campos 'cant_personas' y 'mesa' deben ser números válidos"}), 400
-    
+        
+
     
         cursor.execute(
             "UPDATE reservas SET cant_personas = %s, horario = %s, dia = %s, mesa = %s WHERE id_reserva = %s",
@@ -212,7 +213,7 @@ def actualizar_reserva(id_reserva):
 def eliminar_reserva(id_reserva):
     try:
         conn = get_connection() 
-        cursor = conn.cursor(dictionary=True) 
+        cursor = conn.cursor() 
         
        
         cursor.execute("SELECT COUNT(*) FROM reservas WHERE id_reserva = %s", (id_reserva,))

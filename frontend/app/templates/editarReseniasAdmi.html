@@ -28,7 +28,7 @@
 </div>
 
 <div class="form" id="eliminar_resenia" style="display:none">
-    <form action="{{ url_for('resenia.eliminar', id_resenia=0) }}" method="POST">
+    <form action="{{ url_for('resenias.eliminar', id_resenia=0) }}" method="POST">
         <label class="form__label" for="id_resenias">Id de la resenia: </label>
         <input class="form__input" type="number" id="id_resenias" name="id_resenias" placeholder="Id Resenia" required>
 
@@ -36,3 +36,4 @@
         <button class="form__btn--submit" type="submit">Enviar</button>
     </form>
 </div>
+{% endblock %}

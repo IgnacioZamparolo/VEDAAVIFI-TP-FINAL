@@ -22,7 +22,7 @@
                 <li><a href="{{ url_for('auth.dashboard') }}" class="nav__link">Dashboard</a></li>
                 <li><a href="{{ url_for('auth.reportes') }}" class="nav__link">Reportes</a></li>
                 <li><a href="{{ url_for('auth.gestion') }}" class="nav__link">Gestión</a></li>
-                <li><a href="{{ url_for('reservas_admin.listar_reservas') }}" class="nav__link">Reservas</a></li>
+                <li><a href="{{ url_for('auth.reservas') }}" class="nav__link">Reservas</a></li>
                 <li class="nav__user">{{ session['usuario']['nombre'] }}</li>
                 <li>
                     <form action="{{ url_for('auth.logout') }}" method="POST" class="nav__form">
@@ -41,7 +41,9 @@
     <footer class="footer">
         <p>&copy; 2026 Parrilla Argentina &mdash; Administrador</p>
     </footer>
-    {% block extra_js %}{% endblock %}
+    {% block extra_js %}
+    <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+    {% endblock %}
 </body>
 </html>
  

@@ -1,7 +1,7 @@
 import logging
 import os
 from flask import Flask, render_template
-from app.routes import frontend_bp
+from app.parrilla_argentina_admin.routes.inicio_bp import frontend_bp
 from app.parrilla_argentina_admin.routes.auth import auth_bp
 from app.parrilla_argentina_admin.routes.combos_bp import combos_bp
 from app.parrilla_argentina_admin.routes.combo_version_bp import combo_version_bp
