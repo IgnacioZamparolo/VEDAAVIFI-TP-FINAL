@@ -10,7 +10,7 @@ resenias = Blueprint("resenias", __name__)
 def ver_resenias():
     try:
         conn = get_connection() 
-        cursor = conn.cursor() 
+        cursor = conn.cursor(dictionary=True) 
     
         cursor.execute("SELECT * FROM resenias")
         lista_resenias = cursor.fetchall()
@@ -27,7 +27,7 @@ def ver_resenias():
 def agregar_resenia(): 
     try:
         conn = get_connection()
-        cursor = conn.cursor()
+        cursor = conn.cursor(dictionary=True)
         data = request.get_json() 
          
         if data is None or "descripcion" not in data:
@@ -43,13 +43,12 @@ def agregar_resenia():
         cursor.execute("""INSERT INTO resenias (descripcion) VALUES (%s)""", (data["descripcion"],))
         conn.commit()
 
-        enviar_mail_resenia(data["mail"])
-
         id_resenia = cursor.lastrowid 
         cursor.execute("SELECT * FROM resenias WHERE id_resenias = %s", (id_resenia,))
         resenia_creada = cursor.fetchone()
+        enviar_mail_resenia(data["mail"])
         return jsonify(resenia_creada), 201
-         
+    
     except Exception as e:
         return jsonify({"error": f"Error al agregar resenia: {str(e)}"}), 500
                        
@@ -62,7 +61,7 @@ def agregar_resenia():
 def eliminar_resenias(id_resenias):
     try:
         conn = get_connection() 
-        cursor = conn.cursor() 
+        cursor = conn.cursor(dictionary=True) 
           
         cursor.execute("SELECT * FROM resenias WHERE id_resenias = %s", (id_resenias,))
         resenia = cursor.fetchone()
