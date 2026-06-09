@@ -30,7 +30,7 @@
     </ul>
 </div>
 <div class="form" id="agregar_servicio" style="display:none">
-    <form action="/admin/agregarServicio" method="POST">
+    <form action="{{ url_for('servicios.agregar')}}" method="POST">
         <label class="form__label" for="nombre">Nombre del servicio:</label>
         <input class="form__input" type="text" id="nombre" name="nombre" placeholder="Nombre" required>
 
@@ -42,7 +42,7 @@
 </div>
 
 <div class="form" id="eliminar_servicio" style="display:none">
-    <form action="/admin/eliminarServicio" method="POST">
+    <form action="{{ url_for('servicios.eliminar admi', id_servicio=0)}}" method="POST">
         <label class="form__label" for="id_servicio">Id del servicio: </label>
         <input class="form__input" type="text" id="id_servicio" name="id_servicio" placeholder="Id Servicio" required>
 
@@ -52,7 +52,7 @@
 </div>
 
 <div class="form" id="editar_servicio" style="display:none">
-    <form action="/admin/editarServicio" method="POST">
+    <form action="{{ url_for('servicios.editar', id_servicio=0)}}" method="POST">
         <label class="form__label" for="id_servicio">Id del servicio: </label>
         <input class="form__input" type="text" id="id_servicio" name="id_servicio" placeholder="Id Servicio" required>
 
@@ -66,7 +66,3 @@
         <button class="form__btn--submit" type="submit">Enviar</button>
     </form>
 </div>
-{% block extra_js %}
-    <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
-{% endblock %}
-{% endblock %}
