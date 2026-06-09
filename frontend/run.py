@@ -1,7 +1,7 @@
 import logging
 import os
 from flask import Flask, render_template
-#from app.routes import frontend_bp
+from app.parrilla_argentina_admin.routes.inicio_bp import frontend_bp
 from app.parrilla_argentina_admin.routes.auth import auth_bp
 from app.parrilla_argentina_admin.routes.combos_bp import combos_bp
 from app.parrilla_argentina_admin.routes.combo_version_bp import combo_version_bp
@@ -21,7 +21,7 @@ app = Flask(
 app.json.sort_keys = False
 app.secret_key = os.getenv('SECRET_KEY', 'change-me-please-frontend')
 
-#app.register_blueprint(frontend_bp)
+app.register_blueprint(frontend_bp)
 app.register_blueprint(auth_bp, url_prefix='/admin')
 app.register_blueprint(productos_bp)
 app.register_blueprint(combos_bp)
