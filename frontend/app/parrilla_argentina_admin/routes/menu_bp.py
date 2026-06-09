@@ -38,3 +38,22 @@ def mostrar():
         combos_version=combos_version.get('data', []),
         combos_detalle=combos_detalle.get('data', [])
     )
+
+@menu_bp.route('/menu', methods = ["GET"])
+def mostrar_cliente():
+    productos = api.obtener_productos(token_actual())
+    combos = api.obtener_combo(token_actual())
+
+    if not productos.get('ok'):
+        for mensaje in extraer_mensajes_error(productos.get('error_response')):
+            flash(mensaje, 'error')
+
+    if not combos.get('ok'):
+        for mensaje in extraer_mensajes_error(combos.get('error_response')):
+            flash(mensaje, 'error')
+    
+    return render_template('index.html',
+        productos=productos.get('data', []),
+        combos=combos.get('data', []),
+
+    )
