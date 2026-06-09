@@ -12,7 +12,7 @@
   <div class="reserva-layout">
 
     <div>
-      <form class="form-card" id="reservaForm" novalidate>
+      <form class="form-card" id="reservaFormNativo" action="{{ url_for('reservas.crear') }}" method="POST" novalidate>
         <h2>Datos de la Reserva</h2>
         <p>Los campos marcados con * son obligatorios</p>
 
@@ -24,8 +24,8 @@
           </div>
 
           <div class="form-grupo">
-            <label for="email">Email *</label>
-            <input class="form-control" type="email" id="email" name="email" placeholder="tu@email.com" required autocomplete="email" />
+            <label for="mail">Email *</label>
+            <input class="form-control" type="email" id="mail" name="mail" placeholder="tu@email.com" required autocomplete="email" />
             <span class="error-msg"></span>
           </div>
 
@@ -99,15 +99,7 @@
         </p>
       </form>
 
-      <div class="confirmacion" id="confirmacion">
-        <div class="ic">✅</div>
-        <h3>¡Reserva enviada con éxito!</h3>
-        <p>Recibimos tu solicitud. Te enviaremos la confirmación y tu código QR por email.</p>
-        
-        <div id="seccion-qr" style="margin-top: 1.5rem; text-align: center;">
-          </div>
       </div>
-    </div>
 
     <aside>
       <div class="sidebar-card">
