@@ -185,9 +185,9 @@
     <tbody>
         {% for combo_v in combos_version %}
         <tr>
-            <td>{{ combo_v.descripcion }}</td>
-            <td>{{ combo_v.personas }}</td>
-            <td>{{ combo_v.precio }}</td>           
+            <td>{{ combo_v[1] }}</td>
+            <td>{{ combo_v[2] }}</td>
+            <td>{{ combo_v[3] }}</td>           
         </tr>
         {% endfor %}
     </tbody>
@@ -258,8 +258,8 @@
     <tbody>
         {% for combo_d in combos_detalle %}
         <tr>
-            <td>{{ combo_d.id_combo }}</td>
-            <td>{{ combo_d.id_producto  }}</td>          
+            <td>{{ combo_d[0] }}</td>
+            <td>{{ combo_d[1] }}</td>          
         </tr>
         {% endfor %}
     </tbody>
@@ -289,6 +289,9 @@
         <button class="form__btn--submit" type="submit">Enviar</button>
     </form>
 </div>
+{% block extra_js %}
+    <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+{% endblock %}
 
-
+{% endblock %}
 
