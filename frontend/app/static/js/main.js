@@ -58,10 +58,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* --------------------------------------------------
-     4. FORMULARIO DE RESERVA
+     4. FORMULARIO DE RESERVA (Configuración Nativa)
   -------------------------------------------------- */
-  const form = document.getElementById('reservaForm');
-  const confirmacion = document.getElementById('confirmacion');
+  const form = document.getElementById('reservaFormNativo');
 
   if (form) {
     // Fecha mínima = hoy
@@ -96,25 +95,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     form.addEventListener('submit', (e) => {
-      e.preventDefault();
       let todo_ok = true;
       form.querySelectorAll('.form-control').forEach(campo => { if (!validarCampo(campo)) todo_ok = false; });
-      if (!todo_ok) return;
+      
+      // Si las validaciones del navegador fallan, frenamos el envío
+      if (!todo_ok) {
+        e.preventDefault();
+        return;
+      }
 
+      // Si todo está correcto, no llamamos a e.preventDefault().
+      // Deshabilitamos el botón para evitar doble submit y dejamos que viaje la petición.
       const btn = form.querySelector('[type="submit"]');
       btn.disabled = true;
-      btn.innerHTML = '⏳ Enviando…';
-
-      setTimeout(() => {
-        btn.disabled = false;
-        btn.innerHTML = 'Confirmar Reserva';
-        form.reset();
-        if (confirmacion) {
-          confirmacion.classList.add('show');
-          confirmacion.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          setTimeout(() => confirmacion.classList.remove('show'), 7000);
-        }
-      }, 1600);
+      btn.innerHTML = '⏳ Procesando reserva…';
     });
   }
 
