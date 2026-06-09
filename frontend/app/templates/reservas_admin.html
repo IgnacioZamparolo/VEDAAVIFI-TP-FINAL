@@ -104,7 +104,7 @@
                   {% if reserva.pendiente %}
                     <form
                       action="{{ url_for(
-                        'reservas_admin.confirmar_reserva',
+                        'reservas.confirmar',
                         id_reserva=reserva.id_reserva
                       ) }}"
                       method="POST"
@@ -125,7 +125,7 @@
 
                     <form
                       action="{{ url_for(
-                        'reservas_admin.editar_reserva',
+                        'reservas.actualizar',
                         id_reserva=reserva.id_reserva
                       ) }}"
                       method="POST"
@@ -219,7 +219,7 @@
 
                   <form
                     action="{{ url_for(
-                      'reservas_admin.eliminar_reserva',
+                      'reservas.eliminar',
                       id_reserva=reserva.id_reserva
                     ) }}"
                     method="POST"

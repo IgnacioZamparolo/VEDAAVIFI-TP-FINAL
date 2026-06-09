@@ -30,10 +30,10 @@ SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 SUPABASE_BUCKET = os.getenv("SUPABASE_BUCKET")
  
 # Credenciales Email
-SMTP_USER = os.environ.get("SMTP_USER")
-SMTP_PASSWORD = os.environ.get("SMTP_PASSWORD")
-SMTP_USER=os.environ.get("SMTP_USER")
-SMTP_PASSWORD=os.environ.get("SMTP_PASSWORD")
+SMTP_USER = os.getenv("SMTP_USER")
+SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
+
+
 
 
 # Malas palabras

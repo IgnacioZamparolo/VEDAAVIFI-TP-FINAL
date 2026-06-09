@@ -40,7 +40,7 @@
     </ul>
 </div>
 <div class="form" id="agregar_prod" style="display:none">
-    <form action="{{ url_for('producto.agregar')}}" method="POST" enctype="multipart/form-data">
+    <form action="{{ url_for('productos.agregar')}}" method="POST" enctype="multipart/form-data">
         <label class="form__label" for="nombre">Nombre del producto:</label>
         <input class="form__input" type="text" id="nombre" name="nombre" placeholder="Nombre" required>
 
@@ -70,7 +70,7 @@
 </div>
 
 <div class="form" id="eliminar_prod" style="display:none">
-    <form action="{{ url_for('producto.eliminar', id_producto=0)}}" method="POST">
+    <form action="{{ url_for('productos.eliminar', id_producto=0)}}" method="POST">
         <label class="form__label" for="id_producto">Id del producto: </label>
         <input class="form__input" type="text" id="id_producto" name="id_producto" placeholder="Id Producto" required>
 
@@ -80,7 +80,7 @@
 </div>
 
 <div class="form" id="editar_prod" style="display:none">
-    <form action="{{ url_for('producto.editar', id_producto=0)}}" method="POST">
+    <form action="{{ url_for('productos.editar', id_producto=0)}}" method="POST">
         <label class="form__label" for="id_producto">Id del producto: </label>
         <input class="form__input" type="text" id="id_producto" name="id_producto" placeholder="Id Producto" required>
 
@@ -201,7 +201,7 @@
     </ul>
 </div>
 <div class="form" id="agregar_combo_version" style="display:none">
-    <form action="{{ url_for('combos_version.agregar')}}" method="POST">
+    <form action="{{ url_for('combo_version.agregar')}}" method="POST">
         <label class="form__label" for="descripcion">Nombre de la version:</label>
         <input class="form__input" type="text" id="descripcion" name="descripcion" placeholder="Descripcion" required>
 
@@ -219,7 +219,7 @@
 </div>
 
 <div class="form" id="eliminar_combo_version" style="display:none">
-    <form action="{{ url_for('combos_version.eliminar', id_version=0)}}" method="POST">
+    <form action="{{ url_for('combo_version.eliminar', id_version=0)}}" method="POST">
         <label class="form__label" for="id_version">Id de la version: </label>
         <input class="form__input" type="number" id="id_version" name="id_version" placeholder="Id Version" required>
 
@@ -228,7 +228,7 @@
 </div>
 
 <div class="form" id="editar_combo_version" style="display:none">
-    <form action="{{ url_for('combos_version.editar', id_version=0)}}" method="POST">
+    <form action="{{ url_for('combo_version.editar', id_version=0)}}" method="POST">
         <label class="form__label" for="id_version">Id de la version: </label>
         <input class="form__input" type="number" id="id_version" name="id_version" placeholder="Id Version" required>
 
@@ -271,7 +271,7 @@
     </ul>
 </div>
 <div class="form" id="agregar_combo_detalle" style="display:none">
-    <form action="{{ url_for('combos_detalle.agregar')}}" method="POST">
+    <form action="{{ url_for('combo_detalle.agregar')}}" method="POST">
         <label class="form__label" for="id_combo">Id del combo:</label>
         <input class="form__input" type="number" id="id_combo" name="id_combo" placeholder="id_combo" required>
 
@@ -289,6 +289,6 @@
         <button class="form__btn--submit" type="submit">Enviar</button>
     </form>
 </div>
-
+{% endblock %}
 
 
