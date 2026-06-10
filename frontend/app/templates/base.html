@@ -19,7 +19,7 @@
         <small>Tradición y Sabor</small>
       </a>
       <ul class="nav-links">
-        <li><a href="(/)">Inicio</a></li>
+        <li><a href="{{ url_for('frontend.home') }}">Inicio</a></li>
         <li><a href="{{ url_for('frontend.menu') }}">Menú</a></li>
         <li><a href="{{ url_for('frontend.reserva') }}">Reservas</a></li>
         <li><a href="{{ url_for('frontend.reserva') }}" class="btn btn-dorado">Reservar Mesa</a></li>
@@ -30,7 +30,7 @@
       </button>
     </div>
     <div class="mobile-nav">
-      <a href="(/)">Inicio</a>
+      <a href="{{ url_for('frontend.home') }}">Inicio</a>
       <a href="{{ url_for('frontend.menu') }}">Menú</a>
       <a href="{{ url_for('frontend.reserva') }}">Reservas</a>
       <a href="{{ url_for('frontend.reserva') }}" class="btn btn-dorado btn-block">Reservar Mesa</a>
@@ -51,7 +51,7 @@
       <div>
         <h4>Navegación</h4>
         <ul>
-          <li><a href="(/)">Inicio</a></li>
+          <li><a href="{{ url_for('frontend.home') }}">Inicio</a></li>
           <li><a href="{{ url_for('frontend.menu') }}">Menú</a></li>
           <li><a href="{{ url_for('frontend.reserva') }}">Reservas</a></li>
         </ul>
