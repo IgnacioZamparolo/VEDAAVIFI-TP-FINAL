@@ -33,7 +33,8 @@ SUPABASE_BUCKET = os.getenv("SUPABASE_BUCKET")
 SMTP_USER = os.getenv("SMTP_USER")
 SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
 
-
+# URL del frontend
+FRONTEND_URL = os.getenv("FRONTEND_URL", "http://127.0.0.1:8080")
 
 
 # Malas palabras
