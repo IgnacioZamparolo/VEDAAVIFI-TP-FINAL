@@ -1,0 +1,124 @@
+.resenia-section {
+  width: 100%;
+  padding: 3rem 1.5rem;
+  box-sizing: border-box;
+  background-color: #f7f3ed;
+}
+
+.resenia-container {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.resenia-divisor {
+  color: #ffffff;
+  margin-bottom: 0.75rem;
+}
+
+.mensaje {
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.mensaje--success {
+  background-color: #d4edda;
+  border-color: #b7dbbf;
+  color: #155724;
+}
+
+.mensaje--error {
+  background-color: #f8d7da;
+  border-color: #efb8bd;
+  color: #721c24;
+}
+
+/* Formulario */
+
+.resenia-form {
+  width: 100%;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.resenia-form h2 {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  font-family: "Playfair Display", serif;
+  font-size: 1.8rem;
+}
+
+.resenia-form > p {
+  margin-bottom: 1.5rem;
+  color: #666666;
+  line-height: 1.6;
+}
+
+.resenia-form textarea {
+  width: 100%;
+  min-height: 180px;
+  padding: 0.9rem;
+  box-sizing: border-box;
+  resize: vertical;
+  font-family: "Lato", sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  border: 1px solid #cccccc;
+  border-radius: 8px;
+}
+
+.resenia-form textarea:focus {
+  outline: none;
+  border-color: #a83232;
+  box-shadow: 0 0 0 3px rgba(168, 50, 50, 0.12);
+}
+
+.resenia-confirmacion {
+  width: 100%;
+  padding: 3rem 2rem;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.resenia-confirmacion__icono {
+  margin-bottom: 1rem;
+  font-size: 3rem;
+}
+
+.resenia-confirmacion h2 {
+  margin: 0 0 1rem;
+  font-family: "Playfair Display", serif;
+  font-size: 2rem;
+}
+
+.resenia-confirmacion p {
+  max-width: 520px;
+  margin: 0 auto 1.75rem;
+  color: #555555;
+  line-height: 1.6;
+}
+
+.resenia-error {
+  width: 100%;
+  padding: 3rem 2rem;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.resenia-error h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-family: "Playfair Display", serif;
+  font-size: 2rem;
+  color: #a83232;
+}
+
+.resenia-error p {
+  margin-bottom: 1.75rem;
+  color: #555555;
+  line-height: 1.6;
+}

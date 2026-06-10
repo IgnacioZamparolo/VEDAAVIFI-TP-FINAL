@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Dejar una reseña — Parrilla Argentina
+{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/resenia.css') }}" >
+{% endblock %}
+
+{% block content %}
+
+<section class="reserva-hero">
+  <div class="divisor resenia-divisor">
+    <span>⭐</span>
+  </div>
+
+  <h1>Contanos tu experiencia</h1>
+
+  <p>
+    Tu opinión nos ayuda a seguir mejorando.
+  </p>
+</section>
+
+<section class="resenia-section">
+  <div class="resenia-container">
+
+    {% with mensajes = get_flashed_messages(with_categories=true) %}
+      {% if mensajes %}
+        {% for categoria, mensaje in mensajes %}
+          <div class="mensaje mensaje--{{ categoria }}">
+            {{ mensaje }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+
+    {% if enviada %}
+
+      <div class="form-card resenia-confirmacion">
+        <div class="resenia-confirmacion__icono">
+          ✅
+        </div>
+
+        <h2>¡Gracias por tu reseña!</h2>
+
+        <p>
+          Tu comentario fue enviado correctamente.
+          Agradecemos que hayas compartido tu experiencia con nosotros.
+        </p>
+
+        <a
+          href="{{ url_for('frontend.home') }}"
+          class="btn btn-dorado"
+        >
+          Volver al inicio
+        </a>
+      </div>
+
+
+    {% elif not id_reserva %}
+
+      <div class="form-card resenia-error">
+        <h2>Enlace no válido</h2>
+
+        <p>
+          No pudimos identificar la reserva asociada a este enlace.
+        </p>
+
+        <a
+          href="{{ url_for('frontend.home') }}"
+          class="btn btn-rojo"
+        >
+          Volver al inicio
+        </a>
+      </div>
+
+
+    {% else %}
+
+      <form
+        class="form-card resenia-form"
+        method="POST"
+        action="{{ url_for('resenias.crear') }}"
+      >
+        <h2>Dejanos tu comentario</h2>
+
+        <p>
+          Queremos saber cómo fue tu visita a Parrilla Argentina.
+        </p>
+
+        <input
+          type="hidden"
+          name="id_reserva"
+          value="{{ id_reserva }}"
+        >
+
+        <div class="form-grupo">
+          <label for="descripcion">
+            Reseña *
+          </label>
+
+          <textarea
+            class="form-control"
+            id="descripcion"
+            name="descripcion"
+            rows="7"
+            maxlength="1000"
+            placeholder="Contanos qué te pareció la comida, la atención y tu experiencia general..."
+            required
+          ></textarea>
+
+          <span class="error-msg"></span>
+        </div>
+
+        <div class="form-submit">
+          <button
+            type="submit"
+            class="btn btn-rojo btn-lg btn-block"
+          >
+            Enviar reseña
+          </button>
+        </div>
+
+        <p class="form-legal">
+          La reseña estará asociada únicamente a tu reserva finalizada.
+        </p>
+      </form>
+
+    {% endif %}
+
+  </div>
+</section>
+
+{% endblock %}
