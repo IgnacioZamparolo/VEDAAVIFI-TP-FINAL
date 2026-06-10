@@ -58,7 +58,9 @@ CREATE TABLE IF NOT EXISTS reservas (
 
 CREATE TABLE IF NOT EXISTS resenias (
     id_resenias     INT AUTO_INCREMENT PRIMARY KEY,
-    descripcion     VARCHAR(1000) NOT NULL
+    descripcion     VARCHAR(1000) NOT NULL,
+    id_reserva      INT NOT NULL UNIQUE,
+    FOREIGN KEY (id_reserva) REFERENCES reservas(id_reserva) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS servicios_extra (
@@ -90,12 +92,15 @@ INSERT INTO productos (nombre, descripcion, precio, categoria, lactosa, vegetari
 
 INSERT INTO reservas (mail, cant_personas, dia, horario, mesa, pendiente, confirmada, cancelada, finalizada, vencida ) VALUES
 ('carlos@gmail.com', 4, '2026-06-15', '20:00:00', 1, TRUE, FALSE, FALSE, FALSE, FALSE),
-('marta@gmail.com', 2, '2026-06-20', '13:00:00', 2, FALSE, TRUE, FALSE, FALSE, FALSE);
+('marta@gmail.com', 2, '2026-06-20', '13:00:00', 2, FALSE, TRUE, FALSE, FALSE, FALSE),
+('laura@gmail.com', 2, '2026-06-01', '20:00:00', 3, FALSE, FALSE, FALSE, TRUE, FALSE),
+('juan@gmail.com', 4, '2026-06-02', '21:00:00', 4, FALSE, FALSE, FALSE, TRUE, FALSE),
+('ana@gmail.com', 3, '2026-06-03', '13:00:00', 5, FALSE, FALSE, FALSE, TRUE, FALSE);
 
-INSERT INTO resenias (descripcion) VALUES
-('Excelente experiencia. La carne llegó en el punto justo, súper tierna y con mucho sabor. Sin duda volvería.'),
-('La provoleta una bomba. El servicio muy atento, re recomendado.'),
-('El menú infantil estuvo genial, los chicos felices con las milanesitas.');
+INSERT INTO resenias (descripcion, id_reserva) VALUES
+('Excelente experiencia. La carne llegó en el punto justo, súper tierna y con mucho sabor. Sin duda volvería.', 3),
+('La provoleta una bomba. El servicio muy atento, re recomendado.', 4),
+('El menú infantil estuvo genial, los chicos felices con las milanesitas.', 5);
 
 INSERT INTO servicios_extra (nombre, descripcion) VALUES
 ('Acceso para discapacitados', 'Rampas y espacios adaptados para personas con movilidad reducida'),
