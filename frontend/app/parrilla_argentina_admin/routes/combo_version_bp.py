@@ -19,10 +19,9 @@ def editar(id_version):
         for mensaje in extraer_mensajes_error(resultado.get('error_response')):
             flash(mensaje, 'error')
         return redirect(url_for('menu.mostrar'))
-
     combo_version = None
     for v in resultado['data']:
-        if v.get('id_version') == id_version:
+        if int(v.get('id_version')) == id_version:
             combo_version = v
 
     if combo_version is None:
@@ -36,15 +35,15 @@ def editar(id_version):
         id_combo         = request.form.get('id_combo', '').strip()
 
 
-        if not descripcion or not personas or not precio or not id_combo:
+        if not descripcion or not personas or not precio:
             flash('Completá todos los campos.', 'error')
-            return redirect(url_for('combo_version.editar', id_version=id_version))
+            return redirect(url_for('menu.mostrar'))
 
         try:
-            datos = {'descripcion': descripcion, 'personas': int(personas), 'precio': float(precio), 'id_combo':id_combo}
+            datos = {'descripcion': descripcion, 'personas': int(personas), 'precio': float(precio)}
         except (TypeError, ValueError):
             flash('Personas o precio tienen un formato inválido.', 'error')
-            return redirect(url_for('combo_version.editar', id_version=id_version))
+            return redirect(url_for('menu.mostrar'))
 
         resultado = api.editar_combo_version(id_version, datos, token_actual())
 
@@ -54,7 +53,7 @@ def editar(id_version):
 
         for mensaje in extraer_mensajes_error(resultado.get('error_response')):
             flash(mensaje, 'error')
-        return redirect(url_for('combo_version.editar', id_version=id_version))
+        return redirect(url_for('menu.mostrar'))
 
     return render_template('editarMenuAdmi.html', usuario=usuario, combo_version=combo_version)
 
@@ -67,16 +66,17 @@ def agregar():
         descripcion      = request.form.get('descripcion', '').strip()
         personas         = request.form.get('personas', '').strip()
         precio           = request.form.get('precio', '').strip()
+        id_combo    = request.form.get('id_combo', '').strip()
 
-        if not descripcion or not personas or not precio:
+        if not descripcion or not personas or not precio or not id_combo:
             flash('Completá todos los campos.', 'error')
-            return redirect(url_for('combo_version.agregar'))
+            return redirect(url_for('menu.mostrar'))
 
         try:
-            datos = {'descripcion': descripcion, 'personas': int(personas), 'precio': float(precio)}
+            datos = {'descripcion': descripcion, 'personas': int(personas), 'precio': float(precio), 'id_combo': int(id_combo)}
         except (TypeError, ValueError):
             flash('El precio ingresado no es válido.', 'error')
-            return redirect(url_for('combo_version.agregar'))
+            return redirect(url_for('menu.mostrar'))
         
         resultado = api.agregar_combo_version(datos, token_actual())
         
@@ -86,7 +86,7 @@ def agregar():
         
         for mensaje in extraer_mensajes_error(resultado.get('error_response')):
             flash(mensaje, 'error')
-        return redirect(url_for('combo_version.agregar'))
+        return redirect(url_for('menu.mostrar'))
         
     return render_template('editarMenuAdmi.html', usuario=usuario)
 

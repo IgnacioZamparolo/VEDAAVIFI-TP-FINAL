@@ -21,7 +21,7 @@ def editar(id_combo):
 
     combo = None
     for c in resultado['data']:
-        if c.get('id_combo') == id_combo:
+        if int(c.get('id_combo')) == id_combo:
             combo = c
 
     if combo is None:

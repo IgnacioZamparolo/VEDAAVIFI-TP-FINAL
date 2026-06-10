@@ -10,7 +10,7 @@ def ver_combo_detalle():
     try:
         
         conn = get_connection() 
-        cursor = conn.cursor() 
+        cursor = conn.cursor(dictionary=True) 
     
         cursor.execute("SELECT * FROM combo_detalle")
         resultado = cursor.fetchall()

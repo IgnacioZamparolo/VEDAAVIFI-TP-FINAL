@@ -7,6 +7,7 @@
 <table border="1">
     <thead>
         <tr>
+            <th>Id</th>
             <th>Nombre</th>
             <th>Descripción</th>
             <th>Precio</th>
@@ -20,6 +21,7 @@
     <tbody>
         {% for producto in productos %}
         <tr>
+            <td>{{ producto.id_producto }}</td>
             <td>{{ producto.nombre }}</td>
             <td>{{ producto.descripcion }}</td>
             <td>{{ producto.precio }}</td>
@@ -117,6 +119,7 @@
 <table border="1">
     <thead>
         <tr>
+            <th>Id</th>
             <th>Nombre</th>
             <th>Precio</th>
         </tr>
@@ -124,6 +127,7 @@
     <tbody>
         {% for combo in combos %}
         <tr>
+            <td>{{ combo.id_combo}}</td>
             <td>{{ combo.nombre }}</td>
             <td>{{ combo.precio }}</td>          
         </tr>
@@ -177,6 +181,7 @@
 <table border="1">
     <thead>
         <tr>
+            <th>Id</th>
             <th>Descripcion</th>
             <th>Personas</th>
             <th>Precio</th>
@@ -185,6 +190,7 @@
     <tbody>
         {% for combo_v in combos_version %}
         <tr>
+            <td>{{ combo_v.id_version }}</td>
             <td>{{ combo_v.descripcion }}</td>
             <td>{{ combo_v.personas }}</td>
             <td>{{ combo_v.precio }}</td>           

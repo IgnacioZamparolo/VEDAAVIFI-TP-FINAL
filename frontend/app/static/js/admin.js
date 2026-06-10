@@ -79,6 +79,11 @@ if (botonEditarProd) {
         formEliminarProd.style.display ='none'
     })
 }
+const inputIdProductoEditar = formEditarProd.querySelector('input[name="id_producto"]')
+inputIdProductoEditar.addEventListener("input", () => {
+    const id = inputIdProductoEditar.value
+    formEditarProd.querySelector('form').action = `/productos/${id}/editar`
+})
 
 if (botonEliminarProd) {
     botonEliminarProd.addEventListener("click", () =>{
@@ -87,6 +92,11 @@ if (botonEliminarProd) {
         formEliminarProd.style.display ='block'
     })
 }
+const inputIdProductoEliminar = formEliminarProd.querySelector('input[name="id_producto"]')
+inputIdProductoEliminar.addEventListener("input", () => {
+    const id = inputIdProductoEliminar.value
+    formEliminarProd.querySelector('form').action = `/productos/${id}/eliminar`
+})
 
 if (botonEliminarCombo) {
     botonEliminarCombo.addEventListener("click", () =>{
@@ -95,6 +105,11 @@ if (botonEliminarCombo) {
         formEliminarCombo.style.display ='block'
     })
 }
+const inputIdComboEliminar = formEliminarCombo.querySelector('input[name="id_combo"]')
+inputIdComboEliminar.addEventListener("input", () => {
+    const id = inputIdComboEliminar.value
+    formEliminarCombo.querySelector('form').action = `/combos/${id}/eliminar`
+})
 
 if (botonAgregarCombo) {
     botonAgregarCombo.addEventListener("click", () =>{
@@ -111,6 +126,12 @@ if (botonEditarCombo) {
         formEliminarCombo.style.display ='none'
     })
 }
+const inputIdComboEditar = formEditarCombo.querySelector('input[name="id_combo"]')
+inputIdComboEditar.addEventListener("input", () => {
+    const id = inputIdComboEditar.value
+    formEditarCombo.querySelector('form').action = `/combos/${id}/editar`
+})
+
 
 if (botonAgregarCombod) {
     botonAgregarCombod.addEventListener("click", () =>{
@@ -125,6 +146,11 @@ if (botonEditarCombov) {
         formEliminarCombov.style.display ='none'
     })
 }
+const inputIdVersionEditar = formEditarCombov.querySelector('input[name="id_version"]')
+inputIdVersionEditar.addEventListener("input", () => {
+    const id = inputIdVersionEditar.value
+    formEditarCombov.querySelector('form').action = `/combo_version/${id}/editar`
+})
 
 if (botonAgregarCombov) {
     botonAgregarCombov.addEventListener("click", () =>{
@@ -141,3 +167,8 @@ if (botonEliminarCombov) {
         formEliminarCombov.style.display ='block'
     })
 }
+const inputIdVersionEliminar = formEliminarCombov.querySelector('input[name="id_version"]')
+inputIdVersionEliminar.addEventListener("input", () => {
+    const id = inputIdVersionEliminar.value
+    formEliminarCombov.querySelector('form').action = `/combo_version/${id}/eliminar`
+})
