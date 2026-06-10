@@ -43,13 +43,13 @@ def editar(id_producto):
 
         if not nombre or not descripcion or not precio or not categoria :
             flash('Completá todos los campos.', 'error')
-            return redirect(url_for('productos.editar', id_producto=id_producto))
+            return redirect(url_for('menu.mostrar'))
 
         try:
             datos = {'nombre': nombre, 'descripcion': descripcion, 'precio': float(precio), 'categoria': categoria, 'lactosa': lactosa, 'vegetariano': vegetariano, 'vegano': vegano, 'sin_tacc': sin_tacc}
         except (TypeError, ValueError):
             flash('El precio ingresado no es válido.', 'error')
-            return redirect(url_for('productos.editar', id_producto=id_producto))
+            return redirect(url_for('menu.mostrar'))
 
         resultado = api.editar_producto(id_producto, datos, token_actual(), archivo_imagen)
 
@@ -59,7 +59,7 @@ def editar(id_producto):
 
         for mensaje in extraer_mensajes_error(resultado.get('error_response')):
             flash(mensaje, 'error')
-        return redirect(url_for('productos.editar', id_producto=id_producto))
+        return redirect(url_for('menu.mostrar'))
 
     return render_template('editarMenuAdmi.html', usuario=usuario, producto=producto)
 
@@ -67,7 +67,7 @@ def editar(id_producto):
 @requiere_login()
 def eliminar(id_producto):
     resultado = api.eliminar_producto(id_producto, token_actual())
-
+    print("RESULTADO ELIMINAR:", resultado)
     if not resultado.get('ok'):
         for mensaje in extraer_mensajes_error(resultado.get('error_response')):
             flash(mensaje, 'error')
@@ -95,13 +95,13 @@ def agregar():
 
         if not nombre or not descripcion or not precio or not categoria:
             flash('Completá todos los campos.', 'error')
-            return redirect(url_for('productos.agregar'))
+            return redirect(url_for('menu.mostrar'))
 
         try:
             datos = {'nombre': nombre, 'descripcion': descripcion, 'precio': float(precio), 'categoria': categoria, 'lactosa': lactosa, 'vegetariano': vegetariano, 'vegano': vegano, 'sin_tacc': sin_tacc}
         except (TypeError, ValueError):
             flash('El precio ingresado no es válido.', 'error')
-            return redirect(url_for('productos.agregar'))
+            return redirect(url_for('menu.mostrar'))
         
         resultado = api.agregar_producto(datos, token_actual(), archivo_imagen)
         
@@ -111,7 +111,7 @@ def agregar():
         
         for mensaje in extraer_mensajes_error(resultado.get('error_response')):
             flash(mensaje, 'error')
-        return redirect(url_for('productos.agregar'))
+        return redirect(url_for('menu.mostrar'))
         
     return render_template('editarMenuAdmi.html', usuario=usuario)
 

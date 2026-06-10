@@ -36,9 +36,9 @@ def actualizar_productos(id_producto):
     try: 
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
-        data = request.get_json()  
+        data = request.form 
 
-        if data is None:
+        if not data:
             return jsonify({"error": "Ingrese todos los datos"}), 400
 
         campos_obligatorios = ["nombre", "descripcion", "precio", "categoria", "lactosa", "vegetariano", "vegano", "sin_tacc"]
@@ -51,7 +51,15 @@ def actualizar_productos(id_producto):
         if producto is None:
             return jsonify({"error": "Producto no encontrado"}), 404
         
-        cursor.execute("UPDATE productos SET nombre = %s, descripcion = %s, precio = %s, categoria = %s, lactosa = %s, vegetariano = %s, vegano = %s, sin_tacc = %s WHERE id_producto = %s", (data["nombre"], data["descripcion"], data["precio"], data["categoria"], data["lactosa"], data["vegetariano"], data["vegano"], data["sin_tacc"], id_producto)) 
+        lactosa     = 1 if data.get('lactosa') == 'True' else 0
+        vegetariano = 1 if data.get('vegetariano') == 'True' else 0
+        vegano      = 1 if data.get('vegano') == 'True' else 0
+        sin_tacc    = 1 if data.get('sin_tacc') == 'True' else 0
+        
+        cursor.execute(
+            "UPDATE productos SET nombre = %s, descripcion = %s, precio = %s, categoria = %s, lactosa = %s, vegetariano = %s, vegano = %s, sin_tacc = %s WHERE id_producto = %s",
+            (data["nombre"], data["descripcion"], data["precio"], data["categoria"], lactosa, vegetariano, vegano, sin_tacc, id_producto)
+        )
         conn.commit()  
 
         cursor.execute("SELECT * FROM productos WHERE id_producto = %s", (id_producto,))
@@ -114,6 +122,7 @@ def agregar_producto():
         return jsonify(nuevo_producto), 201
         
     except Exception as e:
+        print("ERROR AGREGAR:", str(e))
         return jsonify({"error": f"Error al agregar el producto: {str(e)}"}), 500
     finally:
         if cursor: cursor.close()
@@ -140,6 +149,8 @@ def eliminar_producto(id_producto):
         return jsonify(producto_eliminado), 200
     
     except Exception as e:
+        if '1451' in str(e):
+         return jsonify({"error": "No se puede eliminar el producto porque está asociado a un combo. Eliminalo del combo primero."}), 400
         return jsonify({"error": f"Error al eliminar el producto: {str(e)}"}), 500
     finally:
         if cursor: 

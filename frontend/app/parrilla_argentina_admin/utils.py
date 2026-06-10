@@ -21,8 +21,14 @@ def limpiar_sesion() -> None:
 
 
 def extraer_mensajes_error(api_response: dict) -> list[str]:
-    errores = (api_response or {}).get('errors', [])
-    return [e.get('description') or e.get('message') or 'Error desconocido' for e in errores]
+    response = api_response or {}
+    errores = response.get('errors', [])
+    if errores:
+        return [e.get('description') or e.get('message') or 'Error desconocido' for e in errores]
+    error_simple = response.get('error')
+    if error_simple:
+        return [error_simple]
+    return ['Error desconocido']
 
 
 def requiere_login():
