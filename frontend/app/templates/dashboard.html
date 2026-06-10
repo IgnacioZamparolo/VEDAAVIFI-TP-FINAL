@@ -2,29 +2,201 @@
 
 {% block title %}Parrilla Argentina — Dashboard{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
+
 {% block content %}
-<section class="hero">
-  <div class="hero__content">
-    <h1 class="hero__title">¡Hola, {{ usuario.nombre }}!</h1>
-    <p class="hero__subtitle">Bienvenido al panel de administración de Parrilla Argentina.</p>
+<div class="db-header">
+  <h1 class="db-header__greeting">¡Hola, {{ usuario.nombre }}!</h1>
+  <p class="db-header__sub">Panel de estadísticas · Parrilla Argentina</p>
+</div>
+
+{% if estadisticas %}
+
+<div class="kpi-grid">
+  <div class="kpi-card kpi-card--r">
+    <div class="kpi-card__label">Reservas</div>
+    <div class="kpi-card__value">{{ estadisticas.total_reservas }}</div>
   </div>
-</section>
-
-<section class="table-section">
-  <div class="search-card" style="max-width: 600px; width: 100%;">
-
-    <h2 style="margin-bottom: 1.2rem;">Tu cuenta</h2>
-    <dl class="datalist">
-      <dt>Nombre</dt><dd>{{ usuario.nombre }}</dd>
-      <dt>Email</dt><dd>{{ usuario.mail }}</dd>
-      <dt>ID</dt><dd>{{ usuario.id_usuario }}</dd>
-    </dl>
-
-    <form action="{{ url_for('auth.logout') }}" method="POST" style="margin-top: 1.75rem;">
-      <button type="submit" class="form__btn form__btn--danger" style="padding: .7rem 1.4rem; font-size: .95rem;">
-        Cerrar sesión
-      </button>
-    </form>
+  <div class="kpi-card kpi-card--g">
+    <div class="kpi-card__label">Productos</div>
+    <div class="kpi-card__value">{{ estadisticas.total_productos }}</div>
   </div>
-</section>
+  <div class="kpi-card kpi-card--b">
+    <div class="kpi-card__label">Reseñas</div>
+    <div class="kpi-card__value">{{ estadisticas.total_resenias }}</div>
+  </div>
+  <div class="kpi-card kpi-card--a">
+    <div class="kpi-card__label">Combos</div>
+    <div class="kpi-card__value">{{ estadisticas.total_combos }}</div>
+  </div>
+</div>
+
+{% if estadisticas.horario_mas_reservado %}
+<div class="horario-card">
+  <div class="horario-card__icon">🕐</div>
+  <div>
+    <div class="horario-card__label">Horario con más reservas</div>
+    <div class="horario-card__value">{{ estadisticas.horario_mas_reservado.horario }}</div>
+    <div class="horario-card__sub">
+      {{ estadisticas.horario_mas_reservado.cantidad }}
+      reserva{{ 's' if estadisticas.horario_mas_reservado.cantidad != 1 else '' }}
+      registrada{{ 's' if estadisticas.horario_mas_reservado.cantidad != 1 else '' }}
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<div class="charts-grid">
+  <div class="chart-card">
+    <h3 class="chart-card__title">🗓️ Reservas por estado</h3>
+    <div class="chart-card__wrap">
+      <canvas id="cEstados"></canvas>
+    </div>
+  </div>
+  <div class="chart-card">
+    <h3 class="chart-card__title">🍽️ Productos por categoría</h3>
+    <div class="chart-card__wrap">
+      <canvas id="cCats"></canvas>
+    </div>
+  </div>
+</div>
+
+{% if estadisticas.reservas_por_dia %}
+<div class="chart-card chart-card--full">
+  <h3 class="chart-card__title">📅 Reservas por día</h3>
+  <div class="chart-card__wrap chart-card__wrap--short">
+    <canvas id="cDias"></canvas>
+  </div>
+</div>
+{% endif %}
+
+<script id="dashboard-data" type="application/json">
+  {{ estadisticas | tojson }}
+</script>
+
+{% else %}
+<div class="db-nodata">
+  <div class="db-nodata__icon">📊</div>
+  <p>No se pudieron cargar las estadísticas. Verificá que la API esté activa.</p>
+</div>
+{% endif %}
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const el = document.getElementById('dashboard-data');
+  if (!el) return;
+
+  const datos = JSON.parse(el.textContent);
+
+  Chart.defaults.font.family = "'Lato', 'Segoe UI', sans-serif";
+  Chart.defaults.color = '#6B6B6B';
+
+  new Chart(document.getElementById('cEstados'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Pendientes', 'Confirmadas', 'Canceladas', 'Finalizadas', 'Vencidas'],
+      datasets: [{
+        data: [
+          datos.reservas_por_estado.pendientes,
+          datos.reservas_por_estado.confirmadas,
+          datos.reservas_por_estado.canceladas,
+          datos.reservas_por_estado.finalizadas,
+          datos.reservas_por_estado.vencidas
+        ],
+        backgroundColor: ['#C8973A', '#2e7d32', '#7B1E1E', '#1565c0', '#6B6B6B'],
+        borderWidth: 2,
+        borderColor: '#fff',
+        hoverOffset: 6
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: { padding: 14, boxWidth: 11, font: { size: 11 } }
+        },
+        tooltip: { callbacks: { label: c => ` ${c.label}: ${c.raw}` } }
+      }
+    }
+  });
+
+  const cats = datos.productos_por_categoria;
+  new Chart(document.getElementById('cCats'), {
+    type: 'bar',
+    data: {
+      labels: cats.map(c => c.categoria.charAt(0).toUpperCase() + c.categoria.slice(1)),
+      datasets: [{
+        label: 'Productos',
+        data: cats.map(c => c.cantidad),
+        backgroundColor: ['#7B1E1E', '#2e7d32', '#1565c0', '#C8973A'],
+        borderRadius: 5,
+        borderSkipped: false
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: c => ` ${c.raw} producto${c.raw !== 1 ? 's' : ''}` } }
+      },
+      scales: {
+        x: {
+          beginAtZero: true,
+          ticks: { stepSize: 1 },
+          grid: { color: 'rgba(0,0,0,0.05)' }
+        },
+        y: { grid: { display: false } }
+      }
+    }
+  });
+
+  const diasEl = document.getElementById('cDias');
+  if (diasEl && datos.reservas_por_dia && datos.reservas_por_dia.length) {
+    new Chart(diasEl, {
+      type: 'line',
+      data: {
+        labels: datos.reservas_por_dia.map(d => d.dia),
+        datasets: [{
+          label: 'Reservas',
+          data: datos.reservas_por_dia.map(d => d.cantidad),
+          borderColor: '#7B1E1E',
+          backgroundColor: 'rgba(123,30,30,0.08)',
+          borderWidth: 2.5,
+          pointBackgroundColor: '#7B1E1E',
+          pointRadius: 5,
+          pointHoverRadius: 7,
+          fill: true,
+          tension: 0.35
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: c => ` ${c.raw} reserva${c.raw !== 1 ? 's' : ''}` } }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: { stepSize: 1 },
+            grid: { color: 'rgba(0,0,0,0.05)' }
+          },
+          x: { grid: { display: false } }
+        }
+      }
+    });
+  }
+});
+</script>
 {% endblock %}
