@@ -1,8 +1,10 @@
+import os
 from services.storage import subir_imagen
 from flask import Blueprint, jsonify, request
 from db_connection import get_connection 
 from utils import requiere_admin
 from constants import EXTENSIONES_PERMITIDAS
+
 
 def archivo_permitido(nombre_archivo):
     return '.' in nombre_archivo and nombre_archivo.rsplit('.', 1)[1].lower() in EXTENSIONES_PERMITIDAS
@@ -19,6 +21,11 @@ def ver_menu():
 
         cursor.execute("SELECT * FROM productos")
         resultado = cursor.fetchall()
+        url_base = f"{os.getenv('SUPABASE_URL')}/storage/v1/object/public/{os.getenv('SUPABASE_BUCKET')}"
+        for producto in resultado:
+            if producto.get('imagen_url'):
+                producto['imagen_url'] = f"{url_base}/{producto['imagen_url']}"
+
         return jsonify(resultado), 200
     except Exception as e:
         return jsonify({"error": f"Error interno del servidor: {str(e)}"}), 500
@@ -56,11 +63,26 @@ def actualizar_productos(id_producto):
         vegano      = 1 if data.get('vegano') == 'True' else 0
         sin_tacc    = 1 if data.get('sin_tacc') == 'True' else 0
         
-        cursor.execute(
-            "UPDATE productos SET nombre = %s, descripcion = %s, precio = %s, categoria = %s, lactosa = %s, vegetariano = %s, vegano = %s, sin_tacc = %s WHERE id_producto = %s",
-            (data["nombre"], data["descripcion"], data["precio"], data["categoria"], lactosa, vegetariano, vegano, sin_tacc, id_producto)
-        )
-        conn.commit()  
+        archivo_imagen = request.files.get('imagen')
+        nombre_imagen_supabase = None
+        if archivo_imagen and archivo_imagen.filename:
+            if not archivo_permitido(archivo_imagen.filename):
+                return jsonify({"error": "Formato no permitido. Solo podés subir jpg, png, jpeg o webp"}), 400
+            nombre_imagen_supabase = subir_imagen(archivo_imagen)
+            if not nombre_imagen_supabase:
+                return jsonify({"error": "Error al subir la imagen."}), 400
+
+        if nombre_imagen_supabase:
+            cursor.execute(
+                "UPDATE productos SET nombre = %s, descripcion = %s, precio = %s, categoria = %s, lactosa = %s, vegetariano = %s, vegano = %s, sin_tacc = %s, imagen_url = %s WHERE id_producto = %s",
+                (data["nombre"], data["descripcion"], data["precio"], data["categoria"], lactosa, vegetariano, vegano, sin_tacc, nombre_imagen_supabase, id_producto)
+            )
+        else:
+            cursor.execute(
+                "UPDATE productos SET nombre = %s, descripcion = %s, precio = %s, categoria = %s, lactosa = %s, vegetariano = %s, vegano = %s, sin_tacc = %s WHERE id_producto = %s",
+                (data["nombre"], data["descripcion"], data["precio"], data["categoria"], lactosa, vegetariano, vegano, sin_tacc, id_producto)
+            )
+        conn.commit()
 
         cursor.execute("SELECT * FROM productos WHERE id_producto = %s", (id_producto,))
         producto_actualizado = cursor.fetchone()
@@ -81,6 +103,7 @@ def agregar_producto():
         cursor = conn.cursor(dictionary=True)
         
         data = request.form
+
         archivo_imagen = request.files.get("imagen") 
 
         if archivo_imagen:
@@ -90,10 +113,16 @@ def agregar_producto():
         if not data:
             return jsonify({"error": "Ingrese todos los datos"}), 400
 
-        campos_obligatorios = ["nombre", "descripcion", "precio", "categoria", "lactosa", "vegetariano", "vegano", "sin_tacc"]
+        campos_obligatorios = ["nombre", "descripcion", "precio", "categoria"]
         for campo in campos_obligatorios:
             if campo not in data:
                 return jsonify({"error": f"Falta el campo requerido {campo}"}), 400
+            
+        lactosa     = 1 if data.get("lactosa")     else 0
+        vegetariano = 1 if data.get("vegetariano") else 0
+        vegano      = 1 if data.get("vegano")      else 0
+        sin_tacc    = 1 if data.get("sin_tacc")    else 0
+   
 
         nombre_imagen_supabase = None
         if archivo_imagen:
@@ -106,11 +135,7 @@ def agregar_producto():
             (nombre, descripcion, precio, categoria, lactosa, vegetariano, vegano, sin_tacc, imagen_url) 
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
         """
-        valores = (
-            data["nombre"], data["descripcion"], data["precio"], 
-            data["categoria"], data["lactosa"], data["vegetariano"], 
-            data["vegano"], data["sin_tacc"], nombre_imagen_supabase
-        )
+        valores = (data["nombre"], data["descripcion"], data["precio"], data["categoria"], lactosa, vegetariano, vegano, sin_tacc, nombre_imagen_supabase)
         
         cursor.execute(query, valores)
         conn.commit()
@@ -122,7 +147,6 @@ def agregar_producto():
         return jsonify(nuevo_producto), 201
         
     except Exception as e:
-        print("ERROR AGREGAR:", str(e))
         return jsonify({"error": f"Error al agregar el producto: {str(e)}"}), 500
     finally:
         if cursor: cursor.close()
@@ -149,8 +173,6 @@ def eliminar_producto(id_producto):
         return jsonify(producto_eliminado), 200
     
     except Exception as e:
-        if '1451' in str(e):
-         return jsonify({"error": "No se puede eliminar el producto porque está asociado a un combo. Eliminalo del combo primero."}), 400
         return jsonify({"error": f"Error al eliminar el producto: {str(e)}"}), 500
     finally:
         if cursor: 

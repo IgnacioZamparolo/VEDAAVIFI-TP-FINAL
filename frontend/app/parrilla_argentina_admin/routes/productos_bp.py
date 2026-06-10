@@ -40,6 +40,7 @@ def editar(id_producto):
         sin_tacc         = request.form.get('sin_tacc', '') == 'on'
 
         archivo_imagen = request.files.get('imagen')
+        print("ARCHIVO EN FRONTEND:", archivo_imagen, archivo_imagen.filename if archivo_imagen else None)
 
         if not nombre or not descripcion or not precio or not categoria :
             flash('Completá todos los campos.', 'error')

@@ -85,6 +85,7 @@ inputIdProductoEditar.addEventListener("input", () => {
     formEditarProd.querySelector('form').action = `/productos/${id}/editar`
 })
 
+
 if (botonEliminarProd) {
     botonEliminarProd.addEventListener("click", () =>{
         formAgregarProd.style.display = 'none'
