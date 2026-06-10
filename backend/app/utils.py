@@ -65,6 +65,7 @@ PASSWORD_RESET_TOKEN_BYTES = 32
 LOGIN_CODE_LEN = 6
 
 def generar_qr(id_reserva):
+    url_finalizacion = (f"{FRONTEND_URL}/reservas/{id_reserva}/finalizar")
     qr = qrcode.QRCode(
         version=1,
         error_correction=qrcode.constants.ERROR_CORRECT_M,
@@ -72,7 +73,7 @@ def generar_qr(id_reserva):
         border=4,
     )
 
-    qr.add_data(id_reserva)
+    qr.add_data(url_finalizacion)
     qr.make(fit=True)
 
     img=qr.make_image(fill_color="black", back_color="white")
@@ -84,9 +85,10 @@ def generar_qr(id_reserva):
 
 def enviar_qr(mail, qr_bytes, id_reserva):
     try:
+        url_finalizacion = (f"{FRONTEND_URL}/reservas/{id_reserva}/finalizar")
         msg = MIMEMultipart("related")
         msg["Subject"]="Confirmación reserva - Parrilla Argentina"
-        msg["From"]="apestana@fi.uba.ar"
+        msg["From"]=SMTP_USER
         msg["To"]= mail
 
         html_content = f"""
@@ -99,6 +101,26 @@ def enviar_qr(mail, qr_bytes, id_reserva):
                     <img src="cid:qr" alt="Código QR de tu reserva" style="border: 1px solid #ddd; padding: 10px; border-radius: 5px;">
                 </div>
                 
+                <p style="color: #666; font-size: 14px;">Presentá este código QR en la entrada.</p>
+
+                <div style="margin-top: 15px;">
+                    <a
+                        href="{url_finalizacion}"
+                        style="
+                            background-color: #198754;
+                            color: white;
+                            padding: 12px 25px;
+                            text-decoration: none;
+                            border-radius: 5px;
+                            display: inline-block;
+                            font-weight: bold;
+                            font-size: 15px;
+                        "
+                    >
+                        Validar y finalizar reserva
+                    </a>
+                </div>
+
                 <p style="color: #666; font-size: 14px;">¿Tuviste un imprevisto? Podés cancelar tu reserva haciendo clic abajo:</p>
                 
                 <div style="margin-top: 15px;">
@@ -187,21 +209,9 @@ def actualizar_estados():
         cursor = conn.cursor(dictionary=True)
         ahora = datetime.now()
 
-        cursor.execute("""SELECT id_reserva, mail FROM reservas WHERE confirmada = TRUE AND TIMESTAMP(dia, horario) < %s """, (ahora,))
-
-        reservas_finalizadas = cursor.fetchall()
-
         cursor.execute("""UPDATE reservas SET pendiente = FALSE, vencida = TRUE WHERE pendiente = TRUE AND TIMESTAMP(dia, horario) < %s """, (ahora,))
 
-        cursor.execute("""UPDATE reservas SET confirmada = FALSE, finalizada = TRUE WHERE confirmada = TRUE AND TIMESTAMP(dia, horario) < %s """, (ahora,))
-
         conn.commit()
-
-        for reserva in reservas_finalizadas:
-            enviado = enviar_mail_resenia(reserva["mail"], reserva["id_reserva"])
-
-            if not enviado:
-                print(f"No se pudo enviar el mail de reseña para la reserva {reserva['id_reserva']}")
     
     except Exception as e:
         print(f"Error al actualizar estados: {e}")
