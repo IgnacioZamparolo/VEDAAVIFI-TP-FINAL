@@ -20,7 +20,7 @@ def mostrar():
     return render_template('index.html', servicios=resultado['data'])
 
 
-@servicios_bp.route('/admin/servicios_extra', methods = ["GET"]) #admin
+@servicios_bp.route('/admin/servicios', methods = ["GET"]) #admin
 @requiere_login()
 def mostrar_admi():
     resultado = api.obtener_servicio(token_actual())

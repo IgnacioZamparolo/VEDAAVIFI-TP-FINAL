@@ -55,12 +55,38 @@ if (botonEditarServicio) {
         formEliminarServicio.style.display ='none'
     })
 }
-
+const selectEditarServicio = formEditarServicio.querySelector('select')
+if (selectEditarServicio) {
+    selectEditarServicio.addEventListener("change", function() {
+        const id = this.value
+        formEditarServicio.querySelector('form').action = `/servicios_extra/${id}`
+        const option = this.options[this.selectedIndex]
+        formEditarServicio.querySelector('input[name="nombre"]').value      = option.dataset.nombre      || ''
+        formEditarServicio.querySelector('input[name="descripcion"]').value = option.dataset.descripcion || ''
+    })
+}
 if (botonEliminarServicio) {
     botonEliminarServicio.addEventListener("click", () =>{
         formAgregarServicio.style.display = 'none'
         formEditarServicio.style.display ='none'
         formEliminarServicio.style.display ='block'
+    })
+}
+const selectEliminarServicio = formEliminarServicio.querySelector('select')
+if (selectEliminarServicio) {
+    selectEliminarServicio.addEventListener("change", () => {
+        const id = selectEliminarServicio.value
+        formEliminarServicio.querySelector('form').action = `/servicios_extra/${id}/eliminar`
+    })
+}
+const btnConfirmarEliminar = document.getElementById('btn-confirmar-eliminar')
+if (btnConfirmarEliminar) {
+    btnConfirmarEliminar.addEventListener('click', () => {
+        const id = document.getElementById('select-eliminar').value
+        if (!id) return
+        const form = document.getElementById('form-eliminar')
+        form.action = `/servicios_extra/${id}/eliminar`
+        form.submit()
     })
 }
 
