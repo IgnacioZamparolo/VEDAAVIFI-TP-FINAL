@@ -42,9 +42,9 @@ def mostrar():
 
 @menu_bp.route('/menu', methods = ["GET"])
 def mostrar_cliente():
-    productos = api.obtener_productos(token_actual())
-    combos = api.obtener_combo(token_actual())
-
+    productos = api.obtener_productos_cliente()
+    print("PRODUCTOS CLIENTE:", productos)
+    combos = api.obtener_combos_cliente()
     if not productos.get('ok'):
         for mensaje in extraer_mensajes_error(productos.get('error_response')):
             flash(mensaje, 'error')
@@ -53,7 +53,7 @@ def mostrar_cliente():
         for mensaje in extraer_mensajes_error(combos.get('error_response')):
             flash(mensaje, 'error')
     
-    return render_template('index.html',
+    return render_template('menu.html',
         productos=productos.get('data', []),
         combos=combos.get('data', []),
 

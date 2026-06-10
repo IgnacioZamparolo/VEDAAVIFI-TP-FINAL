@@ -35,52 +35,25 @@
       <h2 class="seccion-titulo">Entradas</h2>
       <p class="seccion-sub">Para abrir el apetito con los sabores de la parrilla</p>
       <div class="platos-grid">
+        {% for producto in productos if producto.categoria == 'entrada' %}
         <article class="plato-card">
           <div class="plato-head">
-            <h3>Chorizo criollo</h3>
-            <span class="plato-precio">$3.200</span>
+            <h3>{{producto.nombre}}</h3>
+            <span class="plato-precio">${{ "{:,.0f}".format(producto.precio | float) }}</span>
           </div>
-          <p class="plato-desc">Chorizo artesanal a las brasas. Dorado por fuera, jugoso por dentro.</p>
-          <div class="plato-tags"><span class="tag tag-tacc">🌾 Sin TACC</span></div>
-        </article>
-
-        <article class="plato-card">
-          <div class="plato-head">
-            <h3>Morcilla</h3>
-            <span class="plato-precio">$2.800</span>
-          </div>
-          <p class="plato-desc">Morcilla casera a la parrilla. Un clásico imperdible del asado argentino.</p>
-          <div class="plato-tags"><span class="tag tag-tacc">🌾 Sin TACC</span></div>
-        </article>
-
-        <article class="plato-card">
-          <div class="plato-head">
-            <h3>Provoleta</h3>
-            <span class="plato-precio">$3.500</span>
-          </div>
-          <p class="plato-desc">Queso provolone a la parrilla con orégano. Crocante por fuera, cremosa por dentro.</p>
-          <div class="plato-tags">
-            <span class="tag tag-veg">🌿 Vegetariano</span>
-            <span class="tag tag-tacc">🌾 Sin TACC</span>
-            <span class="tag tag-lactosa">🥛 Con Lactosa</span>
+          <p class="plato-desc">{{ producto.descripcion }}</p>
+          <div class="plato-tags"> 
+            {% if producto.vegetariano %}<span class="tag tag-veg">🌿 Vegetariano</span>{% endif %}
+            {% if producto.vegano %}<span class="tag tag-vegano">🌱 Vegano</span>{% endif %}
+            {% if producto.sin_tacc %}<span class="tag tag-tacc">🌾 Sin TACC</span>{% endif %}
+            {% if producto.lactosa %}<span class="tag tag-lactosa">🥛 Con Lactosa</span>{% endif %}
           </div>
         </article>
-
-        <article class="plato-card">
-          <div class="plato-head">
-            <h3>Ensalada mixta</h3>
-            <span class="plato-precio">$2.100</span>
-          </div>
-          <p class="plato-desc">Lechuga, tomate, zanahoria y choclo. Fresca, liviana y perfecta para acompañar.</p>
-          <div class="plato-tags">
-            <span class="tag tag-veg">🌿 Vegetariano</span>
-            <span class="tag tag-vegano">🌱 Vegano</span>
-            <span class="tag tag-tacc">🌾 Sin TACC</span>
-          </div>
-        </article>
-      </div>
+        {% endfor %}
+           </div>
     </div>
   </section>
+
 
   <section id="principales" class="cat-seccion">
     <div class="contenedor">
@@ -88,35 +61,26 @@
       <h2 class="seccion-titulo">Platos principales</h2>
       <p class="seccion-sub">Cortes a la parrilla y clásicos de la cocina argentina</p>
       <div class="platos-grid">
+        {% for producto in productos if producto.categoria == 'principal' %}
         <article class="plato-card">
           <div class="plato-head">
-            <h3>Asado de tira</h3>
-            <span class="plato-precio">$8.500</span>
+             <h3>{{ producto.nombre }}</h3>
+            <span class="plato-precio">${{ "{:,.0f}".format(producto.precio | float) }}</span>
           </div>
-          <p class="plato-desc">Corte clásico a la parrilla. Tierno, jugoso y con el sabor inconfundible de las brasas.</p>
-          <div class="plato-tags"><span class="tag tag-tacc">🌾 Sin TACC</span></div>
-        </article>
-
-        <article class="plato-card">
-          <div class="plato-head">
-            <h3>Vacío</h3>
-            <span class="plato-precio">$9.200</span>
+          <p class="plato-desc">{{ producto.descripcion }}</p>
+          <div class="plato-tags">
+            {% if producto.vegetariano %}<span class="tag tag-veg">🌿 Vegetariano</span>{% endif %}
+            {% if producto.vegano %}<span class="tag tag-vegano">🌱 Vegano</span>{% endif %}
+            {% if producto.sin_tacc %}<span class="tag tag-tacc">🌾 Sin TACC</span>{% endif %}
+            {% if producto.lactosa %}<span class="tag tag-lactosa">🥛 Con Lactosa</span>{% endif %}
           </div>
-          <p class="plato-desc">Corte tierno con chimichurri casero. El favorito de los conocedores.</p>
-          <div class="plato-tags"><span class="tag tag-tacc">🌾 Sin TACC</span></div>
         </article>
-
-        <article class="plato-card">
-          <div class="plato-head">
-            <h3>Mini hamburguesita con papas fritas</h3>
-            <span class="plato-precio">$2.500</span>
-          </div>
-          <p class="plato-desc">Hamburguesa en pan chico con queso cheddar y papas crocantes. Ideal para los más chicos.</p>
-          <div class="plato-tags"><span class="tag tag-lactosa">🥛 Con Lactosa</span></div>
-        </article>
+        {% endfor %}
       </div>
     </div>
   </section>
+
+        
 
   <section id="postres" class="cat-seccion">
     <div class="contenedor">
@@ -124,14 +88,21 @@
       <h2 class="seccion-titulo">Postres</h2>
       <p class="seccion-sub">El dulce cierre que toda buena comida se merece</p>
       <div class="platos-grid">
+         {% for producto in productos if producto.categoria == 'postre' %}
         <article class="plato-card">
           <div class="plato-head">
-            <h3>Flan casero</h3>
-            <span class="plato-precio">$1.800</span>
+           <h3>{{ producto.nombre }}</h3>
+            <span class="plato-precio">${{ "{:,.0f}".format(producto.precio | float) }}</span>
           </div>
-          <p class="plato-desc">Con dulce de leche y crema. Suave, acaramelado y hecho en casa todos los días.</p>
-          <div class="plato-tags"><span class="tag tag-lactosa">🥛 Con Lactosa</span></div>
+           <p class="plato-desc">{{ producto.descripcion }}</p>
+          <div class="plato-tags">
+            {% if producto.vegetariano %}<span class="tag tag-veg">🌿 Vegetariano</span>{% endif %}
+            {% if producto.vegano %}<span class="tag tag-vegano">🌱 Vegano</span>{% endif %}
+            {% if producto.sin_tacc %}<span class="tag tag-tacc">🌾 Sin TACC</span>{% endif %}
+            {% if producto.lactosa %}<span class="tag tag-lactosa">🥛 Con Lactosa</span>{% endif %}
+          </div>
         </article>
+        {% endfor %}
       </div>
     </div>
   </section>
@@ -142,34 +113,25 @@
       <h2 class="seccion-titulo">Bebidas</h2>
       <p class="seccion-sub">Para acompañar cada momento</p>
       <div class="platos-grid">
+       {% for producto in productos if producto.categoria == 'bebida' %}
         <article class="plato-card">
           <div class="plato-head">
-            <h3>Agua mineral</h3>
-            <span class="plato-precio">$900</span>
+            <h3>{{ producto.nombre }}</h3>
+            <span class="plato-precio">${{ "{:,.0f}".format(producto.precio | float) }}</span>
           </div>
-          <p class="plato-desc">500 ml, sin gas o con gas. Siempre fresca y disponible.</p>
+          <p class="plato-desc">{{ producto.descripcion }}</p>
           <div class="plato-tags">
-            <span class="tag tag-veg">🌿 Vegetariano</span>
-            <span class="tag tag-vegano">🌱 Vegano</span>
-            <span class="tag tag-tacc">🌾 Sin TACC</span>
+            {% if producto.vegetariano %}<span class="tag tag-veg">🌿 Vegetariano</span>{% endif %}
+            {% if producto.vegano %}<span class="tag tag-vegano">🌱 Vegano</span>{% endif %}
+            {% if producto.sin_tacc %}<span class="tag tag-tacc">🌾 Sin TACC</span>{% endif %}
+            {% if producto.lactosa %}<span class="tag tag-lactosa">🥛 Con Lactosa</span>{% endif %}
           </div>
         </article>
-
-        <article class="plato-card">
-          <div class="plato-head">
-            <h3>Gaseosa</h3>
-            <span class="plato-precio">$1.200</span>
-          </div>
-          <p class="plato-desc">Coca-Cola, Sprite o Fanta 350 ml. La combinación perfecta con cualquier plato.</p>
-          <div class="plato-tags">
-            <span class="tag tag-veg">🌿 Vegetariano</span>
-            <span class="tag tag-vegano">🌱 Vegano</span>
-            <span class="tag tag-tacc">🌾 Sin TACC</span>
-          </div>
-        </article>
+        {% endfor %}
       </div>
     </div>
   </section>
+        
 
   <section id="combos" class="cat-seccion">
     <div class="contenedor">
@@ -177,54 +139,33 @@
       <h2 class="seccion-titulo">Combos</h2>
       <p class="seccion-sub">La mejor relación precio-sabor, armada por nuestros expertos</p>
       <div class="combos-grid">
-
+        {% for combo in combos %}
         <div class="combo-card">
-          <span class="combo-badge">⭐ Recomendado</span>
-          <h3>Combo Ejecutivo</h3>
-          <p class="version">Combo ejecutivo enero 2026</p>
-          <p class="combo-personas">👥 Para 2 personas</p>
-          
-          <div class="combo-detalle-productos" style="margin: 1rem 0; padding: 0.5rem; background: rgba(255,255,255,0.1); border-radius: 4px;">
-            <strong style="color: #fff; font-size: 0.9rem; display:block; margin-bottom: 0.25rem;">📦 Productos Incluidos:</strong>
-            <ul style="color: rgba(255,255,255,0.8); font-size: 0.85rem; padding-left: 1.2rem; margin: 0;">
-              <li>1x Asado de tira (Corte Principal)</li>
-              <li>1x Vacío Premium</li>
-              <li>2x Ensalada mixta o Papas Fritas</li>
-              <li>2x Gaseosa o Agua Mineral</li>
+            <h3>{{ combo.nombre }}</h3>
+          <div class="combo-precio">${{ "{:,.0f}".format(combo.precio | float) }}</div>
+          <ul>
+            {% for producto in combo.productos %}
+              <li>{{ producto.nombre }}</li>
+            {% endfor %}
+          </ul>
+            {% if combo.versiones %}
+             <ul>
+              {% for version in combo.versiones %}
+                <li>{{ version.descripcion }} — {{ version.personas }} personas — ${{ "{:,.0f}".format(version.precio | float) }}</li>
+              {% endfor %}
             </ul>
-          </div>
-
-          <div class="combo-precio">$12.500</div>
-          <a href="{{ url_for('frontend.reserva') }}" class="btn btn-dorado" style="margin-top:.5rem;">Reservar con este combo</a>
+            {% endif %}
+           <a href="{{ url_for('frontend.reserva') }}" class="btn btn-dorado" style="margin-top:.5rem;">Reservar con este combo</a>
         </div>
-
-        <div class="combo-card">
-          <span class="combo-badge">👶 Infantil</span>
-          <h3>Combo Infantil</h3>
-          <p class="version">Combo infantil enero 2026</p>
-          <p class="combo-personas">👤 Para 1 persona</p>
-          
-          <div class="combo-detalle-productos" style="margin: 1rem 0; padding: 0.5rem; background: rgba(255,255,255,0.1); border-radius: 4px;">
-            <strong style="color: #fff; font-size: 0.9rem; display:block; margin-bottom: 0.25rem;">📦 Productos Incluidos:</strong>
-            <ul style="color: rgba(255,255,255,0.8); font-size: 0.85rem; padding-left: 1.2rem; margin: 0;">
-              <li>1x Mini hamburguesita o Milanesitas</li>
-              <li>1x Porción de Puré o Papas Fritas</li>
-              <li>1x Gaseosa chica</li>
-              <li>1x Flan casero con dulce de leche</li>
-            </ul>
-          </div>
-
-          <div class="combo-precio">$6.500</div>
-          <a href="{{ url_for('frontend.reserva') }}" class="btn btn-dorado" style="margin-top:.5rem;">Reservar con este combo</a>
-        </div>
-
+        {% endfor %}
       </div>
     </div>
   </section>
-
+ 
   <section class="cta-banner">
     <h2>¿Te abrimos el apetito?</h2>
     <p>Reservá tu mesa y viví la experiencia completa de Parrilla Argentina.</p>
     <a href="{{ url_for('frontend.reserva') }}" class="btn btn-dorado btn-lg">Hacer una Reserva</a>
   </section>
 {% endblock %}
+         

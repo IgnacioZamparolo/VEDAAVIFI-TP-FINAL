@@ -439,3 +439,10 @@ def agregar_combo_detalle(datos: dict, token:str) -> dict:
         return {'ok': True}
     return _respuesta_error(response)
 
+def obtener_combos_con_productos() -> dict:
+    response = _get('/combos/con_productos')
+    if response is None:
+        return _error_conexion()
+    if response.status_code == 200:
+        return {'ok': True, 'data': response.json()}
+    return _respuesta_error(response)
