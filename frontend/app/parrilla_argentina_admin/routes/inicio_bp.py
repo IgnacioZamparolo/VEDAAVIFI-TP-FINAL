@@ -6,9 +6,13 @@ frontend_bp = Blueprint("frontend", __name__)
 
 @frontend_bp.route("/")
 def home():
-    return render_template("index.html")
+    resultado = api.obtener_servicio_extra_cliente()
+    servicios = resultado['data'] if resultado.get('ok') else []
 
-@frontend_bp.route("/menu")
+    resultado_resenias = api.obtener_resenias_clientes()
+    resenias = resultado_resenias['data'] if resultado_resenias.get('ok') else []
+
+    return render_template("index.html", servicios=servicios, resenias=resenias)
 
 @frontend_bp.route("/menu")
 def menu():
