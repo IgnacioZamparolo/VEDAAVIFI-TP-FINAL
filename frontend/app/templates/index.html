@@ -54,34 +54,24 @@
   <section class="seccion seccion-alt">
     <div class="contenedor">
       <div class="divisor"><span>⭐</span></div>
-      <h2 class="seccion-titulo">Servicios incluidos</h2>
+      <h2 class="seccion-titulo">Servicios Extras</h2>
       <p class="seccion-sub">Para que tu visita sea perfecta en todo sentido</p>
       <div class="servicios-grid">
+        {% for servicio in servicios %}
         <div class="servicio-card">
-          <div class="ic">♿</div>
+          <div class="ic">⭐</div>
           <div>
-            <h3>Acceso para discapacitados</h3>
-            <p>Rampas y espacios adaptados para personas con movilidad reducida.</p>
+           <h3>{{ servicio.nombre }}</h3>
+            <p>{{ servicio.descripcion }}</p>
           </div>
         </div>
-        <div class="servicio-card">
-          <div class="ic">🅿️</div>
-          <div>
-            <h3>Estacionamiento gratuito</h3>
-            <p>Playa de estacionamiento gratuita dentro de la Parrilla.</p>
-          </div>
+        {% else %}
+          <p>No hay servicios disponibles.</p>
+        {% endfor %}
         </div>
-        <div class="servicio-card">
-          <div class="ic">🥩</div>
-          <div>
-            <h3>Show del asador</h3>
-            <p>Degustación de cortes premium con show en vivo del asador. Una experiencia única.</p>
-          </div>
-        </div>
-      </div>
     </div>
   </section>
-
+  
   <section class="seccion">
     <div class="contenedor">
       <div class="divisor"><span>💬</span></div>

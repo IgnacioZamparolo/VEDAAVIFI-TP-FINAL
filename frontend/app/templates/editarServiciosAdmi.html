@@ -42,19 +42,31 @@
 </div>
 
 <div class="form" id="eliminar_servicio" style="display:none">
-    <form action="{{ url_for('servicios.eliminar_admi', id_servicio=0)}}" method="POST">
-        <label class="form__label" for="id_servicio">Id del servicio: </label>
-        <input class="form__input" type="text" id="id_servicio" name="id_servicio" placeholder="Id Servicio" required>
-
-
-        <button class="form__btn--submit" type="submit">Enviar</button>
+    <form id="form-eliminar" method="POST">
+        <label class="form__label" for="select-eliminar">Servicio a eliminar: </label>
+         <select class="form__input" id="select-eliminar" required>
+            {% for servicio in servicios %}
+                <option value="{{ servicio.id_servicio }}">{{ servicio.id_servicio }} - {{ servicio.nombre }}</option>
+            {% endfor %}
+        </select>
+        <button class="form__btn--submit" type="button" id="btn-confirmar-eliminar">Eliminar</button>
     </form>
 </div>
 
 <div class="form" id="editar_servicio" style="display:none">
-    <form action="{{ url_for('servicios.editar', id_servicio=0)}}" method="POST">
-        <label class="form__label" for="id_servicio">Id del servicio: </label>
-        <input class="form__input" type="text" id="id_servicio" name="id_servicio" placeholder="Id Servicio" required>
+    <form id="form-editar" method="POST">
+        <label class="form__label" for="select-editar">Servicio a editar:</label>
+         <select class="form__input" id="select-editar">
+            <option value="">Seleccioná un servicio </option>
+                {% for servicio in servicios %}
+                    <option value="{{ servicio.id_servicio }}" 
+                            data-nombre="{{ servicio.nombre }}" 
+                            data-descripcion="{{ servicio.descripcion }}">
+                        {{ servicio.id_servicio }} - {{ servicio.nombre }}
+                    </option>
+                {% endfor %}
+        </select>
+
 
         <label class="form__label" for="nombre">Nombre del servicio:</label>
         <input class="form__input" type="text" id="nombre" name="nombre" placeholder="Nombre" required>
