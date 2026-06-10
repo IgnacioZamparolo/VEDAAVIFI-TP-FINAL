@@ -126,7 +126,7 @@ def enviar_qr(mail, qr_bytes, id_reserva):
     
 def enviar_mail_resenia(mail, id_reserva):
     try:
-        url_resenia = (f"{FRONTEND_URL}/resenias/crear" f"id_reserva={id_reserva}")
+        url_resenia = (f"{FRONTEND_URL}/resenias/crear" f"?id_reserva={id_reserva}")
         msg = MIMEMultipart("alternative")
         msg["Subject"] = "¡Dejanos tu reseña! - Parrilla Argentina"
         msg["From"] = SMTP_USER
