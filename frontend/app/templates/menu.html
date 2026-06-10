@@ -37,6 +37,9 @@
       <div class="platos-grid">
         {% for producto in productos if producto.categoria == 'entrada' %}
         <article class="plato-card">
+          {% if producto.imagen_url %}
+            <img src="{{ producto.imagen_url }}" alt="{{ producto.nombre }}" style="width:100%;border-radius:8px;margin-bottom:.5rem;">
+          {% endif %}
           <div class="plato-head">
             <h3>{{producto.nombre}}</h3>
             <span class="plato-precio">${{ "{:,.0f}".format(producto.precio | float) }}</span>
@@ -63,6 +66,9 @@
       <div class="platos-grid">
         {% for producto in productos if producto.categoria == 'principal' %}
         <article class="plato-card">
+          {% if producto.imagen_url %}
+            <img src="{{ producto.imagen_url }}" alt="{{ producto.nombre }}" style="width:100%;border-radius:8px;margin-bottom:.5rem;">
+          {% endif %}
           <div class="plato-head">
              <h3>{{ producto.nombre }}</h3>
             <span class="plato-precio">${{ "{:,.0f}".format(producto.precio | float) }}</span>
@@ -90,6 +96,9 @@
       <div class="platos-grid">
          {% for producto in productos if producto.categoria == 'postre' %}
         <article class="plato-card">
+          {% if producto.imagen_url %}
+            <img src="{{ producto.imagen_url }}" alt="{{ producto.nombre }}" style="width:100%;border-radius:8px;margin-bottom:.5rem;">
+          {% endif %}
           <div class="plato-head">
            <h3>{{ producto.nombre }}</h3>
             <span class="plato-precio">${{ "{:,.0f}".format(producto.precio | float) }}</span>
@@ -115,6 +124,9 @@
       <div class="platos-grid">
        {% for producto in productos if producto.categoria == 'bebida' %}
         <article class="plato-card">
+          {% if producto.imagen_url %}
+            <img src="{{ producto.imagen_url }}" alt="{{ producto.nombre }}" style="width:100%;border-radius:8px;margin-bottom:.5rem;">
+          {% endif %}
           <div class="plato-head">
             <h3>{{ producto.nombre }}</h3>
             <span class="plato-precio">${{ "{:,.0f}".format(producto.precio | float) }}</span>
@@ -155,7 +167,7 @@
               {% endfor %}
             </ul>
             {% endif %}
-           <a href="{{ url_for('frontend.reserva') }}" class="btn btn-dorado" style="margin-top:.5rem;">Reservar con este combo</a>
+           <a href="{{ url_for('frontend.reserva') }}" class="btn btn-dorado" style="margin-top:.5rem;">Reservar mesa</a>
         </div>
         {% endfor %}
       </div>
