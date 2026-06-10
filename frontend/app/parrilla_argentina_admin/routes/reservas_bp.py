@@ -44,6 +44,30 @@ def crear():
         
     return render_template('reserva.html')
 
+@reservas_bp.route(
+    "/reservas/<int:id_reserva>/finalizar", methods=["GET"])
+def finalizar_desde_qr(id_reserva):
+    resultado = api.finalizar_reservas(id_reserva)
+
+    if resultado.get("ok"):
+        mail_enviado = resultado["data"].get("mail_resenia_enviado",False)
+
+        return redirect(url_for("reservas.mostrar_finalizacion", id_reserva=id_reserva, exito=1, mail_enviado=int(mail_enviado)))
+
+    for mensaje in extraer_mensajes_error(resultado.get("error_response")):
+        flash(mensaje, "error")
+
+    return redirect(url_for("reservas.mostrar_finalizacion", id_reserva=id_reserva, exito=0))
+
+
+@reservas_bp.route(
+    "/reservas/<int:id_reserva>/finalizada", methods=["GET"])
+def mostrar_finalizacion(id_reserva):
+    exito = request.args.get("exito") == "1"
+    mail_enviado = request.args.get("mail_enviado") == "1"
+
+    return render_template("reserva_finalizada.html", id_reserva=id_reserva, exito=exito, mail_enviado=mail_enviado)
+
 
 @reservas_bp.route('/reservas/<int:id_reserva>/cancelar', methods = ["POST"]) #cliente
 def cancelar(id_reserva):

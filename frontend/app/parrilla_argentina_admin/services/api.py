@@ -113,6 +113,15 @@ def cancelar_reservas(id_reserva: int) -> dict:
         return {'ok': True, 'data': response.json()}
     return _respuesta_error(response)
 
+def finalizar_reservas(id_reserva: int) -> dict:
+    try:
+        response = requests.patch(f'{API_BASE_URL}/reservas/{id_reserva}/finalizar', timeout=REQUEST_TIMEOUT)
+    except requests.exceptions.ConnectionError:
+        return _error_conexion()
+    if response.status_code == 200:
+        return {'ok': True, 'data': response.json()}
+    return _respuesta_error(response)
+
 #ABM RESEÑAS 
 def obtener_resenias(token: str) -> dict:
     response = _get('/resenias', token=token)
