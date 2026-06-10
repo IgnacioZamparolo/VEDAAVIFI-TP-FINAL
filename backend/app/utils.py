@@ -35,6 +35,7 @@ from constants import (
     SMTP_USER,         
     SMTP_PASSWORD,
     MALAS_PALABRAS_LISTA,
+    FRONTEND_URL,
 )
 
 
@@ -123,14 +124,52 @@ def enviar_qr(mail, qr_bytes, id_reserva):
         print(f"Error al enviar mail: {e}")
         return False
     
-def enviar_mail_resenia(mail):
+def enviar_mail_resenia(mail, id_reserva):
     try:
-        msg = MIMEMultipart("related")
+        url_resenia = (f"{FRONTEND_URL}/resenias/crear" f"?id_reserva={id_reserva}")
+        msg = MIMEMultipart("alternative")
         msg["Subject"] = "¡Dejanos tu reseña! - Parrilla Argentina"
         msg["From"] = SMTP_USER
         msg["To"] = mail
-        msg.attach(MIMEText("<h1>¡Gracias por visitarnos!</h1><h3>Nos encantaría conocer tu experiencia. Podés enviarnos tu reseña respondiendo este mail.</h3>", "html"))
         
+        contenido_texto = ("¡Gracias por visitarnos!\n\n"
+            "Nos encantaría conocer tu experiencia.\n"
+            f"Podés dejar tu reseña ingresando en: {url_resenia}")
+        
+        contenido_html = f"""
+        <html>
+        <body style="margin: 0; padding: 30px; background-color: #f7f3ed; font-family: Arial, sans-serif; color: #222222;">
+            <div style="max-width: 600px; margin: 0 auto; padding: 32px; background-color: #ffffff; border-radius: 12px; text-align: center;">
+              <h1 style="margin-top: 0; color: #a83232;">
+                ¡Gracias por visitarnos!
+              </h1>
+
+              <p style="font-size: 16px; line-height: 1.6; color: #555555;">
+                Nos encantaría conocer tu experiencia en Parrilla Argentina.
+              </p>
+
+              <p style="font-size: 16px; line-height: 1.6; color: #555555;">
+                Tocá el siguiente botón para dejarnos tu comentario.
+              </p>
+
+              <a
+                href="{url_resenia}"
+                style="display: inline-block; margin-top: 16px; padding: 14px 26px; background-color: #d4a017; color: #ffffff; 
+                text-decoration: none; border-radius: 7px; font-size: 16px; font-weight: bold;">
+                Dejar mi reseña
+              </a>
+
+              <p style="margin-top: 28px; font-size: 13px; color: #777777;">
+                Este enlace está asociado a tu reserva finalizada.
+              </p>
+            </div>
+          </body>
+        </html>
+        """
+
+        msg.attach(MIMEText(contenido_texto, "plain"))
+        msg.attach(MIMEText(contenido_html, "html"))
+
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
             server.login(SMTP_USER, SMTP_PASSWORD)
             server.sendmail(SMTP_USER, mail, msg.as_string())
@@ -145,14 +184,24 @@ def actualizar_estados():
     cursor = None
     try:
         conn = get_connection()
-        cursor = conn.cursor()
+        cursor = conn.cursor(dictionary=True)
         ahora = datetime.now()
+
+        cursor.execute("""SELECT id_reserva, mail FROM reservas WHERE confirmada = TRUE AND TIMESTAMP(dia, horario) < %s """, (ahora,))
+
+        reservas_finalizadas = cursor.fetchall()
 
         cursor.execute("""UPDATE reservas SET pendiente = FALSE, vencida = TRUE WHERE pendiente = TRUE AND TIMESTAMP(dia, horario) < %s """, (ahora,))
 
         cursor.execute("""UPDATE reservas SET confirmada = FALSE, finalizada = TRUE WHERE confirmada = TRUE AND TIMESTAMP(dia, horario) < %s """, (ahora,))
 
         conn.commit()
+
+        for reserva in reservas_finalizadas:
+            enviado = enviar_mail_resenia(reserva["mail"], reserva["id_reserva"])
+
+            if not enviado:
+                print(f"No se pudo enviar el mail de reseña para la reserva {reserva['id_reserva']}")
     
     except Exception as e:
         print(f"Error al actualizar estados: {e}")
