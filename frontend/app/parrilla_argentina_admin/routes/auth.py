@@ -46,7 +46,17 @@ def logout():
 @requiere_login()
 def dashboard():
     usuario = usuario_actual()
-    return render_template('dashboard.html', usuario=usuario)
+    resultado = api.obtener_estadisticas(token_actual())
+
+    estadisticas = None
+    if resultado.get('ok'):
+        estadisticas = resultado['data']
+    else:
+        for mensaje in extraer_mensajes_error(resultado.get('error_response')):
+            flash(mensaje, 'error')
+
+    return render_template('dashboard.html', usuario=usuario, estadisticas=estadisticas)
+
 
 @auth_bp.route('/reportes')
 @requiere_login()
