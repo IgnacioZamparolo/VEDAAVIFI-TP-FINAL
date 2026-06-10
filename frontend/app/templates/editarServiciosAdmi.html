@@ -4,66 +4,101 @@
 
 {% block content %}
 
-<table border="1">
-    <thead>
-        <tr>
-            <th>ID Servicio</th>
-            <th>Nombre</th>
-            <th>Descripción</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for servicio in servicios %}
-        <tr>
-            <td>{{ servicio.id_servicio }}</td> 
-            <td>{{ servicio.nombre }}</td> 
-            <td>{{ servicio.descripcion }}</td>                     
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/abm_admin.css') }}">
+{% endblock %}
+
+<div class="abm-card">
+    <table class="abm-table">
+        <thead>
+            <tr>
+                <th>ID Servicio</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for servicio in servicios %}
+            <tr>
+                <td>{{ servicio.id_servicio }}</td>
+                <td>{{ servicio.nombre }}</td>
+                <td>{{ servicio.descripcion }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
 <div>
-    <ul class="botones-form">
-        <li><button class="form__btn" id="btn-editar-servicio">Editar</button></li>
-        <li><button class="form__btn" id="btn-agregar-servicio">Agregar</button></li>
-        <li><button class="form__btn" id="btn-eliminar-servicio">Eliminar</button></li>
-    </ul>
+    <div class="contB">
+
+        <ul class="botones-form">
+            <li><button class="form__btn" id="btn-editar-servicio">Editar</button></li>
+            <li><button class="form__btn" id="btn-agregar-servicio">Agregar</button></li>
+            <li><button class="form__btn" id="btn-eliminar-servicio">Eliminar</button></li>
+        </ul>
+    </div>
 </div>
 <div class="form" id="agregar_servicio" style="display:none">
     <form action="{{ url_for('servicios.agregar')}}" method="POST">
-        <label class="form__label" for="nombre">Nombre del servicio:</label>
-        <input class="form__input" type="text" id="nombre" name="nombre" placeholder="Nombre" required>
+        <div class="contF">
+            <div class="bloques">
+                <label class="form__label" for="nombre">Nombre del servicio:</label>
+                <input class="form__input" type="text" id="nombre" name="nombre" placeholder="Nombre" required>
 
-        <label class="form__label" for="descripcion">Descripción:</label>
-        <input class="form__input" type="text" id="descripcion" rows=4 name="descripcion" placeholder="descripcion" required>
+                <label class="form__label" for="descripcion">Descripción:</label>
+                <input class="form__input" type="text" id="descripcion" rows=4 name="descripcion"
+                    placeholder="Descripción" required>
+            </div>
 
-        <button class="form__btn--submit" type="submit">Enviar</button>
+            <div class="btn-f">
+
+
+                <button class="form__btn--submit" type="submit">Enviar</button>
+            </div>
+        </div>
+
+
     </form>
 </div>
 
 <div class="form" id="eliminar_servicio" style="display:none">
     <form action="{{ url_for('servicios.eliminar_admi', id_servicio=0)}}" method="POST">
-        <label class="form__label" for="id_servicio">Id del servicio: </label>
-        <input class="form__input" type="text" id="id_servicio" name="id_servicio" placeholder="Id Servicio" required>
+        <div class="contF">
 
+            <div class="bloque2">
 
-        <button class="form__btn--submit" type="submit">Enviar</button>
+                <label class="form__label" for="id_servicio">Id del servicio: </label>
+                <input class="form__input" type="text" id="id_servicio" name="id_servicio" placeholder="Id Servicio"
+                    required>
+
+            </div>
+            <div class="btn-f">
+                <button class="form__btn--submit" type="submit">Enviar</button>
+
+            </div>
+        </div>
+
     </form>
 </div>
 
 <div class="form" id="editar_servicio" style="display:none">
     <form action="{{ url_for('servicios.editar', id_servicio=0)}}" method="POST">
-        <label class="form__label" for="id_servicio">Id del servicio: </label>
-        <input class="form__input" type="text" id="id_servicio" name="id_servicio" placeholder="Id Servicio" required>
+        <div class="contF">
+            <div class="bloques">
+                <label class="form__label" for="id_servicio">Id del servicio: </label>
+                <input class="form__input" type="text" id="id_servicio" name="id_servicio" placeholder="Id Servicio" required>
 
-        <label class="form__label" for="nombre">Nombre del servicio:</label>
-        <input class="form__input" type="text" id="nombre" name="nombre" placeholder="Nombre" required>
+                <label class="form__label" for="nombre">Nombre del servicio:</label>
+                <input class="form__input" type="text" id="nombre" name="nombre" placeholder="Nombre" required>
 
-        <label class="form__label" for="descripcion">Descripción:</label>
-        <input class="form__input" type="text" id="descripcion" rows=4 name="descripcion" placeholder="descripcion" required>
-
-
-        <button class="form__btn--submit" type="submit">Enviar</button>
+                <label class="form__label" for="descripcion">Descripción:</label>
+                <input class="form__input" type="text" id="descripcion" rows=4 name="descripcion" placeholder="Descripción" required>
+            </div>
+            <div class="btn-f">
+                <button class="form__btn--submit" type="submit">Enviar</button>
+            </div>
+        </div>        
     </form>
 </div>
 {% endblock %}

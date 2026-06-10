@@ -3,37 +3,51 @@
 {% block title %}Editar Resenias - Parrilla Argentina{% endblock %}
 
 {% block content %}
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/abm_admin.css') }}">
+{% endblock %}
+<div class="abm-card">
+    <table class="abm-table">
+        <thead>
+            <tr>
+                <th>ID Reseña</th>
+                <th>Descripción</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for resenia in resenias %}
+            <tr>
+                <td>{{ resenia.id_resenias }}</td> 
+                <td>{{ resenia.descripcion }}</td>                   
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 
-<table border="1">
-    <thead>
-        <tr>
-            <th>ID Reseña</th>
-            <th>Descripción</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for resenia in resenias %}
-        <tr>
-            <td>{{ resenia.id_resenias }}</td> 
-            <td>{{ resenia.descripcion }}</td>                   
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
 <div>
-    <ul class="botones-form">
-        <li><button class="form__btn" id="btn-ver-resenias">Ver</button></li>
-        <li><button class="form__btn" id="btn-eliminar-resenia">Eliminar</button></li>
-    </ul>
+    <div class="contB">
+        <ul class="botones-form">
+            <li><button class="form__btn" id="btn-ver-resenias">Ver</button></li>
+            <li><button class="form__btn" id="btn-eliminar-resenia">Eliminar</button></li>
+        </ul>
+    </div>
+    
 </div>
 
 <div class="form" id="eliminar_resenia" style="display:none">
     <form action="{{ url_for('resenias.eliminar', id_resenia=0) }}" method="POST">
-        <label class="form__label" for="id_resenias">Id de la resenia: </label>
-        <input class="form__input" type="number" id="id_resenias" name="id_resenias" placeholder="Id Resenia" required>
+        <div class="contF">
+            <div class="bloque2">
+                <label class="form__label" for="id_resenias">Id de la reseña: </label>
+                <input class="form__input" type="number" id="id_resenias" name="id_resenias" placeholder="Id Reseña" required>
+            </div>
+            <div class="btn-F">
+                <button class="form__btn--submit" type="submit">Enviar</button>
+            </div>  
+        </div>
+              
 
-
-        <button class="form__btn--submit" type="submit">Enviar</button>
     </form>
 </div>
 {% endblock %}

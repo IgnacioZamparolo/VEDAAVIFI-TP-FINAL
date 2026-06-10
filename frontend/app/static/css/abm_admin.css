@@ -1,0 +1,132 @@
+.table-section {
+  width: 100%;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.abm-card {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.abm-table {
+  border: 1;
+  border-radius: 12px;
+  width: 100%;
+  min-width: 1000px;
+  border-collapse: collapse;
+  table-layout: auto;
+}
+
+.abm-table th,
+.abm-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #dddddd;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.abm-table th {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.abm-table tbody {
+  background-color: #f7f7f7;
+}
+.contB {
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.contB .botones-form {
+  width: 40%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+li {
+  list-style-type: none;
+}
+.form__btn {
+  background-color: #d2ad68;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form .contF {
+  height: 60vh;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  padding: 1.5rem;
+}
+.form__btn--submit {
+  border-radius: 12px;
+  width: 30%;
+  border: 0;
+}
+.btn-f {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+.bloques {
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
+
+  height: 30vh;
+}
+.contF input {
+  width: 50%;
+  background-color: #ffffff;
+}
+#id_servicio {
+  /*width: 40%;*/
+  background-color: #ffffff;
+}
+.bloque2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 20vh;
+}
+
+.botones-form-combos {
+    width: 40%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.botones-form-combos-version {
+    width: 40%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.botones-form-combos-detalle {
+    width: 40%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
