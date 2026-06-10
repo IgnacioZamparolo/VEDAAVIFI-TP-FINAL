@@ -1,4 +1,6 @@
 from flask import Blueprint, render_template
+from ..services import api
+from ..utils import extraer_mensajes_error
 
 frontend_bp = Blueprint("frontend", __name__)
 
@@ -7,8 +9,16 @@ def home():
     return render_template("index.html")
 
 @frontend_bp.route("/menu")
+
+@frontend_bp.route("/menu")
 def menu():
-    return render_template("menu.html")
+    productos = api.obtener_productos_cliente()
+    combos = api.obtener_combos_con_productos()
+    return render_template("menu.html",
+        productos=productos.get('data', []),
+        combos=combos.get('data', [])
+    )
+
 
 @frontend_bp.route("/reserva")
 def reserva():
