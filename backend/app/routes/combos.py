@@ -117,3 +117,36 @@ def eliminar_combo(id_combo):
     finally:
         if cursor: cursor.close()
         if conn: conn.close()
+
+@combos.route("/combos/con_productos", methods=["GET"])
+def ver_combos_con_productos():
+    conn = None
+    cursor = None
+    try:
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute("SELECT * FROM combos")
+        combos = cursor.fetchall()
+
+        for combo in combos:
+            cursor.execute("""
+                SELECT p.nombre, p.descripcion
+                FROM combo_detalle cd
+                JOIN productos p ON cd.id_producto = p.id_producto
+                WHERE cd.id_combo = %s
+            """, (combo['id_combo'],))
+            combo['productos'] = cursor.fetchall()
+            cursor.execute("""
+                SELECT descripcion, personas, precio
+                FROM combo_version
+                WHERE id_combo = %s
+                    """, (combo['id_combo'],))
+            combo['versiones'] = cursor.fetchall()
+
+        return jsonify(combos), 200
+    except Exception as e:
+        return jsonify({"error": f"Error al obtener combos con productos: {str(e)}"}), 500
+    finally:
+        if cursor: cursor.close()
+        if conn: conn.close()

@@ -39,7 +39,7 @@
           <h3>Contacto</h3>
           <p>
             <a href="tel:+541148520000" style="color:var(--rojo)">+54 11 4852-0000</a><br><br>
-            <a href="mailto:hola@parrillaargentina.com.ar" style="color:var(--rojo)">hola@parrillaargentina.com.ar</a>
+            <a href="mailto:parrillaargentina.web@gmail.com" style="color:var(--rojo)">parrillaargentina.web@gmail.com</a>
           </p>
         </div>
         <div class="info-card">
@@ -54,53 +54,37 @@
   <section class="seccion seccion-alt">
     <div class="contenedor">
       <div class="divisor"><span>⭐</span></div>
-      <h2 class="seccion-titulo">Servicios incluidos</h2>
+      <h2 class="seccion-titulo">Servicios Extras</h2>
       <p class="seccion-sub">Para que tu visita sea perfecta en todo sentido</p>
       <div class="servicios-grid">
+        {% for servicio in servicios %}
         <div class="servicio-card">
-          <div class="ic">♿</div>
+          <div class="ic">⭐</div>
           <div>
-            <h3>Acceso para discapacitados</h3>
-            <p>Rampas y espacios adaptados para personas con movilidad reducida.</p>
+           <h3>{{ servicio.nombre }}</h3>
+            <p>{{ servicio.descripcion }}</p>
           </div>
         </div>
-        <div class="servicio-card">
-          <div class="ic">🅿️</div>
-          <div>
-            <h3>Estacionamiento gratuito</h3>
-            <p>Playa de estacionamiento gratuita dentro de la Parrilla.</p>
-          </div>
+        {% else %}
+          <p>No hay servicios disponibles.</p>
+        {% endfor %}
         </div>
-        <div class="servicio-card">
-          <div class="ic">🥩</div>
-          <div>
-            <h3>Show del asador</h3>
-            <p>Degustación de cortes premium con show en vivo del asador. Una experiencia única.</p>
-          </div>
-        </div>
-      </div>
     </div>
   </section>
-
+  
   <section class="seccion">
     <div class="contenedor">
       <div class="divisor"><span>💬</span></div>
       <h2 class="seccion-titulo">Lo que dicen nuestros clientes</h2>
       <p class="seccion-sub">Opiniones reales de personas que vivieron la experiencia</p>
       <div class="reseñas-grid">
-        <div class="reseña-card">
-          <p>Excelente experiencia. La carne llegó en el punto justo, súper tierna y con mucho sabor. Sin duda volvería.</p>
-          <div class="reseña-estrellas">★★★★★</div>
-        </div>
-        <div class="reseña-card">
-          <p>La provoleta una bomba. El servicio muy atento, re recomendado.</p>
-          <div class="reseña-estrellas">★★★★★</div>
-        </div>
-        <div class="reseña-card">
-          <p>El menú infantil estuvo genial, los chicos felices con las milanesitas.</p>
-          <div class="reseña-estrellas">★★★★★</div>
-        </div>
-      </div>
+        {% for resenia in resenias %}
+          <div class="reseña-card">
+           <p>{{ resenia.descripcion }}</p>
+          </div>
+        {% else %}
+          <p>No hay reseñas disponibles.</p>
+        {% endfor %}
     </div>
   </section>
 

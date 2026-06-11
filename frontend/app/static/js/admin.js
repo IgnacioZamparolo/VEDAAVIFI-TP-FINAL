@@ -55,12 +55,38 @@ if (botonEditarServicio) {
         formEliminarServicio.style.display ='none'
     })
 }
-
+const selectEditarServicio = formEditarServicio.querySelector('select')
+if (selectEditarServicio) {
+    selectEditarServicio.addEventListener("change", function() {
+        const id = this.value
+        formEditarServicio.querySelector('form').action = `/servicios_extra/${id}`
+        const option = this.options[this.selectedIndex]
+        formEditarServicio.querySelector('input[name="nombre"]').value      = option.dataset.nombre      || ''
+        formEditarServicio.querySelector('input[name="descripcion"]').value = option.dataset.descripcion || ''
+    })
+}
 if (botonEliminarServicio) {
     botonEliminarServicio.addEventListener("click", () =>{
         formAgregarServicio.style.display = 'none'
         formEditarServicio.style.display ='none'
         formEliminarServicio.style.display ='block'
+    })
+}
+const selectEliminarServicio = formEliminarServicio.querySelector('select')
+if (selectEliminarServicio) {
+    selectEliminarServicio.addEventListener("change", () => {
+        const id = selectEliminarServicio.value
+        formEliminarServicio.querySelector('form').action = `/servicios_extra/${id}/eliminar`
+    })
+}
+const btnConfirmarEliminar = document.getElementById('btn-confirmar-eliminar')
+if (btnConfirmarEliminar) {
+    btnConfirmarEliminar.addEventListener('click', () => {
+        const id = document.getElementById('select-eliminar').value
+        if (!id) return
+        const form = document.getElementById('form-eliminar')
+        form.action = `/servicios_extra/${id}/eliminar`
+        form.submit()
     })
 }
 
@@ -79,6 +105,12 @@ if (botonEditarProd) {
         formEliminarProd.style.display ='none'
     })
 }
+const inputIdProductoEditar = formEditarProd.querySelector('input[name="id_producto"]')
+inputIdProductoEditar.addEventListener("input", () => {
+    const id = inputIdProductoEditar.value
+    formEditarProd.querySelector('form').action = `/productos/${id}/editar`
+})
+
 
 if (botonEliminarProd) {
     botonEliminarProd.addEventListener("click", () =>{
@@ -87,6 +119,11 @@ if (botonEliminarProd) {
         formEliminarProd.style.display ='block'
     })
 }
+const inputIdProductoEliminar = formEliminarProd.querySelector('input[name="id_producto"]')
+inputIdProductoEliminar.addEventListener("input", () => {
+    const id = inputIdProductoEliminar.value
+    formEliminarProd.querySelector('form').action = `/productos/${id}/eliminar`
+})
 
 if (botonEliminarCombo) {
     botonEliminarCombo.addEventListener("click", () =>{
@@ -95,6 +132,11 @@ if (botonEliminarCombo) {
         formEliminarCombo.style.display ='block'
     })
 }
+const inputIdComboEliminar = formEliminarCombo.querySelector('input[name="id_combo"]')
+inputIdComboEliminar.addEventListener("input", () => {
+    const id = inputIdComboEliminar.value
+    formEliminarCombo.querySelector('form').action = `/combos/${id}/eliminar`
+})
 
 if (botonAgregarCombo) {
     botonAgregarCombo.addEventListener("click", () =>{
@@ -111,6 +153,12 @@ if (botonEditarCombo) {
         formEliminarCombo.style.display ='none'
     })
 }
+const inputIdComboEditar = formEditarCombo.querySelector('input[name="id_combo"]')
+inputIdComboEditar.addEventListener("input", () => {
+    const id = inputIdComboEditar.value
+    formEditarCombo.querySelector('form').action = `/combos/${id}/editar`
+})
+
 
 if (botonAgregarCombod) {
     botonAgregarCombod.addEventListener("click", () =>{
@@ -125,6 +173,11 @@ if (botonEditarCombov) {
         formEliminarCombov.style.display ='none'
     })
 }
+const inputIdVersionEditar = formEditarCombov.querySelector('input[name="id_version"]')
+inputIdVersionEditar.addEventListener("input", () => {
+    const id = inputIdVersionEditar.value
+    formEditarCombov.querySelector('form').action = `/combo_version/${id}/editar`
+})
 
 if (botonAgregarCombov) {
     botonAgregarCombov.addEventListener("click", () =>{
@@ -141,3 +194,8 @@ if (botonEliminarCombov) {
         formEliminarCombov.style.display ='block'
     })
 }
+const inputIdVersionEliminar = formEliminarCombov.querySelector('input[name="id_version"]')
+inputIdVersionEliminar.addEventListener("input", () => {
+    const id = inputIdVersionEliminar.value
+    formEliminarCombov.querySelector('form').action = `/combo_version/${id}/eliminar`
+})

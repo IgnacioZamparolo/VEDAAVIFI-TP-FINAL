@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from db_connection import get_connection 
-from utils import enviar_mail_resenia, contiene_malas_palabras
+from utils import contiene_malas_palabras
 from utils import requiere_admin
 
 
@@ -24,37 +24,67 @@ def ver_resenias():
         conn.close()
 
 @resenias.route("/resenias", methods=["POST"])  # cliente 
-def agregar_resenia(): 
+def agregar_resenia():
+    conn = None
+    cursor = None
+
     try:
+        data = request.get_json(silent=True)
+         
+        if data is None:
+            return jsonify({"errors": [{"description": "El body debe enviarse en formato JSON"}]}), 400
+        
+        if "descripcion" not in data or "id_reserva" not in data:
+            return jsonify({"errors": [{"description": "Faltan campos obligatorios: descripcion e id_reserva"}]}), 400
+        
+        descripcion = str(data["descripcion"]).strip()
+
+        if not descripcion:
+            return jsonify({"errors": [{"description": "La descripcion no puede estar vacía"}]}), 400
+        
+        try:
+            id_reserva = int(data["id_reserva"])
+        except (TypeError, ValueError):
+            return jsonify({"errors": [{"description": "El id_reserva no es válido"}]}), 400
+        
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
-        data = request.get_json() 
-         
-        if data is None or "descripcion" not in data:
-            return jsonify({"error": f"Falta el campo requerido: descripcion"}), 400
+
+        cursor.execute("SELECT id_reserva, finalizada FROM reservas WHERE id_reserva = %s", (id_reserva,))
+
+        reserva = cursor.fetchone()
+
+        if reserva is None:
+            return jsonify({"errors": [{"description": "La reserva no existe"}]}), 404
         
-        cursor.execute("SELECT * FROM reservas WHERE mail = %s AND finalizada = TRUE", (data["mail"],))
-        if cursor.fetchone() is None:
-            return jsonify({"error": "Solo se puede dejar una reseña si tenes una reserva finalizada"}), 403
+        if not reserva["finalizada"]:
+            return jsonify({"errors": [{"description": "Solo se puede dejar una reseña de una reserva finalizada"}]}), 403
         
-        if contiene_malas_palabras(data["descripcion"]):
-            return jsonify({"mensaje": "Tu reseña no pudo ser publicada por contener contenido inadecuado"}), 200
+        cursor.execute("SELECT id_resenias FROM resenias WHERE id_reserva = %s", (id_reserva,))
+
+        if cursor.fetchone() is not None:
+            return jsonify({"errors": [{"description": "Esta reserva ya tiene una reseña"}]}), 409
         
-        cursor.execute("""INSERT INTO resenias (descripcion) VALUES (%s)""", (data["descripcion"],))
+        if contiene_malas_palabras(descripcion):
+            return jsonify({"errors": [{"description": "La descripcion contiene palabras no permitidas"}]}), 400
+        
+        cursor.execute("""INSERT INTO resenias (descripcion, id_reserva) VALUES (%s, %s)""", (descripcion, id_reserva))
         conn.commit()
 
         id_resenia = cursor.lastrowid 
         cursor.execute("SELECT * FROM resenias WHERE id_resenias = %s", (id_resenia,))
         resenia_creada = cursor.fetchone()
-        enviar_mail_resenia(data["mail"])
+        
         return jsonify(resenia_creada), 201
     
     except Exception as e:
-        return jsonify({"error": f"Error al agregar resenia: {str(e)}"}), 500
+        return jsonify({"errors": [{"description": f"Error al agregar resenia: {str(e)}"}]}), 500
                        
     finally:
-        cursor.close()
-        conn.close()
+        if cursor:
+            cursor.close()
+        if conn:
+            conn.close()
 
 @resenias.route("/resenias/<int:id_resenias>", methods = ["DELETE"]) # admin 
 @requiere_admin

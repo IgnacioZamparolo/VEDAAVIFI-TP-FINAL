@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Estado de la reserva — Parrilla Argentina
+{% endblock %}
+
+{% block extra_css %}
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/resenia.css') }}"
+  >
+{% endblock %}
+
+{% block content %}
+
+<section class="reserva-hero">
+  <div class="divisor resenia-divisor">
+    <span>✅</span>
+  </div>
+
+  <h1>Estado de la reserva</h1>
+
+  <p>
+    Resultado de la validación del código QR.
+  </p>
+</section>
+
+<section class="resenia-section">
+  <div class="resenia-container">
+
+    {% with mensajes = get_flashed_messages(with_categories=true) %}
+      {% if mensajes %}
+        {% for categoria, mensaje in mensajes %}
+          <div class="mensaje mensaje--{{ categoria }}">
+            {{ mensaje }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+
+    {% if exito %}
+
+      <div class="form-card resenia-confirmacion">
+
+        <div class="resenia-confirmacion__icono">
+          ✅
+        </div>
+
+        <h2>Reserva finalizada</h2>
+
+        <p>
+          La reserva número {{ id_reserva }}
+          fue marcada como finalizada correctamente.
+        </p>
+
+        {% if mail_enviado %}
+          <p>
+            También se envió al cliente el correo
+            para que pueda dejar su reseña.
+          </p>
+        {% else %}
+          <div class="mensaje mensaje--error">
+            La reserva fue finalizada, pero no se pudo
+            enviar el correo de reseña.
+          </div>
+        {% endif %}
+
+        <a
+          href="{{ url_for('frontend.home') }}"
+          class="btn btn-dorado"
+        >
+          Volver al inicio
+        </a>
+
+      </div>
+
+
+    {% else %}
+
+      <div class="form-card resenia-error">
+
+        <h2>No se pudo finalizar la reserva</h2>
+
+        <p>
+          La reserva puede no existir, no estar confirmada,
+          estar cancelada, vencida o haber sido finalizada anteriormente.
+        </p>
+
+        <a
+          href="{{ url_for('frontend.home') }}"
+          class="btn btn-rojo"
+        >
+          Volver al inicio
+        </a>
+
+      </div>
+
+    {% endif %}
+
+  </div>
+</section>
+
+{% endblock %}
+

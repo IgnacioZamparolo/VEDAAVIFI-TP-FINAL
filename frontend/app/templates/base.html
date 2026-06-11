@@ -9,6 +9,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lato:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" /> 
+
+  {% block extra_css %}{% endblock %}
+  
 </head>
 <body>
 
@@ -19,10 +22,9 @@
         <small>Tradición y Sabor</small>
       </a>
       <ul class="nav-links">
-        <li><a href="(/)">Inicio</a></li>
+        <li><a href="{{ url_for('frontend.home') }}">Inicio</a></li>
         <li><a href="{{ url_for('frontend.menu') }}">Menú</a></li>
         <li><a href="{{ url_for('frontend.reserva') }}">Reservas</a></li>
-        <li><a href="{{ url_for('frontend.reserva') }}" class="btn btn-dorado">Reservar Mesa</a></li>
         <li><a href="{{ url_for('auth.login') }}" class="btn btn-rojo">Admin</a></li> 
       </ul>
       <button class="hamburger" aria-label="Menú">
@@ -30,7 +32,7 @@
       </button>
     </div>
     <div class="mobile-nav">
-      <a href="(/)">Inicio</a>
+      <a href="{{ url_for('frontend.home') }}">Inicio</a>
       <a href="{{ url_for('frontend.menu') }}">Menú</a>
       <a href="{{ url_for('frontend.reserva') }}">Reservas</a>
       <a href="{{ url_for('frontend.reserva') }}" class="btn btn-dorado btn-block">Reservar Mesa</a>
@@ -51,7 +53,7 @@
       <div>
         <h4>Navegación</h4>
         <ul>
-          <li><a href="(/)">Inicio</a></li>
+          <li><a href="{{ url_for('frontend.home') }}">Inicio</a></li>
           <li><a href="{{ url_for('frontend.menu') }}">Menú</a></li>
           <li><a href="{{ url_for('frontend.reserva') }}">Reservas</a></li>
         </ul>
@@ -60,7 +62,7 @@
         <h4>Contacto</h4>
         <ul>
           <li><a href="tel:+541148520000">+54 11 4852-0000</a></li>
-          <li><a href="mailto:hola@parrillaargentina.com.ar">hola@parrillaargentina.com.ar</a></li>
+          <li><a href="mailto:hola@parrillaargentina.com.ar">parrillaargentina.web@gmail.com</a></li>
           <li><a href="#">Instagram</a></li>
           <li><a href="#">Facebook</a></li>
         </ul>

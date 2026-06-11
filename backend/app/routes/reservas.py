@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, request
 from db_connection import get_connection
 from utils import generar_qr, enviar_qr
 from datetime import date, datetime, timedelta
-from utils import requiere_admin
+from utils import requiere_admin, enviar_mail_resenia
 
 reservas = Blueprint("reservas", __name__)
 
@@ -16,7 +16,7 @@ def ver_reservas():
         cursor = conn.cursor(dictionary=True) 
     
         
-        cursor.execute("SELECT id_reserva, mail, cant_personas, dia, horario, mesa FROM reservas")
+        cursor.execute("SELECT id_reserva, mail, cant_personas, dia, horario, mesa, pendiente, confirmada, cancelada, finalizada, vencida FROM reservas")
         resultados = cursor.fetchall()
         
         lista_reservas = []
@@ -104,14 +104,6 @@ def crear_reserva():
         
         
         conn.commit()
-
-        
-        try:
-            qr_bytes = generar_qr(id_reserva)
-            enviar_qr(data["mail"], qr_bytes, id_reserva)
-        except Exception as mail_error:
-            
-            print(f"Advertencia: No se pudo enviar el correo: {str(mail_error)}")
 
 
         cursor.execute("SELECT id_reserva, mail, cant_personas, dia, horario FROM reservas WHERE id_reserva = %s", (id_reserva,))
@@ -242,16 +234,30 @@ def eliminar_reserva(id_reserva):
 @reservas.route("/reservas/<int:id_reserva>/confirmar", methods=["PATCH"]) # admin
 @requiere_admin  
 def confirmar_reserva(id_reserva):
+    conn = None
+    cursor = None
     try: 
         conn = get_connection() 
         cursor = conn.cursor(dictionary=True)
 
         
-        cursor.execute("SELECT COUNT(*) FROM reservas WHERE id_reserva = %s", (id_reserva,)) 
-        existe = cursor.fetchone()
+        cursor.execute("SELECT id_reserva, mail, cant_personas, dia, horario, mesa, pendiente, confirmada, cancelada, finalizada, vencida FROM reservas WHERE id_reserva = %s", (id_reserva,)) 
+        reserva = cursor.fetchone()
         
-        if existe is None or existe[0] == 0: 
+        if reserva is None:
             return jsonify({"error": f"No existe reserva con ese id {id_reserva}"}), 404 
+        
+        if reserva["cancelada"]:
+            return jsonify({"error": "No se puede confirmar una reserva cancelada"}), 409
+        
+        if reserva["vencida"]:
+            return jsonify({"error": "No se puede confirmar una reserva vencida"}), 409
+        
+        if reserva["finalizada"]:
+            return jsonify({"error": "No se puede confirmar una reserva finalizada"}), 409
+        
+        if reserva["confirmada"]:
+            return jsonify({"error": "La reserva ya fue confirmada"}), 409
         
       
         cursor.execute(""" 
@@ -260,42 +266,96 @@ def confirmar_reserva(id_reserva):
             WHERE id_reserva = %s 
         """, (id_reserva,))
         conn.commit()
-        
-        cursor.execute("SELECT mail, cant_personas, dia, horario, mesa FROM reservas WHERE id_reserva = %s", (id_reserva,)) 
-        fila = cursor.fetchone()
-        
-        
-        if isinstance(fila, (tuple, list)):
-            respuesta = {
-                "id_reserva": id_reserva,
-                "mail": fila[0],
-                "cant_personas": fila[1],
-                "dia": str(fila[2]),
-                "horario": str(fila[3]),
-                "mesa": fila[4],
-                "pendiente": False,
-                "confirmada": True
-            }
-        else:
-            respuesta = {
-                "id_reserva": id_reserva,
-                "mail": fila["mail"],
-                "cant_personas": fila["cant_personas"],
-                "dia": str(fila["dia"]),
-                "horario": str(fila["horario"]),
-                "mesa": fila["mesa"],
-                "pendiente": False,
-                "confirmada": True
-            }
-            
-        return jsonify(respuesta), 200 
-     
+
+        qr_enviado = False
+        try:
+            qr_bytes = generar_qr(id_reserva) 
+            qr_enviado = enviar_qr(reserva["mail"], qr_bytes, id_reserva)
+
+            if not qr_enviado:
+                print(f"No se pudo enviar el código QR para la reserva {id_reserva}")
+
+        except Exception as mail_error:
+            print(f"Error al generar o enviar el de la reserva {id_reserva}: {str(mail_error)}")
+
+        respuesta = {
+            "id_reserva": id_reserva,
+            "mail": reserva["mail"],
+            "cant_personas": reserva["cant_personas"],
+            "dia": str(reserva["dia"]),
+            "horario": str(reserva["horario"]),
+            "mesa": reserva["mesa"],
+            "pendiente": False,
+            "confirmada": True,
+            "qr_enviado": qr_enviado
+        }
+        return jsonify(respuesta), 200
+    
     except Exception as e:
+        if conn:
+            conn.rollback()
         return jsonify({"error": f"Error al confirmar reserva: {str(e)}"}), 500 
      
     finally: 
         cursor.close() 
         conn.close()
+
+@reservas.route(
+    "/reservas/<int:id_reserva>/finalizar",
+    methods=["PATCH"]
+)
+def finalizar_reserva(id_reserva):
+    conn = None
+    cursor = None
+
+    try:
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute("""SELECT id_reserva, mail, pendiente, confirmada, cancelada, finalizada, vencida FROM reservas WHERE id_reserva = %s""",(id_reserva,))
+
+        reserva = cursor.fetchone()
+
+        if reserva is None:
+            return jsonify({"errors": [{"description": "La reserva no existe"}]}), 404
+
+        if reserva["cancelada"]:
+            return jsonify({"errors": [{"description": "No se puede finalizar una reserva cancelada"}]}), 409
+
+        if reserva["vencida"]:
+            return jsonify({"errors": [{"description": "No se puede finalizar una reserva vencida"}]}), 409
+
+        if reserva["finalizada"]:
+            return jsonify({"errors": [{"description": "La reserva ya fue finalizada"}]}), 409
+
+        if not reserva["confirmada"]:
+            return jsonify({"errors": [{"description": "La reserva todavía no fue confirmada"}]}), 409
+
+        cursor.execute("""UPDATE reservas SET pendiente = FALSE, confirmada = FALSE, finalizada = TRUE, cancelada = FALSE, vencida = FALSE WHERE id_reserva = %s""", (id_reserva,))
+
+        conn.commit()
+
+        mail_enviado = enviar_mail_resenia(
+            reserva["mail"],
+            id_reserva
+        )
+
+        respuesta = {"mensaje": "Reserva finalizada correctamente", "id_reserva": id_reserva, "mail_resenia_enviado": mail_enviado}
+
+        return jsonify(respuesta), 200
+
+    except Exception as e:
+        if conn:
+            conn.rollback()
+
+        return jsonify({"errors": [{"description": (f"Error al finalizar la reserva: {str(e)}")}]}), 500
+
+    finally:
+        if cursor:
+            cursor.close()
+
+        if conn:
+            conn.close()
 
 @reservas.route("/reservas/<int:id_reserva>/cancelar", methods=["GET"])  # cliente via mail
 def cancelar_reserva_link(id_reserva):

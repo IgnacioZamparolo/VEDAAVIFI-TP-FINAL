@@ -30,7 +30,14 @@
                 <td>{{ producto.lactosa }}</td>
                 <td>{{ producto.vegetariano }}</td>
                 <td>{{ producto.vegano }}</td>
-                <td>{{ producto.sin_tacc }}</td>            
+                <td>{{ producto.sin_tacc }}</td>
+                <td>
+                {% if producto.imagen_url %}
+                    <img src="{{ producto.imagen_url }}" alt="{{ producto.nombre }}" style="width:80px;height:60px;object-fit:cover;">
+                {% else %}
+                    Sin imagen
+                {% endif %}
+            </td>            
             </tr>
             {% endfor %}
         </tbody>
@@ -74,12 +81,10 @@
                 <label class="form__label" for="sin_tacc">Sin Tacc:</label>
                 <input type="checkbox" id="sin_tacc" name="sin_tacc">
 
-            </div>
-            <div class="btn-F">
-                <button class="form__btn--submit" type="submit">Enviar</button>
-            </div>
-        </div>
-        
+        <label class="form__label" for="imagen">Imagen:</label>
+        <input type="file" id="imagen" name="imagen" accept="image/jpg,image/jpeg,image/png,image/webp">
+
+        <button class="form__btn--submit" type="submit">Enviar</button>
     </form>
 </div>
 
@@ -128,13 +133,10 @@
                 <label class="form__label" for="sin_tacc">Sin Tacc:</label>
                 <input type="checkbox" id="sin_tacc" name="sin_tacc">
 
-            </div>
-            <div class="btn-F">
-                <button class="form__btn--submit" type="submit">Enviar</button>
+        <label class="form__label" for="imagen">Imagen:</label>
+        <input type="file" id="imagen" name="imagen" accept="image/jpg,image/jpeg,image/png,image/webp">
 
-            </div>
-        </div>       
-        
+        <button class="form__btn--submit" type="submit">Enviar</button>
     </form>
 </div>
 
@@ -230,37 +232,32 @@
 </div>
 
 <!---COMBO VERSION--->
-<div class="abm-card">
-    <table class="abm-table">
-        <thead>
-            <tr>
-                <th>Descripcion</th>
-                <th>Personas</th>
-                <th>Precio</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for combo_v in combos_version %}
-            <tr>
-                <td>{{ combo_v.descripcion }}</td>
-                <td>{{ combo_v.personas }}</td>
-                <td>{{ combo_v.precio }}</td>           
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
-
+<table border="1">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Descripcion</th>
+            <th>Personas</th>
+            <th>Precio</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for combo_v in combos_version %}
+        <tr>
+            <td>{{ combo_v.id_version }}</td>
+            <td>{{ combo_v.descripcion }}</td>
+            <td>{{ combo_v.personas }}</td>
+            <td>{{ combo_v.precio }}</td>           
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 <div>
-    <div class="contB">
-        <ul class="botones-form-combos-version">
-            <li><button class="form__btn" id="btn-editar-combo-version">Editar</button></li>
-            <li><button class="form__btn" id="btn-agregar-combo-version">Agregar</button></li>
-            <li><button class="form__btn" id="btn-eliminar-combo-version">Eliminar</button></li>
-            <li><button class="form__btn" id="btn-ver-combo-version">Ver</button></li>
-        </ul>
-    </div>
-    
+    <ul class="botones-form-combos-version">
+        <li><button class="form__btn" id="btn-editar-combo-version">Editar</button></li>
+        <li><button class="form__btn" id="btn-agregar-combo-version">Agregar</button></li>
+        <li><button class="form__btn" id="btn-eliminar-combo-version">Eliminar</button></li>
+    </ul>
 </div>
 <div class="form" id="agregar_combo_version" style="display:none">
     <form action="{{ url_for('combo_version.agregar')}}" method="POST">
@@ -358,7 +355,7 @@
     <div class="contB">
         <ul class="botones-form-combos-detalle">
             <li><button class="form__btn" id="btn-agregar-combo-detalle">Agregar</button></li>
-            <li><button class="form__btn" id="btn-ver-combo-detalle">Ver</button></li>
+            
         </ul>
     </div>
     

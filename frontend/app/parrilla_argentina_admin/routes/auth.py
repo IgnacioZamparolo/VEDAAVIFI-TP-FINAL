@@ -46,7 +46,17 @@ def logout():
 @requiere_login()
 def dashboard():
     usuario = usuario_actual()
-    return render_template('dashboard.html', usuario=usuario)
+    resultado = api.obtener_estadisticas(token_actual())
+
+    estadisticas = None
+    if resultado.get('ok'):
+        estadisticas = resultado['data']
+    else:
+        for mensaje in extraer_mensajes_error(resultado.get('error_response')):
+            flash(mensaje, 'error')
+
+    return render_template('dashboard.html', usuario=usuario, estadisticas=estadisticas)
+
 
 @auth_bp.route('/reportes')
 @requiere_login()
@@ -67,28 +77,6 @@ def reportes():
 @requiere_login()
 def gestion():
     return render_template('gestion.html')
-
-
-@auth_bp.route('/menu')
-@requiere_login()
-def menu():
-    usuario = usuario_actual()
-    token=token_actual()
-
-    productos = api.obtener_productos(token)
-    combos = api.obtener_combo(token)
-    combos_version = api.obtener_combo_version(token)
-    combos_detalle = api.obtener_combo_detalle(token)
-
-    print("COMBO VERSION:", combos_version)
-
-    return render_template('editarMenuAdmi.html',
-        usuario=usuario,
-        productos=productos['data'] if productos.get('ok') else [],
-        combos=combos['data'] if combos.get('ok') else [],
-        combos_version=combos_version['data'] if combos_version.get('ok') else [],
-        combos_detalle=combos_detalle['data'] if combos_detalle.get('ok') else []
-    )
 
 
 @auth_bp.route('/resenias')
