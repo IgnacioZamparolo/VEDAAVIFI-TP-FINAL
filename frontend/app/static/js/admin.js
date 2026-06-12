@@ -55,7 +55,7 @@ if (botonEditarServicio) {
         formEliminarServicio.style.display ='none'
     })
 }
-const selectEditarServicio = formEditarServicio.querySelector('select')
+const selectEditarServicio = formEditarServicio ? formEditarServicio.querySelector('select') : null
 if (selectEditarServicio) {
     selectEditarServicio.addEventListener("change", function() {
         const id = this.value
@@ -72,7 +72,7 @@ if (botonEliminarServicio) {
         formEliminarServicio.style.display ='block'
     })
 }
-const selectEliminarServicio = formEliminarServicio.querySelector('select')
+const selectEliminarServicio = formEliminarServicio ? formEliminarServicio.querySelector('select') : null
 if (selectEliminarServicio) {
     selectEliminarServicio.addEventListener("change", () => {
         const id = selectEliminarServicio.value
@@ -119,6 +119,7 @@ if (botonEliminarProd) {
         formEliminarProd.style.display ='block'
     })
 }
+
 const inputIdProductoEliminar = formEliminarProd.querySelector('input[name="id_producto"]')
 inputIdProductoEliminar.addEventListener("input", () => {
     const id = inputIdProductoEliminar.value

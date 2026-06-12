@@ -127,7 +127,7 @@
             <div class="bloquesH">
                 <div class="inputs">
                     <label class="form__label" for="id_producto">Id del producto: </label>
-                    <input class="form__input" type="number" id="id_producto" name="id_producto" placeholder="Id Producto"
+                    <input class="form__input" type="text" id="id_producto" name="id_producto" placeholder="Id Producto"
                         required>
 
                     <label class="form__label" for="nombre">Nombre del producto:</label>
@@ -408,7 +408,7 @@
                 <input class="form__input" type="number" id="id_combo" name="id_combo" placeholder="id combo" required>
 
                 <label class="form__label" for="id_producto">id_producto:</label>
-                <input class="form__input" type="number" id="id_producto" name="id_producto" placeholder="id producto"
+                <input class="form__input" type="number" id="id_producto" name="id_producto" placeholder="id_producto"
                     required>
             </div>
             <div class="btn-F">
@@ -435,7 +435,7 @@
 
     </form>
 </div>
-{% endblock %}
     {% block extra_js %}
     <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
     {% endblock %}
+{% endblock %}

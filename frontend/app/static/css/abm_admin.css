@@ -1,3 +1,9 @@
+.cont-papa{
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
+}
+
 .table-section {
   width: 100%;
   padding: 2rem;
@@ -13,6 +19,8 @@
   padding: 1.5rem;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
   box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
 }
 
 .table-responsive {
@@ -24,7 +32,6 @@
   border: 1;
   border-radius: 12px;
   width: 100%;
-  min-width: 1000px;
   border-collapse: collapse;
   table-layout: auto;
 }
@@ -36,23 +43,27 @@
   border-bottom: 1px solid #dddddd;
   vertical-align: middle;
   white-space: nowrap;
-}
 
+}
+.abm-table tbody tr:hover {
+  background-color: #f7f7f7;
+}
 .abm-table th {
   font-weight: 700;
   white-space: nowrap;
 }
-
 .abm-table tbody {
   background-color: #f7f7f7;
 }
+
 .contB {
-  margin-top: 20px;
+  height: 15vh;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .contB .botones-form {
   width: 40%;
   display: flex;
@@ -83,22 +94,68 @@ li {
   width: 30%;
   border: 0;
 }
+
 .btn-f {
   display: flex;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 30px;
 }
 .bloques {
   display: flex;
   justify-content: space-evenly;
   flex-direction: column;
-
   height: 30vh;
+  margin-bottom: 15px;
+}
+
+.bloquesH {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+}
+
+.inputs{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.checkbox{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  margin-bottom: 20px;
+
+}
+
+.btn-f .form__btn--submit{
+  border-radius: 12px;
+  width: 100%;
+  border: 0;
+}
+
+#enviarP{
+  display: flex;
+  align-items: center;
+}
+
+#enviarP1{
+  display: flex;
+  align-items: center;
+}
+#enviarP .form__btn--submit,
+#enviarP1 .form__btn--submit {
+    width: 100%;
 }
 .contF input {
   width: 50%;
   background-color: #ffffff;
 }
+
+.inputs {
+  gap: 0.8rem;
+}
+
 #id_servicio {
   /*width: 40%;*/
   background-color: #ffffff;
@@ -110,23 +167,59 @@ li {
   height: 20vh;
 }
 
+.bloquesH input {
+  background-color: #ffffff;
+}
+
 .botones-form-combos {
-    width: 40%;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
+  width: 40%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 .botones-form-combos-version {
-    width: 40%;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
+  width: 40%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 .botones-form-combos-detalle {
-    width: 40%;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
+  width: 40%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.abm-table tbody {
+  background-color: transparent;
+}
+
+.btn-F {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.btn-F .form__btn--submit {
+  width: 100%;
+}
+
+.bloques-cv {
+  height: auto;
+  gap: 0.8rem;
+  justify-content: flex-start;
+}
+
+.contF-cv {
+  height: auto;
+}
+
+.form .contF {
+  height: auto;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  padding: 1.5rem;
 }
