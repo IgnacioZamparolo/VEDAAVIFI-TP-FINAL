@@ -6,47 +6,51 @@
 {% block styles %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/abm_admin.css') }}">
 {% endblock %}
-<div class="abm-card">
-    <table class="abm-table">
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Descripción</th>
-                <th>Precio</th>
-                <th>Categoria</th>
-                <th>Lactosa</th>
-                <th>Vegetariano</th>
-                <th>Vegano</th>
-                <th>Sin Tacc</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for producto in productos %}
-            <tr>
-                <td>{{ producto.nombre }}</td>
-                <td>{{ producto.descripcion }}</td>
-                <td>{{ producto.precio }}</td>
-                <td>{{ producto.categoria }}</td>
-                <td>{{ producto.lactosa }}</td>
-                <td>{{ producto.vegetariano }}</td>
-                <td>{{ producto.vegano }}</td>
-                <td>{{ producto.sin_tacc }}</td>
-                <td>
-                {% if producto.imagen_url %}
-                    <img src="{{ producto.imagen_url }}" alt="{{ producto.nombre }}" style="width:80px;height:60px;object-fit:cover;">
-                {% else %}
-                    Sin imagen
-                {% endif %}
-            </td>            
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
-<div>
+<div class="cont-papa">
+    <div class="abm-card">
+        <div class="table-responsive">
+            <table class="abm-table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Precio</th>
+                        <th>Categoria</th>
+                        <th>Lactosa</th>
+                        <th>Vegetariano</th>
+                        <th>Vegano</th>
+                        <th>Sin Tacc</th>
+                        <th>Imagen</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for producto in productos %}
+                    <tr>
+                        <td>{{ producto.nombre }}</td>
+                        <td>{{ producto.descripcion }}</td>
+                        <td>{{ producto.precio }}</td>
+                        <td>{{ producto.categoria }}</td>
+                        <td>{{ producto.lactosa }}</td>
+                        <td>{{ producto.vegetariano }}</td>
+                        <td>{{ producto.vegano }}</td>
+                        <td>{{ producto.sin_tacc }}</td>
+                        <td>
+                            {% if producto.imagen_url %}
+                            <img src="{{ producto.imagen_url }}" alt="{{ producto.nombre }}"
+                                style="width:80px;height:60px;object-fit:cover;">
+                            {% else %}
+                            Sin imagen
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
     <div class="contB">
         <ul class="botones-form">
-            <li><button class="form__btn"  id="btn-editar-menu">Editar</button></li>
+            <li><button class="form__btn" id="btn-editar-menu">Editar</button></li>
             <li><button class="form__btn" id="btn-agregar-menu">Agregar</button></li>
             <li><button class="form__btn" id="btn-eliminar-menu">Eliminar</button></li>
         </ul>
@@ -55,36 +59,45 @@
 
 <div class="form" id="agregar_prod" style="display:none">
     <form action="{{ url_for('productos.agregar')}}" method="POST" enctype="multipart/form-data">
-        <div class="contF">
-            <div class="bloques">
-                <label class="form__label" for="nombre">Nombre del producto:</label>
-                <input class="form__input" type="text" id="nombre" name="nombre" placeholder="Nombre" required>
+        <div class="contFH">
+            <div class="bloquesH">
+                <div class="inputs">
+                    <label class="form__label" for="nombre">Nombre del producto:</label>
+                    <input class="form__input" type="text" id="nombre" name="nombre" placeholder="Nombre" required>
 
-                <label class="form__label" for="descripcion">Descripción:</label>
-                <input class="form__input" type="text" id="descripcion" rows=4 name="descripcion" placeholder="descripcion" required>
+                    <label class="form__label" for="descripcion">Descripción:</label>
+                    <input class="form__input" type="text" id="descripcion" rows=4 name="descripcion"
+                        placeholder="descripcion" required>
 
-                <label class="form__label" for="precio">Precio:</label>
-                <input class="form__input" type="number" id="precio" name="precio" placeholder="precio" required>
+                    <label class="form__label" for="precio">Precio:</label>
+                    <input class="form__input" type="number" id="precio" name="precio" placeholder="precio" required>
 
-                <label class="form__label" for="categoria">Categoria:</label>
-                <input class="form__input" type="text" id="categoria" name="categoria" placeholder="categoria" required>
+                    <label class="form__label" for="categoria">Categoria:</label>
+                    <input class="form__input" type="text" id="categoria" name="categoria" placeholder="categoria" required>
+                </div>
+                <div class="checkbox">
+                    <label class="form__label" for="lactosa">Lactosa:</label>
+                    <input type="checkbox" id="lactosa" name="lactosa">
 
-                <label class="form__label" for="lactosa">Lactosa:</label>
-                <input  type="checkbox" id="lactosa" name="lactosa">
+                    <label class="form__label" for="vegetariano">Vegetariano:</label>
+                    <input type="checkbox" id="vegetariano" name="vegetariano">
 
-                <label class="form__label" for="vegetariano">Vegetariano:</label>
-                <input  type="checkbox" id="vegetariano" name="vegetariano">
+                    <label class="form__label" for="vegano">Vegano:</label>
+                    <input type="checkbox" id="vegano" name="vegano">
 
-                <label class="form__label" for="vegano">Vegano:</label>
-                <input type="checkbox" id="vegano" name="vegano">
+                    <label class="form__label" for="sin_tacc">Sin Tacc:</label>
+                    <input type="checkbox" id="sin_tacc" name="sin_tacc">
 
-                <label class="form__label" for="sin_tacc">Sin Tacc:</label>
-                <input type="checkbox" id="sin_tacc" name="sin_tacc">
-
-        <label class="form__label" for="imagen">Imagen:</label>
-        <input type="file" id="imagen" name="imagen" accept="image/jpg,image/jpeg,image/png,image/webp">
-
-        <button class="form__btn--submit" type="submit">Enviar</button>
+                    <label class="form__label" for="imagen">Imagen:</label>
+                    <input type="file" id="imagen" name="imagen" accept="image/jpg,image/jpeg,image/png,image/webp">
+                
+                    <div class="btn-F" id="enviarP">
+                        <button class="form__btn--submit"  type="submit">Enviar</button>
+                    </div>
+                </div>
+                
+            </div>
+        </div>        
     </form>
 </div>
 
@@ -93,7 +106,8 @@
         <div class="contF">
             <div class="bloques">
                 <label class="form__label" for="id_producto">Id del producto: </label>
-                <input class="form__input" type="text" id="id_producto" name="id_producto" placeholder="Id Producto" required>
+                <input class="form__input" type="text" id="id_producto" name="id_producto" placeholder="Id Producto"
+                    required>
             </div>
             <div class="btn-F">
                 <button class="form__btn--submit" type="submit">Enviar</button>
@@ -104,39 +118,51 @@
 
 <div class="form" id="editar_prod" style="display:none">
     <form action="{{ url_for('productos.editar', id_producto=0)}}" method="POST">
-        <div class="contF">
-            <div class="bloques">
-                <label class="form__label" for="id_producto">Id del producto: </label>
-                <input class="form__input" type="text" id="id_producto" name="id_producto" placeholder="Id Producto" required>
+        <div class="contFH">
+            <div class="bloquesH">
+                <div class="inputs">
+                    <label class="form__label" for="id_producto">Id del producto: </label>
+                    <input class="form__input" type="text" id="id_producto" name="id_producto" placeholder="Id Producto"
+                        required>
 
-                <label class="form__label" for="nombre">Nombre del producto:</label>
-                <input class="form__input" type="text" id="nombre" name="nombre" placeholder="Nombre" required>
+                    <label class="form__label" for="nombre">Nombre del producto:</label>
+                    <input class="form__input" type="text" id="nombre" name="nombre" placeholder="Nombre" required>
 
-                <label class="form__label" for="descripcion">Descripción:</label>
-                <input class="form__input" type="text" id="descripcion" rows=4 name="descripcion" placeholder="descripcion" required>
+                    <label class="form__label" for="descripcion">Descripción:</label>
+                    <input class="form__input" type="text" id="descripcion" rows=4 name="descripcion"
+                        placeholder="descripcion" required>
 
-                <label class="form__label" for="precio">Precio:</label>
-                <input class="form__input" type="number" id="precio" name="precio" placeholder="precio" required>
+                    <label class="form__label" for="precio">Precio:</label>
+                    <input class="form__input" type="number" id="precio" name="precio" placeholder="precio" required>
 
-                <label class="form__label" for="categoria">Categoria:</label>
-                <input class="form__input" type="text" id="categoria" name="categoria" placeholder="categoria" required>
+                    <label class="form__label" for="categoria">Categoria:</label>
+                    <input class="form__input" type="text" id="categoria" name="categoria" placeholder="categoria" required>
 
-                <label class="form__label" for="lactosa">Lactosa:</label>
-                <input type="checkbox" id="lactosa" name="lactosa">
+                </div>
+                <div class="checkbox">
+                    <label class="form__label" for="lactosa">Lactosa:</label>
+                    <input type="checkbox" id="lactosa" name="lactosa">
 
-                <label class="form__label" for="vegetariano">Vegetariano:</label>
-                <input type="checkbox" id="vegetariano" name="vegetariano">
+                    <label class="form__label" for="vegetariano">Vegetariano:</label>
+                    <input type="checkbox" id="vegetariano" name="vegetariano">
 
-                <label class="form__label" for="vegano">Vegano:</label>
-                <input type="checkbox" id="vegano" name="vegano">
+                    <label class="form__label" for="vegano">Vegano:</label>
+                    <input type="checkbox" id="vegano" name="vegano">
 
-                <label class="form__label" for="sin_tacc">Sin Tacc:</label>
-                <input type="checkbox" id="sin_tacc" name="sin_tacc">
+                    <label class="form__label" for="sin_tacc">Sin Tacc:</label>
+                    <input type="checkbox" id="sin_tacc" name="sin_tacc">
 
-        <label class="form__label" for="imagen">Imagen:</label>
-        <input type="file" id="imagen" name="imagen" accept="image/jpg,image/jpeg,image/png,image/webp">
+                    <label class="form__label" for="imagen">Imagen:</label>
+                    <input type="file" id="imagen" name="imagen" accept="image/jpg,image/jpeg,image/png,image/webp">
+                    <div class="btn-F" id="enviarP1">
+                        <button class="form__btn--submit"  type="submit">Enviar</button>
+                    </div>
+                </div>
+                
 
-        <button class="form__btn--submit" type="submit">Enviar</button>
+            </div>
+            
+        </div>
     </form>
 </div>
 
@@ -154,7 +180,7 @@
             {% for combo in combos %}
             <tr>
                 <td>{{ combo.nombre }}</td>
-                <td>{{ combo.precio }}</td>          
+                <td>{{ combo.precio }}</td>
             </tr>
             {% endfor %}
         </tbody>
@@ -163,13 +189,13 @@
 
 <div>
     <div class="contB">
-        <ul class="botones-form-combos">
+        <ul class="botones-form">
             <li><button class="form__btn" id="btn-editar-combo">Editar</button></li>
             <li><button class="form__btn" id="btn-agregar-combo">Agregar</button></li>
             <li><button class="form__btn" id="btn-eliminar-combo">Eliminar</button></li>
         </ul>
     </div>
-    
+
 </div>
 <div class="form" id="agregar_combo" style="display:none">
     <form action="{{ url_for('combos.agregar')}}" method="POST">
@@ -187,8 +213,8 @@
 
             </div>
         </div>
-        
-        
+
+
     </form>
 </div>
 
@@ -204,7 +230,7 @@
                 <button class="form__btn--submit" type="submit">Enviar</button>
 
             </div>
-        </div>   
+        </div>
     </form>
 </div>
 
@@ -227,44 +253,51 @@
 
             </div>
         </div>
-        
+
     </form>
 </div>
 
 <!---COMBO VERSION--->
-<table border="1">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Descripcion</th>
-            <th>Personas</th>
-            <th>Precio</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for combo_v in combos_version %}
-        <tr>
-            <td>{{ combo_v.id_version }}</td>
-            <td>{{ combo_v.descripcion }}</td>
-            <td>{{ combo_v.personas }}</td>
-            <td>{{ combo_v.precio }}</td>           
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="abm-card">
+    <table class="abm-table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Descripcion</th>
+                <th>Personas</th>
+                <th>Precio</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for combo_v in combos_version %}
+            <tr>
+                <td>{{ combo_v.id_version }}</td>
+                <td>{{ combo_v.descripcion }}</td>
+                <td>{{ combo_v.personas }}</td>
+                <td>{{ combo_v.precio }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
 <div>
-    <ul class="botones-form-combos-version">
-        <li><button class="form__btn" id="btn-editar-combo-version">Editar</button></li>
-        <li><button class="form__btn" id="btn-agregar-combo-version">Agregar</button></li>
-        <li><button class="form__btn" id="btn-eliminar-combo-version">Eliminar</button></li>
-    </ul>
+    <div class="contB">
+        <ul class="botones-form">
+            <li><button class="form__btn" id="btn-editar-combo-version">Editar</button></li>
+            <li><button class="form__btn" id="btn-agregar-combo-version">Agregar</button></li>
+            <li><button class="form__btn" id="btn-eliminar-combo-version">Eliminar</button></li>
+        </ul>
+    </div>
+    
 </div>
 <div class="form" id="agregar_combo_version" style="display:none">
     <form action="{{ url_for('combo_version.agregar')}}" method="POST">
-        <div class="contF">
-            <div class="bloques">
+        <div class="contF contF-cv">
+            <div class="bloques bloques-cv">
                 <label class="form__label" for="descripcion">Nombre de la version:</label>
-                <input class="form__input" type="text" id="descripcion" name="descripcion" placeholder="Descripcion" required>
+                <input class="form__input" type="text" id="descripcion" name="descripcion" placeholder="Descripcion"
+                    required>
 
                 <label class="form__label" for="personas">Personas:</label>
                 <input class="form__input" type="number" id="personas" name="personas" placeholder="Personas" required>
@@ -280,40 +313,40 @@
                 <button class="form__btn--submit" type="submit">Enviar</button>
             </div>
         </div>
-        
+
     </form>
 </div>
 
 <div class="form" id="eliminar_combo_version" style="display:none">
     <form action="{{ url_for('combo_version.eliminar', id_version=0)}}" method="POST">
-        <div class="contF">
-            <div class="bloques">
+        <div class="contF contF-cv">
+            <div class="bloques bloques-cv">
                 <label class="form__label" for="id_version">Id de la version: </label>
-                <input class="form__input" type="number" id="id_version" name="id_version" placeholder="Id Version" required>
+                <input class="form__input" type="number" id="id_version" name="id_version" placeholder="Id Version"
+                    required>
 
             </div>
             <div class="btn-F">
                 <button class="form__btn--submit" type="submit">Enviar</button>
-
             </div>
         </div>
-        
-        
     </form>
 </div>
 
 <div class="form" id="editar_combo_version" style="display:none">
     <form action="{{ url_for('combo_version.editar', id_version=0)}}" method="POST">
-        <div class="contF">
-            <div class="bloques">
+        <div class="contF contF-cv">
+            <div class="bloques bloques-cv">
                 <label class="form__label" for="id_version">Id de la version: </label>
-                <input class="form__input" type="number" id="id_version" name="id_version" placeholder="Id Version" required>
+                <input class="form__input" type="number" id="id_version" name="id_version" placeholder="Id Version"
+                    required>
 
                 <label class="form__label" for="personas">Personas:</label>
                 <input class="form__input" type="number" id="personas" name="personas" placeholder="Personas" required>
 
                 <label class="form__label" for="Descripcion">Nombre de la version:</label>
-                <input class="form__input" type="text" id="descripcion" name="descripcion" placeholder="Descripcion" required>
+                <input class="form__input" type="text" id="descripcion" name="descripcion" placeholder="Descripcion"
+                    required>
 
                 <label class="form__label" for="precio">Precio:</label>
                 <input class="form__input" type="number" id="precio" name="precio" placeholder="precio" required>
@@ -321,11 +354,9 @@
             </div>
             <div class="btn-F">
                 <button class="form__btn--submit" type="submit">Enviar</button>
-
             </div>
         </div>
-        
-        
+
     </form>
 </div>
 
@@ -344,7 +375,7 @@
             {% for combo_d in combos_detalle %}
             <tr>
                 <td>{{ combo_d.id_combo }}</td>
-                <td>{{ combo_d.id_producto  }}</td>          
+                <td>{{ combo_d.id_producto }}</td>
             </tr>
             {% endfor %}
         </tbody>
@@ -355,10 +386,10 @@
     <div class="contB">
         <ul class="botones-form-combos-detalle">
             <li><button class="form__btn" id="btn-agregar-combo-detalle">Agregar</button></li>
-            
+
         </ul>
     </div>
-    
+
 </div>
 <div class="form" id="agregar_combo_detalle" style="display:none">
     <form action="{{ url_for('combo_detalle.agregar')}}" method="POST">
@@ -368,14 +399,15 @@
                 <input class="form__input" type="number" id="id_combo" name="id_combo" placeholder="id_combo" required>
 
                 <label class="form__label" for="id_producto">id_producto:</label>
-                <input class="form__input" type="number" id="id_producto" name="id_producto" placeholder="id_producto" required>
+                <input class="form__input" type="number" id="id_producto" name="id_producto" placeholder="id_producto"
+                    required>
             </div>
             <div class="btn-F">
                 <button class="form__btn" type="submit">Enviar</button>
 
             </div>
         </div>
-        
+
     </form>
 </div>
 <div class="form" id="obtener_combo_detalle" style="display:none">
@@ -391,10 +423,11 @@
 
             </div>
         </div>
-        
-        
+
+
     </form>
 </div>
+    {% block extra_js %}
+    <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+    {% endblock %}
 {% endblock %}
-
-

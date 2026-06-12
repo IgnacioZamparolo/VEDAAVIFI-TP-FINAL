@@ -49,4 +49,7 @@
 
     </form>
 </div>
+    {% block extra_js %}
+        <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+    {% endblock %}
 {% endblock %}
