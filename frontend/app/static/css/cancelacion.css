@@ -1,0 +1,100 @@
+.cancelacion-section {
+  width: 100%;
+  padding: 3rem 1.5rem;
+  box-sizing: border-box;
+  background-color: #f7f3ed;
+}
+
+.cancelacion-container {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.form-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e6dfd5;
+}
+
+.cancelacion-divisor {
+  color: #ffffff;
+  margin-bottom: 0.75rem;
+}
+
+.mensaje {
+    margin-bottom: 1.5rem;
+    padding: 1rem 1.25rem;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.mensaje--success {
+    background-color: #d4edda;
+    border-color: #b7dbbf;
+    color: #155724;
+}
+
+.mensaje--error {
+    background-color: #f8d7da;
+    border-color: #efb8bd;
+    color: #721c24;
+}
+
+.cancelacion-confirmacion {
+    width: 100%;
+    padding: 3rem 2rem;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.cancelacion-confirmacion__icono {
+    margin-bottom: 1rem;
+    font-size: 3rem;
+}
+
+.cancelacion-confirmacion h2 {
+    margin: 0 0 1rem;
+    font-family: "Playfair Display", serif;
+    font-size: 2rem;
+}
+
+.cancelacion-confirmacion p {
+    max-width: 520px;
+    margin: 0 auto 1.75rem;
+    color: #555555;
+    line-height: 1.6;
+}
+
+.cancelacion-error {
+    width: 100%;
+    padding: 3rem 2rem;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.cancelacion-error h2 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-family: "Playfair Display", serif;
+    font-size: 2rem;
+    color: #a83232;
+}
+
+.cancelacion-error p {
+    margin-bottom: 1.75rem;
+    color: #555555;
+    line-height: 1.6;
+}
+
+.form-card.cancelacion-confirmacion, 
+.form-card.cancelacion-error {
+  background-color: #ffffff;
+  border-radius: 16px; 
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06); 
+  border: 1px solid #eadecc; 
+  padding: 3.5rem 2.5rem; 
+}
