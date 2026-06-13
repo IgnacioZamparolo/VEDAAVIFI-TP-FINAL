@@ -7,14 +7,14 @@
 {% block extra_css %}
   <link
     rel="stylesheet"
-    href="{{ url_for('static', filename='css/resenia.css') }}"
+    href="{{ url_for('static', filename='css/cancelacion.css') }}"
   >
 {% endblock %}
 
 {% block content %}
 
 <section class="reserva-hero">
-  <div class="divisor resenia-divisor">
+  <div class="divisor re-divisor">
     <span>⚠️</span>
   </div>
 
@@ -22,8 +22,8 @@
 
 </section>
 
-<section class="resenia-section">
-  <div class="resenia-container">
+<section class="cancelacion-section">
+  <div class="cancelacion-container">
 
     {% with mensajes = get_flashed_messages(with_categories=true) %}
       {% if mensajes %}
@@ -37,8 +37,8 @@
 
     {% if mostrar_confirmacion %}
 
-      <div class="form-card resenia-confirmacion">
-        <div class="resenia-confirmacion__icono">
+      <div class="form-card cancelacion-confirmacion">
+        <div class="cancelacion-confirmacion__icono">
           ⚠️
         </div>
 
@@ -61,8 +61,8 @@
 
     {% elif exito %}
 
-      <div class="form-card resenia-confirmacion">
-        <div class="resenia-confirmacion__icono">
+      <div class="form-card cancelacion-confirmacion">
+        <div class="cancelacion-confirmacion__icono">
           ❌
         </div>
 
@@ -82,7 +82,7 @@
 
       {% else %}
 
-      <div class="form-card resenia-error">
+      <div class="form-card cancelacion-error">
         <h2>No se pudo procesar la solicitud</h2>
 
         <p>
