@@ -12,44 +12,29 @@
             <tr>
                 <th>ID Reseña</th>
                 <th>Descripción</th>
+                <th>
+                    
+                </th>
             </tr>
         </thead>
         <tbody>
             {% for resenia in resenias %}
             <tr>
                 <td>{{ resenia.id_resenias }}</td> 
-                <td>{{ resenia.descripcion }}</td>                   
+                <td>{{ resenia.descripcion }}</td> 
+                <td>
+                    <form action="{{ url_for('resenias.eliminar', id_resenia=resenia.id_resenias) }}" method="POST" style="display:inline;">
+                    <button class="form__btn--eliminar" type="submit" onclick="return confirm('¿Seguro que quiere eliminar esta reseña?');">
+                        Eliminar
+                    </button>
+                </form>
+                </td>                  
             </tr>
             {% endfor %}
         </tbody>
     </table>
 </div>
-
-<div>
-    <div class="contB">
-        <ul class="botones-form">
-            <li><button class="form__btn" id="btn-eliminar-resenia">Eliminar</button></li>
-        </ul>
-    </div>
-    
-</div>
-
-<div class="form" id="eliminar_resenia" style="display:none">
-    <form action="{{ url_for('resenias.eliminar', id_resenia=0) }}" method="POST">
-        <div class="contF">
-            <div class="bloque2">
-                <label class="form__label" for="id_resenias">Id de la reseña: </label>
-                <input class="form__input" type="number" id="id_resenias" name="id_resenias" placeholder="Id Reseña" required>
-            </div>
-            <div class="btn-F">
-                <button class="form__btn--submit" type="submit">Enviar</button>
-            </div>  
-        </div>
-              
-
-    </form>
-</div>
-    {% block extra_js %}
-        <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
-    {% endblock %}
+{% block extra_js %}
+    <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+{% endblock %}
 {% endblock %}

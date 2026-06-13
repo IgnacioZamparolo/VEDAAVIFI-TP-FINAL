@@ -89,7 +89,10 @@
                     <input type="checkbox" id="sin_tacc" name="sin_tacc">
 
                     <label class="form__label" for="imagen">Imagen:</label>
-                    <input type="file" id="imagen" name="imagen" accept="image/jpg,image/jpeg,image/png,image/webp">
+                    <label class="btn-img" for="imagen">
+                        <input type="file" id="imagen" name="imagen" accept="image/jpg,image/jpeg,image/png,image/webp" style="display:none">
+                        Seleccionar Imagen
+                    </label>
                 
                     <div class="btn-F" id="enviarP">
                         <button class="form__btn--submit"  type="submit">Enviar</button>
@@ -122,7 +125,7 @@
             <div class="bloquesH">
                 <div class="inputs">
                     <label class="form__label" for="id_producto">Id del producto: </label>
-                    <input class="form__input" type="text" id="id_producto" name="id_producto" placeholder="Id Producto"
+                    <input class="form__input" type="number" id="id_producto" name="id_producto" placeholder="Id Producto"
                         required>
 
                     <label class="form__label" for="nombre">Nombre del producto:</label>
@@ -153,7 +156,10 @@
                     <input type="checkbox" id="sin_tacc" name="sin_tacc">
 
                     <label class="form__label" for="imagen">Imagen:</label>
-                    <input type="file" id="imagen" name="imagen" accept="image/jpg,image/jpeg,image/png,image/webp">
+                    <label class="btn-img" for="imagen">
+                        <input type="file" id="imagen" name="imagen" accept="image/jpg,image/jpeg,image/png,image/webp" style="display:none">
+                        Seleccionar Imagen
+                    </label>
                     <div class="btn-F" id="enviarP1">
                         <button class="form__btn--submit"  type="submit">Enviar</button>
                     </div>
@@ -223,7 +229,7 @@
         <div class="contF">
             <div class="bloques">
                 <label class="form__label" for="id_combo">Id del combo: </label>
-                <input class="form__input" type="text" id="id_combo" name="id_combo" placeholder="Id Combo" required>
+                <input class="form__input" type="number" id="id_combo" name="id_combo" placeholder="Id Combo" required>
 
             </div>
             <div class="btn-F">
@@ -239,7 +245,7 @@
         <div class="contF">
             <div class="bloques">
                 <label class="form__label" for="id_combo">Id del combo: </label>
-                <input class="form__input" type="text" id="id_combo" name="id_combo" placeholder="Id Combo" required>
+                <input class="form__input" type="number" id="id_combo" name="id_combo" placeholder="Id Combo" required>
 
                 <label class="form__label" for="nombre">Nombre del combo:</label>
                 <input class="form__input" type="text" id="nombre" name="nombre" placeholder="Nombre" required>
@@ -250,7 +256,6 @@
             </div>
             <div class="btn-F">
                 <button class="form__btn--submit" type="submit">Enviar</button>
-
             </div>
         </div>
 
@@ -396,14 +401,14 @@
         <div class="contF">
             <div class="bloques">
                 <label class="form__label" for="id_combo">Id del combo:</label>
-                <input class="form__input" type="number" id="id_combo" name="id_combo" placeholder="id_combo" required>
+                <input class="form__input" type="number" id="id_combo" name="id_combo" placeholder="id combo" required>
 
                 <label class="form__label" for="id_producto">id_producto:</label>
-                <input class="form__input" type="number" id="id_producto" name="id_producto" placeholder="id_producto"
+                <input class="form__input" type="number" id="id_producto" name="id_producto" placeholder="id producto"
                     required>
             </div>
             <div class="btn-F">
-                <button class="form__btn" type="submit">Enviar</button>
+                <button class="form__btn--submit" type="submit">Enviar</button>
 
             </div>
         </div>
@@ -420,7 +425,6 @@
             </div>
             <div class="btn-F">
                 <button class="form__btn--submit" type="submit">Enviar</button>
-
             </div>
         </div>
 
