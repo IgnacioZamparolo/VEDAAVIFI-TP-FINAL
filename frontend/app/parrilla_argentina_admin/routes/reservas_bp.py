@@ -69,16 +69,37 @@ def mostrar_finalizacion(id_reserva):
     return render_template("reserva_finalizada.html", id_reserva=id_reserva, exito=exito, mail_enviado=mail_enviado)
 
 
-@reservas_bp.route('/reservas/<int:id_reserva>/cancelar', methods = ["POST"]) #cliente
+@reservas_bp.route('/reservas/<int:id_reserva>/cancelar', methods = ["GET", "POST"]) #cliente
 def cancelar(id_reserva):
-    resultado = api.cancelar_reservas(id_reserva)
-    
+    resultado = api.obtener_reservas(token_actual())
+    usuario = usuario_actual()
+
     if not resultado.get('ok'):
-        for mensaje in extraer_mensajes_error(resultado.get('error_response')):
-            flash(mensaje, 'error')
-        return render_template('reserva.html')
+            for mensaje in extraer_mensajes_error(resultado.get('error_response')):
+                flash(mensaje, 'error')
+            return redirect('reserva_cancelada.html', usuario=usuario, mostrar_confirmacion=False, exito=False)
+
+    reserva = None
+    for r in resultado['data']:
+        if r.get('id_reserva') == id_reserva:
+            reserva = r
+
+    if reserva is None:
+        return render_template('reserva_cancelada.html', usuario=usuario, mostrar_confirmacion=False, exito=False)
+
+    if request.method == 'POST':
+        resultado_cancelar = api.cancelar_reservas(id_reserva)
+
+        if resultado_cancelar.get('ok'):
+            return render_template('reserva_cancelada.html', usuario=usuario, id_reserva=id_reserva, mostrar_confirmacion=False, exito=True)
         
-    return render_template('reserva.html')
+        for mensaje in extraer_mensajes_error(resultado_cancelar.get('error_response')):
+            flash(mensaje, 'error')
+
+        return render_template('reserva_cancelada.html', usuario=usuario, mostrar_confirmacion=False, exito=False)
+
+    return render_template('reserva_cancelada.html', usuario=usuario, id_reserva=id_reserva, mostrar_confirmacion=True)
+        
 
 
 @reservas_bp.route('/reservas/admin', methods = ["GET"]) #admin

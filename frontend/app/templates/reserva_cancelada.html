@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Cancelar reserva — Parrilla Argentina
+{% endblock %}
+
+{% block extra_css %}
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/resenia.css') }}"
+  >
+{% endblock %}
+
+{% block content %}
+
+<section class="reserva-hero">
+  <div class="divisor resenia-divisor">
+    <span>⚠️</span>
+  </div>
+
+  <h1>Gestión de Reserva</h1>
+
+</section>
+
+<section class="resenia-section">
+  <div class="resenia-container">
+
+    {% with mensajes = get_flashed_messages(with_categories=true) %}
+      {% if mensajes %}
+        {% for categoria, mensaje in mensajes %}
+          <div class="mensaje mensaje--{{ categoria }}">
+            {{ mensaje }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    {% if mostrar_confirmacion %}
+
+      <div class="form-card resenia-confirmacion">
+        <div class="resenia-confirmacion__icono">
+          ⚠️
+        </div>
+
+        <h2>¿Estás seguro de que deseas cancelar?</h2>
+
+        <form action="" method="POST" style="margin-top: 20px;">
+          <button type="submit" class="btn btn-rojo" style="width: 100%; margin-bottom: 10px;">
+            Sí, cancelar mi reserva
+          </button>
+
+          <a
+            href="{{ url_for('frontend.home') }}"
+            class="btn btn-dorado"
+            style="display: block; text-align: center;"
+          >
+            No cancelar, mantener mi reserva
+          </a>
+        </form>
+      </div>
+
+    {% elif exito %}
+
+      <div class="form-card resenia-confirmacion">
+        <div class="resenia-confirmacion__icono">
+          ❌
+        </div>
+
+        <h2>Reserva cancelada</h2>
+
+        <p>
+          La reserva número {{ id_reserva }} ha sido cancelada correctamente.
+        </p>
+
+        <a
+          href="{{ url_for('frontend.home') }}"
+          class="btn btn-dorado"
+        >
+          Volver al inicio
+        </a>
+      </div>
+
+      {% else %}
+
+      <div class="form-card resenia-error">
+        <h2>No se pudo procesar la solicitud</h2>
+
+        <p>
+          Este enlace ya no es válido. Es posible que la reserva ya haya sido cancelada, 
+          esté vencida o haya finalizado.
+        </p>
+
+        <a
+          href="{{ url_for('frontend.home') }}"
+          class="btn btn-dorado"
+        >
+          Volver al inicio
+        </a>
+      </div>
+
+    {% endif %}
+    
+  </div>
+</section>
+
+{% endblock %}
+

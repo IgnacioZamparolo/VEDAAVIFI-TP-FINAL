@@ -106,7 +106,7 @@ def crear_reservas(datos: dict) -> dict:
     return _respuesta_error(response)
 
 def cancelar_reservas(id_reserva: int) -> dict:
-    response = _get(f'/reservas/{id_reserva}/cancelar')
+    response = _post(f'/reservas/{id_reserva}/cancelar', {})
     if response is None:
         return _error_conexion()
     if response.status_code == 200:
