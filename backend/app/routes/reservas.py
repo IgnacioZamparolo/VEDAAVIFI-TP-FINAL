@@ -357,7 +357,7 @@ def finalizar_reserva(id_reserva):
         if conn:
             conn.close()
 
-@reservas.route("/reservas/<int:id_reserva>/cancelar", methods=["GET"])  # cliente via mail
+@reservas.route("/reservas/<int:id_reserva>/cancelar", methods=["POST"])  # cliente via mail
 def cancelar_reserva_link(id_reserva):
 
     try:
