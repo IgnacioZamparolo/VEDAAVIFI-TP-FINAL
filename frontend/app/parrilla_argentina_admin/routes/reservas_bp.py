@@ -35,7 +35,7 @@ def crear():
         resultado = api.crear_reservas(datos)
 
         if resultado.get('ok'):
-            flash('Reserva creada correctamente.', 'success')
+            flash('Reserva creada correctamente. En el momento que podamos asegurar un lugar para usted le enviaremos un mail.', 'success')
             return redirect(url_for('reservas.crear'))
         
         for mensaje in extraer_mensajes_error(resultado.get('error_response')):
