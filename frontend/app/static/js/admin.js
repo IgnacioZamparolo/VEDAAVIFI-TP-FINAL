@@ -200,3 +200,14 @@ inputIdVersionEliminar.addEventListener("input", () => {
     const id = inputIdVersionEliminar.value
     formEliminarCombov.querySelector('form').action = `/combo_version/${id}/eliminar`
 })
+
+document.querySelectorAll('input[type="file"]').forEach(input => {
+  input.addEventListener('change', () => {
+    const span = input.closest('.btn-img').querySelector('.btn-img__texto');
+    if (input.files.length > 0) {
+      span.textContent = input.files[0].name;
+    } else {
+      span.textContent = 'Seleccionar Imagen';
+    }
+  });
+});

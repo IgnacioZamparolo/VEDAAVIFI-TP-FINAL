@@ -132,61 +132,23 @@
                       class="editar-reserva__form"
                     >
 
-                      <div class="form__group">
-                        <label
-                          class="form__label"
-                          for="cant_personas_{{ reserva.id_reserva }}"
-                        >
-                          Cantidad de personas
-                        </label>
+                       <input
+                        type="hidden"
+                        name="cant_personas"
+                        value="{{ reserva.cant_personas }}"
+                      >
 
-                        <input
-                          class="form__input"
-                          type="number"
-                          id="cant_personas_{{ reserva.id_reserva }}"
-                          name="cant_personas"
-                          value="{{ reserva.cant_personas }}"
-                          min="1"
-                          max="10"
-                          required
-                        >
-                      </div>
+                      <input
+                        type="hidden"
+                        name="dia"
+                        value="{{ reserva.dia }}"
+                      >
 
-                      <div class="form__group">
-                        <label
-                          class="form__label"
-                          for="dia_{{ reserva.id_reserva }}"
-                        >
-                          Fecha
-                        </label>
-
-                        <input
-                          class="form__input"
-                          type="date"
-                          id="dia_{{ reserva.id_reserva }}"
-                          name="dia"
-                          value="{{ reserva.dia }}"
-                          required
-                        >
-                      </div>
-
-                      <div class="form__group">
-                        <label
-                          class="form__label"
-                          for="horario_{{ reserva.id_reserva }}"
-                        >
-                          Horario
-                        </label>
-
-                        <input
-                          class="form__input"
-                          type="time"
-                          id="horario_{{ reserva.id_reserva }}"
-                          name="horario"
-                          value="{{ reserva.horario[:5] }}"
-                          required
-                        >
-                      </div>
+                      <input
+                        type="hidden"
+                        name="horario"
+                        value="{{ reserva.horario[:5] }}"
+                      >
 
                       <div class="form__group">
                         <label
