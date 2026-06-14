@@ -88,7 +88,12 @@ def crear_reserva():
         
         if fecha_reserva < date.today():
             return jsonify({"error": "No se puede reservar para una fecha que ya paso"}), 400
-                            
+
+        if fecha_reserva == date.today():
+            hora_reserva = datetime.strptime(data["horario"], "%H:%M").time()
+            if hora_reserva < datetime.now().time():
+                return jsonify({"error": "El horario seleccionado ya no está disponible para el día de hoy"}), 400
+                    
         if data["cant_personas"] <= 0:
             return jsonify({"error": "La cantidad de personas debe ser mayor a 0"}), 400
 
