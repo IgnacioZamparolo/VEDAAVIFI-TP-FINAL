@@ -103,24 +103,6 @@ def enviar_qr(mail, qr_bytes, id_reserva):
                 
                 <p style="color: #666; font-size: 14px;">Presentá este código QR en la entrada.</p>
 
-                <div style="margin-top: 15px;">
-                    <a
-                        href="{url_finalizacion}"
-                        style="
-                            background-color: #198754;
-                            color: white;
-                            padding: 12px 25px;
-                            text-decoration: none;
-                            border-radius: 5px;
-                            display: inline-block;
-                            font-weight: bold;
-                            font-size: 15px;
-                        "
-                    >
-                        Validar y finalizar reserva
-                    </a>
-                </div>
-
                 <p style="color: #666; font-size: 14px;">¿Tuviste un imprevisto? Podés cancelar tu reserva haciendo clic abajo:</p>
                 
                 <div style="margin-top: 15px;">
