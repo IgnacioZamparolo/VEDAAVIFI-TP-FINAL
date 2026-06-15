@@ -68,9 +68,9 @@ def crear_producto(data, archivo_imagen):
         cursor.execute("SELECT * FROM productos WHERE id_producto = %s", (id_nuevo,))
         return cursor.fetchone()
     except ValueError as ve:
-        raise ValueError(str(ve)) # Errores de validación (400)
+        raise ValueError(str(ve)) 
     except Exception as e:
-        raise Exception(f"Error al agregar el producto: {str(e)}") # Errores de BD (500)
+        raise Exception(f"Error al agregar el producto: {str(e)}")
     finally:
         if cursor: cursor.close()
         if conn: conn.close()
@@ -92,7 +92,7 @@ def actualizar_producto(id_producto, data, archivo_imagen):
 
         cursor.execute("SELECT * FROM productos WHERE id_producto = %s", (id_producto,))
         if cursor.fetchone() is None:
-            raise LookupError("Producto no encontrado") # Provoca un 404
+            raise LookupError("Producto no encontrado")
 
         lactosa     = 1 if data.get('lactosa') == 'True' else 0
         vegetariano = 1 if data.get('vegetariano') == 'True' else 0
