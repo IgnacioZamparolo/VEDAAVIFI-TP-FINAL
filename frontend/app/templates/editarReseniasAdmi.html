@@ -3,29 +3,38 @@
 {% block title %}Editar Resenias - Parrilla Argentina{% endblock %}
 
 {% block content %}
-
-<table border="1">
-    <thead>
-        <tr>
-            <th>ID Reseña</th>
-            <th>Descripción</th>
-            <th>Acción</th> </tr>
-    </thead>
-    <tbody>
-        {% for resenia in resenias %}
-        <tr>
-            <td>{{ resenia.id_resenias }}</td> 
-            <td>{{ resenia.descripcion }}</td>                   
-            <td>
-                <form action="{{ url_for('resenias.eliminar', id_resenia=resenia.id_resenias) }}" method="POST" style="display:inline;">
-                    <button class="form__btn" type="submit" onclick="return confirm('¿Seguro que quiere eliminar esta reseña?');">
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/abm_admin.css') }}">
+{% endblock %}
+<div class="abm-card">
+    <table class="abm-table">
+        <thead>
+            <tr>
+                <th>ID Reseña</th>
+                <th>Descripción</th>
+                <th>
+                    
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for resenia in resenias %}
+            <tr>
+                <td>{{ resenia.id_resenias }}</td> 
+                <td>{{ resenia.descripcion }}</td> 
+                <td>
+                    <form action="{{ url_for('resenias.eliminar', id_resenia=resenia.id_resenias) }}" method="POST" style="display:inline;">
+                    <button class="form__btn--eliminar" type="submit" onclick="return confirm('¿Seguro que quiere eliminar esta reseña?');">
                         Eliminar
                     </button>
                 </form>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
+                </td>                  
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% block extra_js %}
+    <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+{% endblock %}
 {% endblock %}

@@ -103,24 +103,6 @@ def enviar_qr(mail, qr_bytes, id_reserva):
                 
                 <p style="color: #666; font-size: 14px;">Presentá este código QR en la entrada.</p>
 
-                <div style="margin-top: 15px;">
-                    <a
-                        href="{url_finalizacion}"
-                        style="
-                            background-color: #198754;
-                            color: white;
-                            padding: 12px 25px;
-                            text-decoration: none;
-                            border-radius: 5px;
-                            display: inline-block;
-                            font-weight: bold;
-                            font-size: 15px;
-                        "
-                    >
-                        Validar y finalizar reserva
-                    </a>
-                </div>
-
                 <p style="color: #666; font-size: 14px;">¿Tuviste un imprevisto? Podés cancelar tu reserva haciendo clic abajo:</p>
                 
                 <div style="margin-top: 15px;">
@@ -207,10 +189,22 @@ def actualizar_estados():
     try:
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
-        ahora = datetime.now()
+        ahora = datetime.now().replace(microsecond=0)
 
-        cursor.execute("""UPDATE reservas SET pendiente = FALSE, vencida = TRUE WHERE pendiente = TRUE AND TIMESTAMP(dia, horario) < %s """, (ahora,))
-
+        query = """
+            UPDATE reservas 
+            SET 
+                pendiente = FALSE, 
+                confirmada = FALSE, 
+                vencida = TRUE 
+            WHERE 
+                (pendiente = TRUE OR confirmada = TRUE)
+                AND finalizada = FALSE 
+                AND cancelada = FALSE 
+                AND vencida = FALSE
+                AND CAST(CONCAT(dia, ' ', horario) AS DATETIME) < %s
+        """
+        cursor.execute(query, (ahora,))
         conn.commit()
     
     except Exception as e:
@@ -221,10 +215,6 @@ def actualizar_estados():
             cursor.close()
         if conn:
             conn.close()
-
-scheduler = BackgroundScheduler()
-scheduler.add_job(actualizar_estados, "interval", minutes=1)
-scheduler.start()
 
 # Errores
 def construir_error_api(code: str, message: str, description: str):
@@ -391,3 +381,9 @@ def requiere_admin(funcion):
  
     return wrapper
 
+scheduler = BackgroundScheduler()
+
+if not os.environ.get("WERKZEUG_RUN_MAIN"):
+    scheduler.add_job(actualizar_estados, "interval", minutes=1)
+    scheduler.start()
+    

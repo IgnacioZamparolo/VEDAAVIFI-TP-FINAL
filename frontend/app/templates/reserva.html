@@ -12,17 +12,26 @@
   <div class="reserva-layout">
 
     <div>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            {% if category == 'error' %}
+              <div class="alert alert-danger" style="padding: 15px; margin-bottom: 20px; border-radius: 4px; color: #721c24; background-color: #f8d7da; border: 1px solid #f5c6cb;">
+                  {{ message }}
+              </div>
+            {% else %}
+              <div class="alert alert-success" style="padding: 15px; margin-bottom: 20px; border-radius: 4px; color: #155724; background-color: #d4edda; border: 1px solid #c3e6cb;">
+                  {{ message }}
+              </div>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
       <form class="form-card" id="reservaFormNativo" action="{{ url_for('reservas.crear') }}" method="POST" novalidate>
         <h2>Datos de la Reserva</h2>
         <p>Los campos marcados con * son obligatorios</p>
 
         <div class="form-grid">
-          <div class="form-grupo">
-            <label for="nombre">Nombre *</label>
-            <input class="form-control" type="text" id="nombre" name="nombre" placeholder="Ej: María" required autocomplete="given-name" />
-            <span class="error-msg"></span>
-          </div>
-
           <div class="form-grupo">
             <label for="mail">Email *</label>
             <input class="form-control" type="email" id="mail" name="mail" placeholder="tu@email.com" required autocomplete="email" />
@@ -67,25 +76,8 @@
               <option value="4">4 personas</option>
               <option value="5">5 personas</option>
               <option value="6">6 personas</option>
-              <option value="11">Más de 10 (eventos)</option>
             </select>
             <span class="error-msg"></span>
-          </div>
-
-          <div class="form-grupo">
-            <label for="mesa">Mesa preferida</label>
-            <select class="form-control" id="mesa" name="mesa">
-              <option value="">— Sin preferencia —</option>
-              <option value="interior">Interior (salón principal)</option>
-              <option value="ventana">Junto a la ventana</option>
-              <option value="terraza">Terraza exterior</option>
-              <option value="barra">Barra del asador</option>
-            </select>
-          </div>
-
-          <div class="form-grupo full">
-            <label for="comentarios">Comentarios o solicitudes especiales</label>
-            <textarea class="form-control" id="comentarios" name="comentarios" placeholder="Ej: alergias, celebración especial, silla para bebé..."></textarea>
           </div>
         </div>
 
@@ -115,7 +107,7 @@
           <div class="ic">🕐</div>
           <div>
             <strong>Horarios</strong>
-            <p>Mar–Dom: 11:00h a 01:00h</p>
+            <p>Todos los días: 12:00hs a 15:00hs y 20:00hs a 23:00hs</p>
           </div>
         </div>
         <div class="sidebar-item">
@@ -138,20 +130,6 @@
             <strong>Accesibilidad</strong>
             <p>Rampas y espacios adaptados disponibles</p>
           </div>
-        </div>
-
-        <hr class="sidebar-hr" />
-
-        <div class="sidebar-aviso">
-          <strong>⚠️ Cancelaciones</strong>
-          Podés cancelar hasta 1 hora antes sin cargo. 
-        </div>
-
-        <hr class="sidebar-hr" />
-
-        <div class="sidebar-aviso" style="background:#fdf1f1;border-color:#f5c0c0;color:#7a0000;margin-top:0;">
-          <strong>🥩 Grupos grandes</strong>
-          Para eventos o grupos de más de 10 personas, contactanos directamente por teléfono o email para una propuesta a medida.
         </div>
       </div>
     </aside>
