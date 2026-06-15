@@ -36,13 +36,6 @@ def endpoint_actualizar_estado_qr(token_qr):
         request.json.get("estado")
     ))
 CAPACIDAD_MAX = 10
-
-@reservas.route("/reservas", methods=["GET"]) # admin
-@requiere_admin  
-
-@reservas.route("/reservas", methods=["POST"])  # cliente
-
-@reservas.route("/reservas/<int:id_reserva>", methods=["PUT"]) # admin
        
 @reservas.route("/reservas/<int:id_reserva>", methods=["DELETE"]) # admin
 @requiere_admin  
@@ -224,9 +217,6 @@ def cancelar_reserva_link(id_reserva):
             return jsonify({"error": f"No existe reserva con id {id_reserva}"}), 404
 
 
-
-        
-
         if isinstance(reserva, (tuple, list)):
 
             fecha_reserva = reserva[0]
@@ -243,12 +233,6 @@ def cancelar_reserva_link(id_reserva):
 
             mail_cliente = reserva["mail"]
 
-
-
-        
-
-        
-
         if isinstance(horario_raw, timedelta):
 
             hora_time = (datetime.min + horario_raw).time()
@@ -263,25 +247,14 @@ def cancelar_reserva_link(id_reserva):
 
         horario_reserva = datetime.combine(fecha_reserva, hora_time)
 
-
-
-        
-
         if datetime.now() >= horario_reserva - timedelta(hours=1):
 
             return jsonify({"error": "No se puede cancelar con menos de una hora de anticipación"}), 400
 
-
-
-       
-
         cursor.execute("DELETE FROM reservas WHERE id_reserva = %s", (id_reserva,))
 
         conn.commit()
-
-
-
-
+        
         return jsonify({
 
             "mensaje": "Reserva cancelada correctamente",
@@ -296,13 +269,9 @@ def cancelar_reserva_link(id_reserva):
 
         }), 200
 
-
-
     except Exception as e:
 
         return jsonify({"error": f"Error al cancelar la reserva: {str(e)}"}), 500
-
-
 
     finally:
 
