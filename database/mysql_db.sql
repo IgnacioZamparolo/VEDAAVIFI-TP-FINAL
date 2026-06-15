@@ -10,7 +10,8 @@ CREATE TABLE IF NOT EXISTS productos (
     lactosa         BOOLEAN DEFAULT FALSE,
     vegetariano     BOOLEAN DEFAULT FALSE,
     vegano          BOOLEAN DEFAULT FALSE,
-    sin_tacc        BOOLEAN DEFAULT FALSE
+    sin_tacc        BOOLEAN DEFAULT FALSE,
+    imagen_url      VARCHAR(255) DEFAULT NULL
 );
 
 CREATE TABLE IF NOT EXISTS combos (
