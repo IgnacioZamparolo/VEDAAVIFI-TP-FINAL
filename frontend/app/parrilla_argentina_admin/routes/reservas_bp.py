@@ -46,6 +46,7 @@ def crear():
 
 @reservas_bp.route(
     "/reservas/<int:id_reserva>/finalizar", methods=["GET"])
+@requiere_login()
 def finalizar_desde_qr(id_reserva):
     resultado = api.finalizar_reservas(id_reserva)
 
