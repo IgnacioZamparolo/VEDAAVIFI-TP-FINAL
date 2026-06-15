@@ -100,12 +100,11 @@ document.addEventListener('DOMContentLoaded', () => {
   new Chart(document.getElementById('cEstados'), {
     type: 'doughnut',
     data: {
-      labels: ['Pendientes', 'Confirmadas', 'Canceladas', 'Finalizadas', 'Vencidas'],
+      labels: ['Pendientes', 'Confirmadas','Finalizadas', 'Vencidas'],
       datasets: [{
         data: [
           datos.reservas_por_estado.pendientes,
           datos.reservas_por_estado.confirmadas,
-          datos.reservas_por_estado.canceladas,
           datos.reservas_por_estado.finalizadas,
           datos.reservas_por_estado.vencidas
         ],
