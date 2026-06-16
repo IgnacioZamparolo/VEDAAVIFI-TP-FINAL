@@ -45,6 +45,9 @@
   white-space: nowrap;
 
 }
+.abm-table tbody tr:hover {
+  background-color: #f7f7f7;
+}
 .abm-table th {
   font-weight: 700;
   white-space: nowrap;
@@ -86,17 +89,17 @@ li {
   border-radius: 10px;
   padding: 1.5rem;
 }
-
-
-
 .form__btn--submit {
   border-radius: 12px;
   width: 30%;
   border: 0;
 }
 
-
-
+.btn-f {
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+}
 .bloques {
   display: flex;
   justify-content: space-evenly;
@@ -127,7 +130,7 @@ li {
 
 .btn-f .form__btn--submit{
   border-radius: 12px;
-  width: 50%;
+  width: 100%;
   border: 0;
 }
 
@@ -154,6 +157,7 @@ li {
 }
 
 #id_servicio {
+  /*width: 40%;*/
   background-color: #ffffff;
 }
 .bloque2 {
@@ -167,7 +171,26 @@ li {
   background-color: #ffffff;
 }
 
+.botones-form-combos {
+  width: 40%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
 
+.botones-form-combos-version {
+  width: 40%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.botones-form-combos-detalle {
+  width: 40%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
 .abm-table tbody {
   background-color: transparent;
 }
@@ -179,7 +202,7 @@ li {
 }
 
 .btn-F .form__btn--submit {
-  width: 50%;
+  width: 100%;
 }
 
 .bloques-cv {
@@ -188,54 +211,15 @@ li {
   justify-content: flex-start;
 }
 
-.form .contF.contF-cv {
+.contF-cv {
   height: auto;
 }
 
-.form__btn--eliminar {
-  background-color: #7B1E1E;
-  color: white;
-  padding: 0.7rem 1.4rem;
-  border-radius: 8px;
-  border: none;
-  font-size: .95rem;
-  font-weight: 700;
-  cursor: pointer;
-  font-family: var(--font-family-body);
-  transition: all var(--transition);
-  display: inline-block;
-  text-align: center;
-  letter-spacing: .03em;
-}
-
-.bloques select{
+.form .contF {
+  height: auto;
   width: 50%;
-  background-color: white;
-  color: rgb(139, 138, 138);
-}
-
-.form__btn:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  transition: box-shadow 0.2s ease;
-}
-
-.form__btn--submit:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  transition: box-shadow 0.2s ease;
-}
-
-.form__btn--eliminar:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  transition: box-shadow 0.2s ease;
-}
-
-.btn-img {
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  background-color: #d2ad68;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  font-weight: 700;
-
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  padding: 1.5rem;
 }

@@ -19,5 +19,32 @@ def _ejecutar(funcion, status_ok=200):
  
 @auth.route("/login", methods=["POST"])
 def post_login():
+    """
+    Iniciar sesión como administrador.
+    Permite a los administradores autenticarse para acceder al panel de gestión.
+    ---
+    tags:
+      - Autenticación
+    parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          type: object
+          properties:
+            email:
+              type: string
+              example: admin@parrilla.com
+            password:
+              type: string
+              example: claveSegura123
+    responses:
+      200:
+        description: Login exitoso. Devuelve los datos del usuario o token.
+      400:
+        description: Credenciales inválidas o datos incompletos.
+      500:
+        description: Error interno del servidor.
+    """
     return _ejecutar(login_con_password)
  
