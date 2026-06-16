@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
 load_dotenv()
 from flask import Flask
-from flasgger import Swagger
+#from flasgger import Swagger
 
 from routes.combos import combos
 from routes.combo_detalle import combo_detalle
@@ -15,7 +15,7 @@ from routes.auth import auth
 from routes.usuarios import usuarios 
 
 app = Flask(__name__)
-swagger = Swagger(app)
+#swagger = Swagger(app)
 
 app.register_blueprint(combos)
 app.register_blueprint(combo_detalle)
