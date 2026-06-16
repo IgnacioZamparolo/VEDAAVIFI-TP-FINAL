@@ -13,7 +13,7 @@ productos = Blueprint("productos", __name__)
 
 @productos.route("/productos", methods=["GET"])
 def endpoint_ver_productos():
-    return _ejecutar(obtener_todos_los_productos)
+    return _ejecutar(lambda body:obtener_todos_los_productos())
 
 @productos.route("/productos", methods=["POST"])
 @requiere_admin

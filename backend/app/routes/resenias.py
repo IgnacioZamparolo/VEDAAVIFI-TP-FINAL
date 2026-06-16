@@ -12,7 +12,7 @@ resenias = Blueprint("resenias", __name__)
 
 @resenias.route("/resenias", methods=["GET"])
 def ver_resenias():
-    return _ejecutar(obtener_todas_las_resenias)
+    return _ejecutar(lambda body:obtener_todas_las_resenias())
 
 @resenias.route("/resenias", methods=["POST"])
 def agregar_resenia():
