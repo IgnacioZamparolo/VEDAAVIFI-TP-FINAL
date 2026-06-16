@@ -122,7 +122,7 @@
 </div>
 
 <div class="form" id="editar_prod" style="display:none">
-    <form action="{{ url_for('productos.editar', id_producto=0)}}" method="POST">
+    <form action="{{ url_for('productos.editar', id_producto=0)}}" method="POST" enctype="multipart/form-data">
         <div class="contFH">
             <div class="bloquesH">
                 <div class="inputs">

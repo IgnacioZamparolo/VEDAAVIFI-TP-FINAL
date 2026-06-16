@@ -1,11 +1,40 @@
-from flask import Blueprint, jsonify, request
-from db_connection import get_connection
-from utils import generar_qr, enviar_qr
-from datetime import date, datetime, timedelta
-from utils import requiere_admin, enviar_mail_resenia
+from flask import Blueprint, request
+from utils import requiere_admin
+from routes.auth import _ejecutar 
+
+from services.services_reservas import (
+    obtener_todas_las_reservas,
+    crear_nueva_reserva,
+    modificar_estado_reserva,
+    modificar_estado_reserva_por_qr
+)
 
 reservas = Blueprint("reservas", __name__)
 
+@reservas.route("/reservas", methods=["GET"])
+@requiere_admin
+def endpoint_ver_reservas():
+    return _ejecutar(obtener_todas_las_reservas)
+
+@reservas.route("/reservas", methods=["POST"])
+def endpoint_crear_reserva():
+    return _ejecutar(lambda: crear_nueva_reserva(request.json))
+
+@reservas.route("/reservas/<int:id_reserva>", methods=["PUT"])
+@requiere_admin
+def endpoint_actualizar_estado(id_reserva):
+    return _ejecutar(lambda: modificar_estado_reserva(
+        id_reserva, 
+        request.json.get("estado")
+    ))
+
+@reservas.route("/reservas/qr/<string:token_qr>", methods=["PUT"])
+@requiere_admin
+def endpoint_actualizar_estado_qr(token_qr):
+    return _ejecutar(lambda: modificar_estado_reserva_por_qr(
+        token_qr, 
+        request.json.get("estado")
+    ))
 CAPACIDAD_MAX = 10
 
 @reservas.route("/reservas", methods=["GET"]) # admin
@@ -385,9 +414,6 @@ def cancelar_reserva_link(id_reserva):
             return jsonify({"error": f"No existe reserva con id {id_reserva}"}), 404
 
 
-
-        
-
         if isinstance(reserva, (tuple, list)):
 
             fecha_reserva = reserva[0]
@@ -404,12 +430,6 @@ def cancelar_reserva_link(id_reserva):
 
             mail_cliente = reserva["mail"]
 
-
-
-        
-
-        
-
         if isinstance(horario_raw, timedelta):
 
             hora_time = (datetime.min + horario_raw).time()
@@ -424,25 +444,14 @@ def cancelar_reserva_link(id_reserva):
 
         horario_reserva = datetime.combine(fecha_reserva, hora_time)
 
-
-
-        
-
         if datetime.now() >= horario_reserva - timedelta(hours=1):
 
             return jsonify({"error": "No se puede cancelar con menos de una hora de anticipación"}), 400
 
-
-
-       
-
         cursor.execute("DELETE FROM reservas WHERE id_reserva = %s", (id_reserva,))
 
         conn.commit()
-
-
-
-
+        
         return jsonify({
 
             "mensaje": "Reserva cancelada correctamente",
@@ -457,13 +466,9 @@ def cancelar_reserva_link(id_reserva):
 
         }), 200
 
-
-
     except Exception as e:
 
         return jsonify({"error": f"Error al cancelar la reserva: {str(e)}"}), 500
-
-
 
     finally:
 

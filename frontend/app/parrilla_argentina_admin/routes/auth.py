@@ -120,7 +120,7 @@ def servicios():
         for mensaje in extraer_mensajes_error(resultado.get('error_response')):
             flash(mensaje, 'error')
 
-        return render_template('editarServiciosAdmi.html', usuario=usuario, servicios=None)
+        return render_template('editarServiciosAdmi.html', usuario=usuario, servicios=[])
     
     return render_template('editarServiciosAdmi.html', usuario=usuario, servicios=resultado['data']
     )
