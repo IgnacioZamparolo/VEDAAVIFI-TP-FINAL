@@ -38,8 +38,7 @@ def actualizar_combo_version(id_version, data):
 
         cursor.execute("SELECT * FROM combo_version WHERE id_version = %s", (id_version,))
         if cursor.fetchone() is None:
-            raise ValueError(f"No existe una version del combo con el id  {id_version}")
-   
+            raise LookupError({"error": f"No existe una version del combo con el id {id_version}"})   
             
         for campo in ["descripcion", "personas", "precio"]:
             if campo not in data:
@@ -54,7 +53,7 @@ def actualizar_combo_version(id_version, data):
         version_actualizada = cursor.fetchone()
         return (version_actualizada)
     
-    except ValueError as e:
+    except (ValueError, LookupError) as e:
         raise e
     except Exception as e:
         raise Exception(f"Error al actualizar la version del combo: {str(e)}")
@@ -116,13 +115,12 @@ def eliminar_combo_version(id_version):
         cursor.execute("SELECT * FROM combo_version WHERE id_version = %s", (id_version,))
         version = cursor.fetchone()
         if version is None:
-            raise ValueError(f"No existe una version del combo con el id  {id_version}")
-
+            raise LookupError({"error": f"No existe una version del combo con el id {id_version}"}) 
         cursor.execute("DELETE FROM combo_version WHERE id_version = %s", (id_version,))
         conn.commit()
         return version
 
-    except ValueError as e:
+    except (ValueError, LookupError) as e:
         raise e
     except Exception as e:
         raise Exception(f"Error al eliminar el combo: {str(e)}")

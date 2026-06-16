@@ -34,7 +34,7 @@ def actualizar_combos(id_combo, data):
         cursor.execute("SELECT * FROM combos WHERE id_combo = %s", (id_combo,))
         combo = cursor.fetchone()
         if combo is None:
-            raise LookupError ("Combo no encontrado")
+            raise LookupError ({"error":"Combo no encontrado"})
         
         cursor.execute("UPDATE combos SET nombre = %s, precio = %s WHERE id_combo = %s", (data["nombre"], data["precio"], id_combo)) 
         conn.commit()  
@@ -94,7 +94,7 @@ def eliminar_combo(id_combo):
         combo_eliminado = cursor.fetchone()
 
         if combo_eliminado is None:
-            raise LookupError("Combo no encontrado")
+            raise LookupError({"error": "Combo no encontrado"})
 
         cursor.execute("DELETE FROM combos WHERE id_combo = %s", (id_combo,))
         conn.commit()
