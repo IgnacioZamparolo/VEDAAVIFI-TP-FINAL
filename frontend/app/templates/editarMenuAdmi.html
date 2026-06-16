@@ -122,12 +122,12 @@
 </div>
 
 <div class="form" id="editar_prod" style="display:none">
-    <form action="{{ url_for('productos.editar', id_producto=0)}}" method="POST">
+    <form action="{{ url_for('productos.editar', id_producto=0)}}" method="POST" enctype="multipart/form-data">
         <div class="contFH">
             <div class="bloquesH">
                 <div class="inputs">
                     <label class="form__label" for="id_producto">Id del producto: </label>
-                    <input class="form__input" type="text" id="id_producto" name="id_producto" placeholder="Id Producto"
+                    <input class="form__input" type="number" id="id_producto" name="id_producto" placeholder="Id Producto"
                         required>
 
                     <label class="form__label" for="nombre">Nombre del producto:</label>
@@ -408,7 +408,7 @@
                 <input class="form__input" type="number" id="id_combo" name="id_combo" placeholder="id combo" required>
 
                 <label class="form__label" for="id_producto">id_producto:</label>
-                <input class="form__input" type="number" id="id_producto" name="id_producto" placeholder="id_producto"
+                <input class="form__input" type="number" id="id_producto" name="id_producto" placeholder="id producto"
                     required>
             </div>
             <div class="btn-F">
