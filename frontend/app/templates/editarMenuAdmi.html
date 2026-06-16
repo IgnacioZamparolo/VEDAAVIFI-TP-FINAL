@@ -12,7 +12,6 @@
             <table class="abm-table">
                 <thead>
                     <tr>
-                        <th>Id</th>
                         <th>Nombre</th>
                         <th>Descripción</th>
                         <th>Precio</th>
@@ -27,7 +26,6 @@
                 <tbody>
                     {% for producto in productos %}
                     <tr>
-                        <td>{{ producto.id_producto }}</td>
                         <td>{{ producto.nombre }}</td>
                         <td>{{ producto.descripcion }}</td>
                         <td>{{ producto.precio }}</td>
@@ -90,10 +88,10 @@
                     <label class="form__label" for="sin_tacc">Sin Tacc:</label>
                     <input type="checkbox" id="sin_tacc" name="sin_tacc">
 
-                    <label class="form__label" for="imagen-agregar">Imagen:</label>
-                    <label class="btn-img" for="imagen-agregar">
-                        <input type="file" id="imagen-agregar" name="imagen" accept="image/jpg,image/jpeg,image/png,image/webp" style="display:none">
-                        <span class="btn-img__texto">Seleccionar Imagen</span>
+                    <label class="form__label" for="imagen">Imagen:</label>
+                    <label class="btn-img" for="imagen">
+                        <input type="file" id="imagen" name="imagen" accept="image/jpg,image/jpeg,image/png,image/webp" style="display:none">
+                        Seleccionar Imagen
                     </label>
                 
                     <div class="btn-F" id="enviarP">
@@ -127,7 +125,7 @@
             <div class="bloquesH">
                 <div class="inputs">
                     <label class="form__label" for="id_producto">Id del producto: </label>
-                    <input class="form__input" type="text" id="id_producto" name="id_producto" placeholder="Id Producto"
+                    <input class="form__input" type="number" id="id_producto" name="id_producto" placeholder="Id Producto"
                         required>
 
                     <label class="form__label" for="nombre">Nombre del producto:</label>
@@ -157,10 +155,10 @@
                     <label class="form__label" for="sin_tacc">Sin Tacc:</label>
                     <input type="checkbox" id="sin_tacc" name="sin_tacc">
 
-                    <label class="form__label" for="imagen-editar">Imagen:</label>
-                    <label class="btn-img" for="imagen-editar">
-                        <input type="file" id="imagen-editar" name="imagen" accept="image/jpg,image/jpeg,image/png,image/webp" style="display:none">
-                        <span class="btn-img__texto">Seleccionar Imagen</span>
+                    <label class="form__label" for="imagen">Imagen:</label>
+                    <label class="btn-img" for="imagen">
+                        <input type="file" id="imagen" name="imagen" accept="image/jpg,image/jpeg,image/png,image/webp" style="display:none">
+                        Seleccionar Imagen
                     </label>
                     <div class="btn-F" id="enviarP1">
                         <button class="form__btn--submit"  type="submit">Enviar</button>
@@ -180,7 +178,6 @@
     <table class="abm-table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Nombre</th>
                 <th>Precio</th>
             </tr>
@@ -188,7 +185,6 @@
         <tbody>
             {% for combo in combos %}
             <tr>
-                <td>{{ combo.id_combo }}</td>
                 <td>{{ combo.nombre }}</td>
                 <td>{{ combo.precio }}</td>
             </tr>
@@ -408,7 +404,7 @@
                 <input class="form__input" type="number" id="id_combo" name="id_combo" placeholder="id combo" required>
 
                 <label class="form__label" for="id_producto">id_producto:</label>
-                <input class="form__input" type="number" id="id_producto" name="id_producto" placeholder="id_producto"
+                <input class="form__input" type="number" id="id_producto" name="id_producto" placeholder="id producto"
                     required>
             </div>
             <div class="btn-F">
@@ -435,7 +431,7 @@
 
     </form>
 </div>
-{% endblock %}
     {% block extra_js %}
     <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
     {% endblock %}
+{% endblock %}

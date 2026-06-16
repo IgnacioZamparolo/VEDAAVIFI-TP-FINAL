@@ -37,8 +37,7 @@ def actualizar_servicio(id_servicio, data):
         cursor.execute("SELECT * FROM servicios_extra WHERE id_servicio = %s", (id_servicio,))
         servicio = cursor.fetchone()
         if servicio is None:
-            raise LookupError("Servicio extra no encontrado")
-        
+            raise LookupError({"error": "Servicio extra no encontrado"})        
         cursor.execute(""" UPDATE servicios_extra SET nombre = %s, descripcion = %s WHERE id_servicio = %s """, (data["nombre"], data["descripcion"], id_servicio)) 
         conn.commit()  
 
@@ -95,8 +94,7 @@ def eliminar_servicio(id_servicio):
         cursor.execute("SELECT * FROM servicios_extra WHERE id_servicio = %s", (id_servicio,))
         servicio_eliminado = cursor.fetchone()
         if servicio_eliminado is None:
-            raise LookupError("Servicio extra no encontrado")
-
+            raise LookupError({"error": "Servicio extra no encontrado"})
         cursor.execute("DELETE FROM servicios_extra WHERE id_servicio = %s", (id_servicio,))
         conn.commit()
         return servicio_eliminado
