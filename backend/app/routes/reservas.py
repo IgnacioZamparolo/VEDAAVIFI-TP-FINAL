@@ -56,17 +56,11 @@ def ver_reservas():
 @reservas.route("/reservas", methods=["POST"])  # cliente
 def crear_reserva(): 
     try:
-        # 🚨 CONTROL 1: Saber si la petición entró a la función
-        print("\n" + "="*50)
-        print("[BACKEND] ¡PETICIÓN POST DETECTADA EN /reservas!")
-        print("="*50)
+        
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
         data = request.get_json()  
-        # 🚨 CONTROL 2: Ver exactamente qué datos llegaron del front
-        print(f"[BACKEND] Datos JSON recibidos: {data}")
-        print(f"[BACKEND] Tipo de datos recibidos: {type(data)}")
-        print("="*50 + "\n")
+        
         if data is None: 
             return jsonify({"error": "Ingrese todos los datos, por favor"}), 400
     
@@ -137,7 +131,7 @@ def crear_reserva():
                        
     except Exception as e:
    
-        print(f"\n[🚨 BACKEND EXCEPCIÓN CRÍTICA]: {str(e)}\n")
+        
         return jsonify({"error": f"Error al crear la reserva: {str(e)}"}), 500
                        
     finally:
