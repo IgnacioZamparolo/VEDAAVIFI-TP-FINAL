@@ -202,16 +202,21 @@ El archivo `database/mysql_db.sql` crea automáticamente el schema al levantar e
 ---
 ## Documentacion
 **Swagger:**
+
 openapi: 3.0.0
+
 info:
     title: API Parrilla Argentina
     version: 1.0.0
     description: API oficial para gestión de reservas, menú y
 administración de usuarios.
+
 servers:
     - url: http://localhost:5000
     description: Servidor Local
+
 paths:
+
     /auth/login:
         post:
             tags: [Autenticación]
