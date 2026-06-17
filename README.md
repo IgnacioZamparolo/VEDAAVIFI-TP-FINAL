@@ -96,17 +96,29 @@ VEDAAVIFI-TP-FINAL/
 Crear un archivo `.env` en la raíz del proyecto con las siguientes variables:
 
 API_BASE_URL=http://127.0.0.1:5000
+
 REQUEST_TIMEOUT=10
+
 MALAS_PALABRAS=idiota,pelotudo,estupido,boludo,imbecil,inutil,mierda,basura,garca,forro,hijodeputa,puto
+
 SUPABASE_URL=https://cnsegpmrifgsccfynrhl.supabase.co/
+
 SUPABASE_KEY=sb_secret_SGl_gD1QA6wOSkVNbkMZtw_puc_Eeyr
+
 SUPABASE_BUCKET=productos
+
 DB_USER=admin
+
 DB_PASSWORD=1234
+
 DATABASE=parrilla_argentina
+
 DB_PORT=3307
+
 FRONTEND_URL=http://127.0.0.1:8080
+
 SMTP_USER=parrillaargentina.web@gmail.com
+
 SMTP_PASSWORD=uhmwoyafvcrevuvk
 ```
 
@@ -190,184 +202,209 @@ El archivo `database/mysql_db.sql` crea automáticamente el schema al levantar e
 ---
 ## Documentacion
 **Swagger:**
-openapi: 3.0.0 
-info: 
-  title: API Parrilla Argentina 
-  version: 1.0.0 
-  description: Contrato de diseño para el sistema de gestión de la 
-parrilla (Reservas, Combos, Productos y Reportes). 
-servers: 
-  - url: http://localhost:5000 
-    description: Servidor Local de Flask 
- 
-paths: 
-  # --- Módulo: Auth --- 
-  /auth/login: 
-    post: 
-      tags: 
-        - Autenticación 
-      summary: Iniciar sesión en el sistema 
-      requestBody: 
-        required: true 
-        content: 
-          application/json: 
-            schema: 
-              type: object 
-              properties: 
-                email: 
-                  type: string 
-                password: 
-                  type: string 
-      responses: 
-        '200': 
-          description: Autenticación exitosa (Devuelve token o sesión) 
-        '401': 
-          description: Credenciales incorrectas 
- 
-  # --- Módulo: Usuarios --- 
-  /usuarios: 
-    get: 
-      tags: 
-        - Usuarios 
-      summary: Obtener lista de usuarios (Solo Admin) 
-      responses: 
-        '200': 
-          description: Lista de usuarios obtenida correctamente 
-    post: 
-      tags: 
-        - Usuarios 
-      summary: Registrar un nuevo usuario 
-      requestBody: 
-        required: true 
-        content: 
-          application/json: 
-            schema: 
-              type: object 
-              properties: 
-                nombre: 
-                  type: string 
-                email: 
-                  type: string 
-                password: 
-                  type: string 
-      responses: 
-        '201': 
-          description: Usuario creado con éxito 
- 
-  # --- Módulo: Productos --- 
-  /productos: 
-    get: 
-      tags: 
-        - Productos 
-      summary: Obtener todos los productos del menú 
-      responses: 
-        '200': 
-          description: Lista de productos 
-    post: 
-      tags: 
-        - Productos 
-      summary: Agregar un nuevo producto al menú 
-      responses: 
-        '201': 
-          description: Producto agregado 
- 
-  # --- Módulo: Combos, Detalles y Versiones --- 
-  /combos: 
-    get: 
-      tags: 
-        - Combos y Promociones 
-      summary: Listar todos los combos disponibles 
-      responses: 
-        '200': 
-          description: Lista de combos 
-  /combos/detalles: 
-    get: 
-      tags: 
-        - Combos y Promociones 
-      summary: Obtener el desglose de ingredientes/productos por combo 
-      responses: 
-        '200': 
-          description: Detalle de los combos devuelto 
-  /combos/versiones: 
-    get: 
-      tags: 
-        - Combos y Promociones 
-      summary: Historial o versiones activas de los combos 
-      responses: 
-        '200': 
-          description: Lista de versiones de combos 
- 
-  # --- Módulo: Reservas --- 
-  /reservas: 
-    get: 
-      tags: 
-        - Reservas 
-      summary: Listar todas las reservas registradas 
-      responses: 
-        '200': 
-          description: Lista de reservas obtenida correctamente 
-    post: 
-      tags: 
-        - Reservas 
-      summary: Crear una nueva reserva de mesa 
-      requestBody: 
-        required: true 
-        content: 
-          application/json: 
-            schema: 
-              type: object 
-              properties: 
-                mail: 
-                  type: string 
-                cant_personas: 
-                  type: integer 
-                dia: 
-                  type: string 
-                horario: 
-                  type: string 
-      responses: 
-        '201': 
-          description: Reserva confirmada con éxito 
- 
-  # --- Módulo: Reseñas --- 
-  /resenias: 
-    get: 
-      tags: 
-        - Reseñas y Feedback 
-      summary: Obtener las opiniones de los clientes 
-      responses: 
-        '200': 
-          description: Lista de opiniones 
-    post: 
-      tags: 
-        - Reseñas y Feedback 
-      summary: Publicar una nueva reseña 
-      responses: 
-        '201': 
-          description: Reseña guardada 
- 
-  # --- Módulo: Servicios Extra --- 
-  /servicios_extra: 
-    get: 
-      tags: 
-        - Servicios Adicionales 
-      summary: Listar servicios extras (ej. shows, decoración, 
-estacionamiento) 
-      responses: 
-        '200': 
-          description: Lista de servicios extras 
- 
-  # --- Módulo: Reportes --- 
-  /reportes: 
-    get: 
-      tags: 
-        - Reportes y Estadísticas 
-summary: Obtener métricas del negocio (reservas del mes, platos 
-más vendidos) 
-responses: 
-'200': 
-description: Datos estadísticos generados correctamente 
+openapi: 3.0.0
+info:
+    title: API Parrilla Argentina
+    version: 1.0.0
+    description: API oficial para gestión de reservas, menú y
+administración de usuarios.
+servers:
+    - url: http://localhost:5000
+    description: Servidor Local
+paths:
+    /auth/login:
+        post:
+            tags: [Autenticación]
+            summary: Iniciar sesión (Admin)
+            responses:
+                '200':
+                description: Login exitoso
 
+    /productos:
+        get:
+            tags: [Productos]
+            summary: Ver menú completo
+            responses:
+                '200':
+                description: Lista de productos
+
+        post:
+            tags: [Productos]
+            summary: Crear nuevo producto (Admin)
+            responses:
+                '201':
+                description: Producto creado
+
+    /productos/{id_producto}:
+        put:
+            tags: [Productos]
+            summary: Actualizar producto (Admin)
+            parameters:
+                - name: id_producto
+                in: path
+                required: true
+                schema: {type: integer}
+            responses:
+                '200':
+                description: Producto actualizado
+        delete:
+            tags: [Productos]
+            summary: Borrar producto (Admin)
+            parameters:
+                    - name: id_producto
+                    in: path
+                    required: true
+
+                    schema: {type: integer}
+            responses:
+                    '200':
+                    description: Producto borrado
+
+    /reservas:
+        get:
+            tags: [Reservas]
+            summary: Ver todas las reservas (Admin)
+            responses:
+                '200':
+                description: OK
+        post:
+            tags: [Reservas]
+            summary: Crear nueva reserva
+            responses:
+                '201':
+                description: Reserva creada
+
+    /reservas/{id_reserva}:
+        put:
+            tags: [Reservas]
+            summary: Actualizar estado de reserva (Admin)
+            parameters:
+                - name: id_reserva
+                in: path
+                required: true
+                schema: {type: integer}
+            responses:
+                '200':
+                description: Reserva actualizada
+        delete:
+            tags: [Reservas]
+            summary: Eliminar reserva (Admin)
+            parameters:
+                - name: id_reserva
+                in: path
+                required: true
+                schema: {type: integer}
+            responses:
+                '200':
+                description: Reserva eliminada
+
+    /reservas/{id_reserva}/confirmar:
+        patch:
+            tags: [Reservas]
+            summary: Confirmar reserva (Admin)
+            parameters:
+                - name: id_reserva
+                in: path
+                required: true
+                schema: {type: integer}
+            responses:
+                '200':
+                description: Confirmada
+
+    /reservas/{id_reserva}/finalizar:
+        patch:
+            tags: [Reservas]
+            summary: Finalizar reserva
+            parameters:
+                - name: id_reserva
+                in: path
+                required: true
+                schema: {type: integer}
+            responses:
+                '200':
+                description: Finalizada
+
+    /reservas/{id_reserva}/cancelar:
+        post:
+            tags: [Reservas]
+            summary: Cancelar reserva (Cliente)
+            parameters:
+                - name: id_reserva
+                in: path
+                required: true
+                schema: {type: integer}
+            responses:
+                '200':
+                description: Cancelada
+
+    /usuarios/me:
+        get:
+            tags: [Usuarios]
+            summary: Obtener perfil (Admin)
+            responses:
+                '200':
+                description: OK
+
+    /combos:
+        get:
+            tags: [Combos]
+            summary: Listar combos
+            responses:
+                '200':
+                description: OK
+        post:
+            tags: [Combos]
+            summary: Crear combo (Admin)
+            responses:
+                '201':
+                description: Creado
+
+    /combos/{id_combo}:
+        put:
+            tags: [Combos]
+            summary: Actualizar combo (Admin)
+            parameters:
+                - name: id_combo
+                in: path
+                required: true
+                schema: {type: integer}
+            responses:
+                '200':
+                description: Actualizado
+        delete:
+            tags: [Combos]
+            summary: Eliminar combo (Admin)
+            parameters:
+                - name: id_combo
+                in: path
+                required: true
+                schema: {type: integer}
+            responses:
+                '200':
+                description: Eliminado
+
+    /resenias:
+        get:
+            tags: [Reseñas]
+            summary: Ver reseñas
+            responses:
+                '200':
+                description: OK
+        post:
+            tags: [Reseñas]
+            summary: Crear reseña
+            responses:
+                '201':
+                description: Creada
+
+    /servicios_extra:
+        get:
+            tags: [Servicios Adicionales]
+            summary: Ver servicios
+            responses:
+                '200':
+                description: OK
+                
 **Informe:**
 
 https://docs.google.com/document/d/1Q0X54ZwN_QJlRAj-Ywm_9kUKmZ22esz73_J1EF5A87Y/edit?usp=sharing
