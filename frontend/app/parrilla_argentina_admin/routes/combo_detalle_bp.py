@@ -21,7 +21,12 @@ def agregar():
             flash('Completá todos los campos.', 'error')
             return redirect(url_for('menu.mostrar'))
 
-        datos = {'id_producto': id_producto, 'id_combo':id_combo}
+        try:
+            datos = {'id_producto': int(id_producto), 'id_combo': int(id_combo)}
+        except ValueError:
+            flash('Los ids deben ser números.', 'error')
+            return redirect(url_for('menu.mostrar'))
+        
         resultado = api.agregar_combo_detalle(datos, token_actual())
         
         if resultado.get('ok'):
